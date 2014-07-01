@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Deiver Kiel
+ * @author Soda de Limon
  */
 @WebServlet(name = "Planilla", urlPatterns = {"/Planilla"})
 public class Planilla extends HttpServlet {

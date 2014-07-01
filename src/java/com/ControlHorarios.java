@@ -43,7 +43,7 @@ public class ControlHorarios {
             cal = Calendar.getInstance();
             Time horaEntradaHoy = new Time(00, 00, 00);
             Time horaSalidaHoy = new Time(00, 00, 00);
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -101,7 +101,7 @@ public class ControlHorarios {
             cal = Calendar.getInstance();
             Time horaConexionHoy = new Time(0, 0, 0);
 
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -131,7 +131,7 @@ public class ControlHorarios {
         try {
             cal = Calendar.getInstance();
             Time horaConexionHoy = new Time(00, 00, 00);
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -160,7 +160,7 @@ public class ControlHorarios {
         try {
             cal = Calendar.getInstance();
             Time horaConexionHoy = new Time(00, 00, 00);
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -187,7 +187,7 @@ public class ControlHorarios {
     public void iniciarSesionXelDia(Usuario usuario) {
         try {
             cal = Calendar.getInstance();
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -195,7 +195,7 @@ public class ControlHorarios {
             if (!rs.next()) {
 
                 Conexion.getInstancia().insertar(
-                        "controlhorarios",
+                        "ControlHorarios",
                         "idUsuario, fecha, horaEntrada",
                         "'" + usuario.getId()
                         + "', '" + dateFormat.format(cal.getTime())
@@ -216,7 +216,7 @@ public class ControlHorarios {
     public void cerrarSesion(Usuario usuario) {
         try {
             cal = Calendar.getInstance();
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -225,7 +225,7 @@ public class ControlHorarios {
 
                 //pone la hora de cierre en la linea que corresponde a la fecha de hoy
                 Conexion.getInstancia().modificar(
-                        "controlhorarios",
+                        "ControlHorarios",
                         "horaSalida",
                         timeFormat.format(cal.getTime()),
                         "fecha='" + dateFormat.format(cal.getTime())
@@ -253,7 +253,7 @@ public class ControlHorarios {
     public boolean cerroSesionXelDia(Usuario usuario) {
         try {
             cal = Calendar.getInstance();
-            String SQL_BUSCAR = "Select * from controlhorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
 
             Statement st = Conexion.getInstancia().conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);

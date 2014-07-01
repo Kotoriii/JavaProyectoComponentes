@@ -74,7 +74,7 @@ public class Conexion {
 
     public Usuario buscarXId(String _id) {
         try {
-            String SQL_BUSCAR = "Select * from usuarios where id ='" + _id + "';";
+            String SQL_BUSCAR = "Select * from Usuarios where id ='" + _id + "';";
 
             Statement st = conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -106,7 +106,7 @@ public class Conexion {
     
     public Usuario buscarPorNombre(String _nombre){
         try {
-            String SQL_BUSCAR = "Select * from usuarios where nombre ='" + _nombre + "';";
+            String SQL_BUSCAR = "Select * from Usuarios where nombre ='" + _nombre + "';";
 
             Statement st = conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -142,7 +142,7 @@ public class Conexion {
             if (listEmpleados != null)
                 vaciarLista();
             
-            String SQL_BUSCAR = "Select * from usuarios;";
+            String SQL_BUSCAR = "Select * from Usuarios;";
 
             Statement st = conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -183,7 +183,7 @@ public class Conexion {
             if (listEmpleados != null)
                 vaciarLista();
             
-            String SQL_BUSCAR = "Select * from usuarios where estado ='" + _estado + "';";
+            String SQL_BUSCAR = "Select * from Usuarios where estado ='" + _estado + "';";
 
             Statement st = conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -223,7 +223,7 @@ public class Conexion {
             if (listEmpleados != null)
                 vaciarLista();
             
-            String SQL_BUSCAR = "Select * from usuarios;";
+            String SQL_BUSCAR = "Select * from Usuarios;";
 
             Statement st = conectar().createStatement();
             ResultSet rs = st.executeQuery(SQL_BUSCAR);
@@ -351,7 +351,7 @@ public class Conexion {
             String _salario, String _precioXHora, String _keyword, String _correo,
             String _horaEntrada, String _horaSalida) {
         try {
-            String SQL_CREAR = "INSERT INTO usuarios (id, nombre, contrasenna, rol, salario, precioPorHora, keywords, correo, horaEntrada, horaSalida, estado) "
+            String SQL_CREAR = "INSERT INTO Usuarios (id, nombre, contrasenna, rol, salario, precioPorHora, keywords, correo, horaEntrada, horaSalida, estado) "
                     + "VALUES ('" + _id + "', '" + _nombre + "', '" + _contrasenna + "', '" + _rol + "', '" + _salario + "', '" + _precioXHora + "', '" + _keyword + "', '" + _correo + "', '" + _horaEntrada + "', '" + _horaSalida + "', 'Activo');";
 
             Statement st = conectar().createStatement();

@@ -52,7 +52,7 @@ public class LoginB extends HttpServlet {
                 cnt = 2;
             } else if (ControlHorarios.getInstancia().cerroSesionXelDia(usuario)) {
                 cnt = 3;
-            } else if (usuario.getEstado().equals("Inactivo")) {
+            } else if (false && usuario.getEstado().equals("Inactivo")) {
                 cnt = 4;
             } 
 
