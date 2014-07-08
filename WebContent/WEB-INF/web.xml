@@ -10,23 +10,23 @@
     </servlet>
     <servlet>
         <servlet-name>LoginB</servlet-name>
-        <servlet-class>Servlets.LoginB</servlet-class>
+        <servlet-class>servlets.LoginB</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>Servlets.Logout</servlet-class>
+        <servlet-class>servlets.Logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FlushDB</servlet-name>
-        <servlet-class>Servlets.FlushDB</servlet-class>
+        <servlet-class>servlets.FlushDB</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EliminarSesion</servlet-name>
-        <servlet-class>Servlets.EliminarSesion</servlet-class>
+        <servlet-class>servlets.EliminarSesion</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>modificarContra</servlet-name>
-        <servlet-class>Servlets.modificarContra</servlet-class>
+        <servlet-class>servlets.modificarContra</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
