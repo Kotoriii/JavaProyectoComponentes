@@ -32,9 +32,9 @@ public class Conexion {
     Connection mCon = null;
     private static Conexion conex = null;
 
-    String mUser = "root";
-    String mPassword = "root";
-    String mUrl = "jdbc:mysql://localhost:3306/mydb";
+    String mUser = "ruot";
+    String mPassword = "7777777";
+    String mUrl = "jdbc:mysql://db4free.net:3306/dogebarcelo";
     
     public void agregarResultadoBusqueda(Usuario resultado){
         this.listEmpleados.add(resultado);

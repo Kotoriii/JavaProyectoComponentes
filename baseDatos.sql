@@ -2,15 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `dogebarcelo` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `dogebarcelo` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Usuarios`
+-- Table `dogebarcelo`.`Usuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Usuarios` ;
+DROP TABLE IF EXISTS `dogebarcelo`.`Usuarios` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`Usuarios` (
+CREATE  TABLE IF NOT EXISTS `dogebarcelo`.`Usuarios` (
   `id` INT NOT NULL ,
   `nombre` VARCHAR(45) NULL ,
   `contrasenna` VARCHAR(45) NULL ,
@@ -27,11 +27,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ControlHorarios`
+-- Table `dogebarcelo`.`ControlHorarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ControlHorarios` ;
+DROP TABLE IF EXISTS `dogebarcelo`.`ControlHorarios` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`ControlHorarios` (
+CREATE  TABLE IF NOT EXISTS `dogebarcelo`.`ControlHorarios` (
   `idUsuario` INT NOT NULL ,
   `fecha` DATE NOT NULL ,
   `horaEntrada` TIME NULL ,
@@ -40,18 +40,18 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`ControlHorarios` (
   INDEX `fk_ControlHorarios_Usuarios_idx` (`idUsuario` ASC) ,
   CONSTRAINT `fk_ControlHorarios_Usuarios`
     FOREIGN KEY (`idUsuario` )
-    REFERENCES `mydb`.`Usuarios` (`id` )
+    REFERENCES `dogebarcelo`.`Usuarios` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ShiftReports`
+-- Table `dogebarcelo`.`ShiftReports`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ShiftReports` ;
+DROP TABLE IF EXISTS `dogebarcelo`.`ShiftReports` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`ShiftReports` (
+CREATE  TABLE IF NOT EXISTS `dogebarcelo`.`ShiftReports` (
   `idUsuario` INT NOT NULL ,
   `fecha` DATE NOT NULL ,
   `reporte` TEXT NULL ,
@@ -59,18 +59,18 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`ShiftReports` (
   INDEX `fk_ShiftReports_Usuarios1_idx` (`idUsuario` ASC) ,
   CONSTRAINT `fk_ShiftReports_Usuarios1`
     FOREIGN KEY (`idUsuario` )
-    REFERENCES `mydb`.`Usuarios` (`id` )
+    REFERENCES `dogebarcelo`.`Usuarios` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Permisos`
+-- Table `dogebarcelo`.`Permisos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Permisos` ;
+DROP TABLE IF EXISTS `dogebarcelo`.`Permisos` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`Permisos` (
+CREATE  TABLE IF NOT EXISTS `dogebarcelo`.`Permisos` (
   `idUsuario` INT NOT NULL ,
   `desdeFecha` DATE NOT NULL ,
   `hastaFecha` DATE NULL ,
@@ -80,18 +80,18 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Permisos` (
   INDEX `fk_Permisos_Usuarios1_idx` (`idUsuario` ASC) ,
   CONSTRAINT `fk_Permisos_Usuarios1`
     FOREIGN KEY (`idUsuario` )
-    REFERENCES `mydb`.`Usuarios` (`id` )
+    REFERENCES `dogebarcelo`.`Usuarios` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pagos`
+-- Table `dogebarcelo`.`Pagos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Pagos` ;
+DROP TABLE IF EXISTS `dogebarcelo`.`Pagos` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`Pagos` (
+CREATE  TABLE IF NOT EXISTS `dogebarcelo`.`Pagos` (
   `idUsuario` INT NOT NULL ,
   `fecha` VARCHAR(45) NOT NULL ,
   `cantidad` INT NOT NULL ,
@@ -99,18 +99,18 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Pagos` (
   INDEX `fk_Pagos_Usuarios1_idx` (`idUsuario` ASC) ,
   CONSTRAINT `fk_Pagos_Usuarios1`
     FOREIGN KEY (`idUsuario` )
-    REFERENCES `mydb`.`Usuarios` (`id` )
+    REFERENCES `dogebarcelo`.`Usuarios` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Horas`
+-- Table `dogebarcelo`.`Horas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Horas` ;
+DROP TABLE IF EXISTS `dogebarcelo`.`Horas` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`Horas` (
+CREATE  TABLE IF NOT EXISTS `dogebarcelo`.`Horas` (
   `idUsuario` INT NOT NULL ,
   `fecha` DATE NULL ,
   `HorasExtra` INT NULL ,
@@ -118,12 +118,12 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Horas` (
   PRIMARY KEY (`idUsuario`) ,
   CONSTRAINT `fk_HorasExtra_Usuarios1`
     FOREIGN KEY (`idUsuario` )
-    REFERENCES `mydb`.`Usuarios` (`id` )
+    REFERENCES `dogebarcelo`.`Usuarios` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-USE `mydb` ;
+USE `dogebarcelo` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
