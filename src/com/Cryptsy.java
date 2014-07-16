@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -58,7 +57,7 @@ public class Cryptsy {
 
     private boolean initialized = false;
     private String secret, key;
-    private Mac mac;
+    private Mac mac; //mac ac
     private Gson gson;
 
     /**
