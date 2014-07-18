@@ -3,12 +3,10 @@
     Created on : Mar 9, 2014, 12:58:14 PM
     Author     : Andrea
 --%>
-<%@page import="com.Usuario"%>
+<%@page import="entidades.Usuario"%>
 <%
     Usuario usuario = new Usuario();//se usa un constructor vacio para evitar nullPointerException
-    if (request.getSession().getAttribute("usuario") == null) {
-        response.sendRedirect("index.jsp");
-    } else {
+    if (request.getSession().getAttribute("usuario") != null) {
         usuario = (Usuario) request.getSession().getAttribute("usuario");
     }
 

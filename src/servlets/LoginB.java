@@ -42,14 +42,15 @@ public class LoginB extends HttpServlet {
         ServicioEntidad<Usuario> su = new ServicioEntidad<Usuario>() {
 			private static final long serialVersionUID = -2327415224536168522L;
 		};
-		su.startEntityManager();
+		
         try {
             String id = request.getParameter("inptId");
             String contra = request.getParameter("inptContra");
-            //Conexion con = Conexion.getInstancia();
             
             Usuario usuario = new Usuario();
-            usuario = su.buscar(usuario, id);
+            su.startEntityManager();////
+            usuario = su.buscar(usuario, new Integer(Integer.parseInt(id)));
+            su.closeEntityManager();///
             
             int cnt = 0;
             
@@ -62,7 +63,7 @@ public class LoginB extends HttpServlet {
                 cnt = 2;
             } else if (ControlHorarios.getInstancia().cerroSesionXelDia(usuario)) {
                 cnt = 3;
-            } else if (false && usuario.getEstado().equals("Inactivo")) {
+            } else if (usuario.getEstado().equals("Inactivo")) {
                 cnt = 4;
             } 
  
@@ -70,10 +71,8 @@ public class LoginB extends HttpServlet {
             if (cnt == 0) {
 
                 request.getSession().setMaxInactiveInterval(0);
-                request.getSession().setAttribute("usuario", us);
-                //ControlHorarios.getInstancia().iniciarSesionXelDia(usuario);
-               // usuario.registerObserver(ObservadorUsuario.getInstancia());
-               // usuario.notifyObservers();
+                request.getSession().setAttribute("usuario", usuario);
+                ControlHorarios.getInstancia().iniciarSesionXelDia(usuario);
 
                 response.sendRedirect("paginaP.jsp");
 
@@ -82,7 +81,6 @@ public class LoginB extends HttpServlet {
             }
 
         } finally {
-        	su.closeEntityManager();
             out.close();
         }
     }

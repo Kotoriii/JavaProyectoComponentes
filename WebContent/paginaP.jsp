@@ -6,11 +6,12 @@
 
 <%@page import="com.ControlHorarios"%>
 <%@page import="java.sql.Time"%>
-<%@page import="com.Usuario"%>
+<%@page import="entidades.Usuario"%>
 <%
     Usuario usuario = new Usuario();//se usa un constructor vacio para evitar nullPointerException
     if (request.getSession().getAttribute("usuario") == null) {
         response.sendRedirect("index.jsp");
+        
     } else {
         usuario = (Usuario) request.getSession().getAttribute("usuario");
     }
@@ -33,6 +34,9 @@
                 int tiempoConHoy = ControlHorarios.getInstancia().tiempoConectadoHoyMinutos(usuario);
                 int horas = tiempoConHoy / 60;
                 int minutos =  tiempoConHoy - (horas * 60);
+                if (minutos == -1){
+                	minutos = 0;
+                }
                 %>                
                 <div class=" jumbotron" style="margin-top: 23%; border-radius: 10px;">
                     <h4>Usted lleva <%= horas %> horas y <%= minutos %> minutos de estar conectado</h3>

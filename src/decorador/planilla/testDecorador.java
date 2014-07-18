@@ -1,15 +1,8 @@
 package decorador.planilla;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-
-import org.hibernate.Query;
-
+import com.ControlHorarios;
 import comu.ServicioEntidad;
-import entidades.ServicioExtra;
+
 import entidades.Usuario;
 
 /**
@@ -26,23 +19,14 @@ public class testDecorador {
     		final long serialVersionUID = 1L;
 		};
 		su.startEntityManager();
-		javax.persistence.Query query = su.getEntityManager().createQuery("from "+ Usuario.class.getSimpleName() +" where nombre = '2' and rol = 'o'");
-		//query.setParameter("code", "234");
-		List list = query.getResultList();
-    	for(Usuario u : (List<Usuario>)list){
-    		 System.out.println("salario " + u.getSalario());
-    	}
-    	
-    	Calendar cal;
-    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // formato usado
-    																// para las
-    																// fechas de
-    																// mysql
-    	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");// formato
-    													
-    	cal = Calendar.getInstance();
-
-    	System.out.println(new Time(cal.getTime().getTime()));
+		Usuario usuario = new Usuario();
+		usuario = su.buscar(usuario, 1);
+		su.closeEntityManager();
+		System.out.println(usuario.getNombre());
+		
+		ControlHorarios p = ControlHorarios.getInstancia();
+		p.iniciarSesionXelDia(usuario);
+		
        /* Salario salario1 = new Base();
         System.out.println("El salario es de: " + salario1.getDescription());
         System.out.println("El monto es: " + salario1.adicion(450));

@@ -5,9 +5,6 @@
  */
 package com;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,11 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.hibernate.Session;
-
 import comu.ServicioEntidad;
+
 import entidades.Controlhorario;
 import entidades.ControlhorarioPK;
 import entidades.Hora;
@@ -51,9 +45,6 @@ public class ControlHorarios {
 	private static ControlHorarios controlh = null;
 
 	private ControlHorarios() {
-		seu.startEntityManager();
-		sech.startEntityManager();
-
 		cal = Calendar.getInstance();
 	}
 
@@ -72,16 +63,21 @@ public class ControlHorarios {
 			cal = Calendar.getInstance();
 			Time horaEntradaHoy = new Time(00, 00, 00);
 			Time horaSalidaHoy = new Time(00, 00, 00);
+
+			seu.startEntityManager();// //
+
 			javax.persistence.Query query = seu.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
 			for (Controlhorario c : (List<Controlhorario>) list) {
 				horaSalidaHoy = c.getHoraSalida();
 				horaEntradaHoy = c.getHoraEntrada();
 			}
+
+			seu.closeEntityManager();// //
 
 			horasTrabajoNormales = (tiempoConectadoHoyMinutos(usuario) / 60)
 					- cuantasHorasExtra(usuario);
@@ -134,15 +130,19 @@ public class ControlHorarios {
 			cal = Calendar.getInstance();
 			Time horaConexionHoy = new Time(0, 0, 0);
 
+			seu.startEntityManager();// ///
+
 			javax.persistence.Query query = seu.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
 			for (Controlhorario c : (List<Controlhorario>) list) {
 				horaConexionHoy = c.getHoraEntrada();
 			}
+
+			seu.closeEntityManager();// ////
 
 			/*
 			 * No se si hay una menjor manera de hacer esto pero lo que hace
@@ -166,15 +166,21 @@ public class ControlHorarios {
 		try {
 			cal = Calendar.getInstance();
 			Time horaConexionHoy = new Time(00, 00, 00);
+
+			seu.startEntityManager();// ////
+
 			javax.persistence.Query query = seu.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
 			for (Controlhorario c : (List<Controlhorario>) list) {
 				horaConexionHoy = c.getHoraEntrada();
 			}
+
+			seu.closeEntityManager();// //
+
 			/*
 			 * No se si hay una menjor manera de hacer esto pero lo que hace
 			 * aqui es que agarra las horas actuales y le resta la hora en la
@@ -195,16 +201,21 @@ public class ControlHorarios {
 		int horasConectado = -1;
 		try {
 			cal = Calendar.getInstance();
+
+			seu.startEntityManager();// ////
+
 			Time horaConexionHoy = new Time(00, 00, 00);
 			javax.persistence.Query query = seu.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
 			for (Controlhorario c : (List<Controlhorario>) list) {
 				horaConexionHoy = c.getHoraEntrada();
 			}
+
+			seu.closeEntityManager(); // //////
 
 			/*
 			 * No se si hay una menjor manera de hacer esto pero lo que hace
@@ -226,24 +237,35 @@ public class ControlHorarios {
 	public void iniciarSesionXelDia(entidades.Usuario usuario) {
 		try {
 			cal = Calendar.getInstance();
+
+			seu.startEntityManager();
+
 			javax.persistence.Query query = seu.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
+
+			seu.closeEntityManager();
+
 			if (list.isEmpty()) {
 				Controlhorario ch = new Controlhorario();
 
 				ControlhorarioPK chpk = new ControlhorarioPK();
 				chpk.setIdUsuario(usuario.getId());
-				chpk.setFecha(new Date(dateFormat.format(cal.getTime())));
+				chpk.setFecha(cal.getTime());
 
-				ch.setUsuario(usuario);
+				ch.setId(chpk);
+				// ch.setUsuario(usuario);
 				ch.setHoraEntrada(new Time(cal.getTime().getTime()));
 				ch.setHoraSalida(null);
 
+				sech.startEntityManager();// //
+
 				sech.insertar(ch);
+
+				sech.closeEntityManager();// ///
 
 			} else {
 				System.out.println("Ya fue iniciada la sesion el dia de hoy.."
@@ -261,21 +283,27 @@ public class ControlHorarios {
 		try {
 			cal = Calendar.getInstance();
 
+			seu.startEntityManager();// ///
+
 			javax.persistence.Query query = seu.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
+
+			seu.closeEntityManager();// ///
 
 			// Si esto no se cumple es simplemente porque el usuario no ha
 			// empezado sesion en el presente dia
 			for (Controlhorario c : (List<Controlhorario>) list) {
 				// agrega hora de salida
 				c.setHoraSalida(new Time(cal.getTime().getTime()));
-
+				
+				sech.startEntityManager();// //
 				sech.actualizar(c);
-
+				sech.closeEntityManager();// //
+				
 				// inserta las horas trabajadas durante el dia
 				ServicioEntidad<Hora> seh = new ServicioEntidad<Hora>() {
 					private static final long serialVersionUID = 1L;
@@ -284,7 +312,8 @@ public class ControlHorarios {
 
 				Hora horasDia = new Hora();
 				horasDia.setIdUsuario(usuario.getId());
-				horasDia.setFecha(new Date(dateFormat.format(cal.getTime())));
+				horasDia.setFecha(cal.getTime());
+
 				horasDia.setHorasExtra(cuantasHorasExtra(usuario));
 				horasDia.setHorasNormales(cuantasHorasDeTrabajoNormales(usuario));
 
@@ -302,22 +331,30 @@ public class ControlHorarios {
 
 	public boolean cerroSesionXelDia(entidades.Usuario usuario) {
 		try {
+			ServicioEntidad<entidades.Usuario> df = new ServicioEntidad<entidades.Usuario>() {
+				private static final long serialVersionUID = 1L;
+			};
+
 			cal = Calendar.getInstance();
 			Boolean cerro = false;
-			javax.persistence.Query query = seu.getEntityManager().createQuery(
+			
+			df.startEntityManager();/////
+			
+			javax.persistence.Query query = df.getEntityManager().createQuery(
 					"from " + Controlhorario.class.getSimpleName()
 							+ " where idUsuario = '" + usuario.getId()
 							+ "' and fecha='"
-							+ dateFormat.format(cal.getTime()));
+							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
-			//solo entra si hay datos en el select
+			// solo entra si hay datos en el select
 			for (Controlhorario c : (List<Controlhorario>) list) {
 				if (c.getHoraSalida() != null) {
 					cerro = true;
 				}
 			}
+			df.closeEntityManager(); /////
+			
 			return cerro;
-		
 
 		} catch (Exception ex) {
 			System.out.println("Error: " + ex.getMessage());
