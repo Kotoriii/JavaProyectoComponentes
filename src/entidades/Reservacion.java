@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -34,15 +36,15 @@ public class Reservacion implements Serializable {
 	@OneToMany(mappedBy="reservacion")
 	private List<Factura> facturas;
 
-	//bi-directional many-to-one association to Hotel
-	@ManyToOne
-	@JoinColumn(name="Hotel_idHotel")
-	private Hotel hotel;
-
 	//bi-directional many-to-one association to Cliente
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Cliente_idCliente")
 	private Cliente cliente;
+
+	//bi-directional many-to-one association to Hotel
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="Hotel_idHotel")
+	private Hotel hotel;
 
 	public Reservacion() {
 	}
@@ -109,20 +111,20 @@ public class Reservacion implements Serializable {
 		return factura;
 	}
 
-	public Hotel getHotel() {
-		return this.hotel;
-	}
-
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
-
 	public Cliente getCliente() {
 		return this.cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Hotel getHotel() {
+		return this.hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 }

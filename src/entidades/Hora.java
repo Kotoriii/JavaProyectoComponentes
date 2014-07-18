@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -28,7 +30,7 @@ public class Hora implements Serializable {
 	private int horasNormales;
 
 	//bi-directional one-to-one association to Usuario
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="idUsuario")
 	private Usuario usuario;
 

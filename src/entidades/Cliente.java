@@ -27,13 +27,13 @@ public class Cliente implements Serializable {
 	@Column(name="Telefono")
 	private String telefono;
 
-	//bi-directional many-to-many association to Servicio
-	@ManyToMany(mappedBy="clientes")
-	private List<Servicio> servicios;
-
 	//bi-directional many-to-one association to Reservacion
 	@OneToMany(mappedBy="cliente")
 	private List<Reservacion> reservacions;
+
+	//bi-directional many-to-many association to Servicio
+	@ManyToMany(mappedBy="clientes")
+	private List<Servicio> servicios;
 
 	public Cliente() {
 	}
@@ -70,14 +70,6 @@ public class Cliente implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public List<Servicio> getServicios() {
-		return this.servicios;
-	}
-
-	public void setServicios(List<Servicio> servicios) {
-		this.servicios = servicios;
-	}
-
 	public List<Reservacion> getReservacions() {
 		return this.reservacions;
 	}
@@ -98,6 +90,14 @@ public class Cliente implements Serializable {
 		reservacion.setCliente(null);
 
 		return reservacion;
+	}
+
+	public List<Servicio> getServicios() {
+		return this.servicios;
+	}
+
+	public void setServicios(List<Servicio> servicios) {
+		this.servicios = servicios;
 	}
 
 }

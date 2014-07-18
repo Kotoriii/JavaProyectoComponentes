@@ -1,6 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -21,7 +22,7 @@ public class Elemento implements Serializable {
 	private String descripcion_Elemento;
 
 	//bi-directional many-to-one association to Habitacione
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Habitaciones_idHabitaciones")
 	private Habitacione habitacione;
 

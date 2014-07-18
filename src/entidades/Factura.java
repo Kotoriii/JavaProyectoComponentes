@@ -1,6 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -18,7 +19,7 @@ public class Factura implements Serializable {
 	private int idFactura;
 
 	//bi-directional many-to-one association to Reservacion
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Reservacion_idReservacion")
 	private Reservacion reservacion;
 

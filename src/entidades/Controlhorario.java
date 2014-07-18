@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Time;
 
 
@@ -23,8 +25,8 @@ public class Controlhorario implements Serializable {
 	private Time horaSalida;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="idUsuario")
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="idUsuario", insertable=false, updatable=false)
 	private Usuario usuario;
 
 	public Controlhorario() {

@@ -61,7 +61,7 @@ public class Usuario implements Serializable {
 	private List<Shiftreport> shiftreports;
 
 	//bi-directional many-to-one association to Hotel
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="idHotel")
 	private Hotel hotel;
 

@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -29,7 +31,7 @@ public class ServicioExtra implements Serializable {
 	private Date horario;
 
 	//bi-directional many-to-one association to Habitacione
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Habitaciones_idHabitaciones")
 	private Habitacione habitacione;
 

@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.Conexion;
 import com.ControlHorarios;
 import com.ObservadorUsuario;
-import com.Usuario;
+import comu.ServicioEntidad;
+
+import entidades.Usuario;
 
 /**
  *
@@ -40,11 +42,13 @@ public class LoginB extends HttpServlet {
         try {
             String id = request.getParameter("inptId");
             String contra = request.getParameter("inptContra");
-            Conexion con = Conexion.getInstancia();
-
-            Usuario usuario = con.buscarXId(id);
-
+            //Conexion con = Conexion.getInstancia();
+            Usuario usuario = new Usuario();
+            
+            usuario = usuario.buscarTodos().get(0);
+            
             int cnt = 0;
+            /*
             //se fija que el usuairo no ha iniciado sesion en el dia y
             //se fija que el usuario exista y que la contrasenna
             //sea correcta
@@ -57,14 +61,15 @@ public class LoginB extends HttpServlet {
             } else if (false && usuario.getEstado().equals("Inactivo")) {
                 cnt = 4;
             } 
+ */
 
             if (cnt == 0) {
 
                 request.getSession().setMaxInactiveInterval(0);
                 request.getSession().setAttribute("usuario", usuario);
-                ControlHorarios.getInstancia().iniciarSesionXelDia(usuario);
-                usuario.registerObserver(ObservadorUsuario.getInstancia());
-                usuario.notifyObservers();
+                //ControlHorarios.getInstancia().iniciarSesionXelDia(usuario);
+               // usuario.registerObserver(ObservadorUsuario.getInstancia());
+               // usuario.notifyObservers();
 
                 response.sendRedirect("paginaP.jsp");
 

@@ -45,10 +45,10 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		return (E) em.find(item.getClass(), pk);
 	}
 	
+
 	public List<E> buscarTodos(E item){
 		String qjl = "Select t from " + item.getClass().getSimpleName() +" t";
 		return (List<E>) em.createQuery(qjl, item.getClass()).getResultList();
 		
 	}
-
 }

@@ -11,15 +11,15 @@
 		<class>entidades.Hora</class>
 		<class>entidades.Hotel</class>
 		<class>entidades.Pago</class>
-		<class>entidades.PagoPK</class>
-		<class>entidades.Permiso</class>
-		<class>entidades.PermisoPK</class>
-		<class>entidades.Reservacion</class>
-		<class>entidades.ServicioExtra</class>
-		<class>entidades.Servicio</class>
-		<class>entidades.Shiftreport</class>
-		<class>entidades.ShiftreportPK</class>
 		<class>entidades.Usuario</class>
+		<class>entidades.ShiftreportPK</class>
+		<class>entidades.Shiftreport</class>
+		<class>entidades.ServicioExtra</class>
+		<class>entidades.Permiso</class>
+		<class>entidades.PagoPK</class>
+		<class>entidades.Reservacion</class>
+		<class>entidades.Servicio</class>
+		<class>entidades.PermisoPK</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dogebarcelo"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

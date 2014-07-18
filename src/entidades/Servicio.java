@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class Servicio implements Serializable {
 	private Date horario;
 
 	//bi-directional many-to-many association to Cliente
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(
 		name="cliente_has_servicios"
 		, joinColumns={

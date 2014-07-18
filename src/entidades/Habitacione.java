@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -23,7 +25,7 @@ public class Habitacione implements Serializable {
 	private List<Elemento> elementos;
 
 	//bi-directional many-to-one association to Hotel
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Hotel_idHotel")
 	private Hotel hotel;
 
