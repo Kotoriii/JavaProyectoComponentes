@@ -39,20 +39,24 @@ public class LoginB extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        ServicioEntidad<Usuario> su = new ServicioEntidad<Usuario>() {
+			private static final long serialVersionUID = -2327415224536168522L;
+		};
+		su.startEntityManager();
         try {
             String id = request.getParameter("inptId");
             String contra = request.getParameter("inptContra");
             //Conexion con = Conexion.getInstancia();
-            Usuario usuario = new Usuario();
             
-            usuario = usuario.buscarTodos().get(0);
+            Usuario usuario = new Usuario();
+            usuario = su.buscar(usuario, id);
             
             int cnt = 0;
-            /*
+            
             //se fija que el usuairo no ha iniciado sesion en el dia y
             //se fija que el usuario exista y que la contrasenna
             //sea correcta
-            if (usuario == null) {
+            if (usuario.getNombre() == null) {
                 cnt = 1;
             } else if (!usuario.getContrasenna().equals(contra)) {
                 cnt = 2;
@@ -61,12 +65,12 @@ public class LoginB extends HttpServlet {
             } else if (false && usuario.getEstado().equals("Inactivo")) {
                 cnt = 4;
             } 
- */
+ 
 
             if (cnt == 0) {
 
                 request.getSession().setMaxInactiveInterval(0);
-                request.getSession().setAttribute("usuario", usuario);
+                request.getSession().setAttribute("usuario", us);
                 //ControlHorarios.getInstancia().iniciarSesionXelDia(usuario);
                // usuario.registerObserver(ObservadorUsuario.getInstancia());
                // usuario.notifyObservers();
@@ -78,6 +82,7 @@ public class LoginB extends HttpServlet {
             }
 
         } finally {
+        	su.closeEntityManager();
             out.close();
         }
     }

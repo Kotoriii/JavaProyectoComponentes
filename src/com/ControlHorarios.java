@@ -12,270 +12,322 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Query;
+
+import org.hibernate.Session;
+
+import comu.ServicioEntidad;
+import entidades.Controlhorario;
+import entidades.ControlhorarioPK;
+import entidades.Hora;
+import entidades.Usuario;
 
 /**
- *
+ * 
  * @author Andrea
  */
 public class ControlHorarios {
 
-    Calendar cal;
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // formato usado para las fechas de mysql
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");//formato usado para el tiempo en mysql
+	Calendar cal;
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // formato usado
+																// para las
+																// fechas de
+																// mysql
+	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");// formato
+																	// usado
+																	// para el
+																	// tiempo en
+																	// mysql
+	ServicioEntidad<entidades.Usuario> seu = new ServicioEntidad<entidades.Usuario>() {
+		private static final long serialVersionUID = 1L;
+	};
+	ServicioEntidad<entidades.Controlhorario> sech = new ServicioEntidad<entidades.Controlhorario>() {
+		private static final long serialVersionUID = 1L;
+	};
 
-    private static ControlHorarios controlh = null;
+	private static ControlHorarios controlh = null;
 
-    private ControlHorarios() {
-        cal = Calendar.getInstance();
-    }
+	private ControlHorarios() {
+		seu.startEntityManager();
+		sech.startEntityManager();
 
-    public static ControlHorarios getInstancia() {
-        if (controlh == null) {
-            controlh = new ControlHorarios();
-        }
+		cal = Calendar.getInstance();
+	}
 
-        return controlh;
-    }
+	public static ControlHorarios getInstancia() {
+		if (controlh == null) {
+			controlh = new ControlHorarios();
+		}
 
-    public int cuantasHorasDeTrabajoNormales(Usuario usuario) {
-        int horasTrabajoNormales = 0;
-        try {
-            cal = Calendar.getInstance();
-            Time horaEntradaHoy = new Time(00, 00, 00);
-            Time horaSalidaHoy = new Time(00, 00, 00);
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+		return controlh;
+	}
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+	public int cuantasHorasDeTrabajoNormales(entidades.Usuario usuario) {
+		int horasTrabajoNormales = 0;
+		try {
 
-            if (rs.next()) {
-                horaSalidaHoy = rs.getTime("horaSalida");
-                horaEntradaHoy = rs.getTime("horaEntrada");
-            }
+			cal = Calendar.getInstance();
+			Time horaEntradaHoy = new Time(00, 00, 00);
+			Time horaSalidaHoy = new Time(00, 00, 00);
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
+			for (Controlhorario c : (List<Controlhorario>) list) {
+				horaSalidaHoy = c.getHoraSalida();
+				horaEntradaHoy = c.getHoraEntrada();
+			}
 
-            horasTrabajoNormales = (tiempoConectadoHoyMinutos(usuario) / 60) - cuantasHorasExtra(usuario);
+			horasTrabajoNormales = (tiempoConectadoHoyMinutos(usuario) / 60)
+					- cuantasHorasExtra(usuario);
 
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
-        return horasTrabajoNormales;
-    }
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
+		return horasTrabajoNormales;
+	}
 
-    public int cuantasHorasExtra(Usuario usuario) {
-        //le resta 8 a las horas totales que ha trabajado hoy, se presupone
-        //que un dia laboral normal es de 8 horas por lo tanto el restante 
-        //son las horas extra
-        int horasExtra = (tiempoConectadoHoyMinutos(usuario) / 60) - 8;
-        if (horasExtra < 0) {
-            horasExtra = 0;
-        }
-        return horasExtra;
-    }
+	public int cuantasHorasExtra(entidades.Usuario usuario) {
+		// le resta 8 a las horas totales que ha trabajado hoy, se presupone
+		// que un dia laboral normal es de 8 horas por lo tanto el restante
+		// son las horas extra
 
-    /**
-     * Encuentra la diferencia en minutos entre tiempoMayor y Tiempomenor
-     *
-     * @param tiempoMenor el tiempo que representa la hora menor. ej 5:00:00
-     * @param tiempoMayor el tiempo que representa la hora mayor. ej 10:00:00 El
-     * resultado con estos parametros seria de 300 (5 * 60) //Hay que tomar en
-     * cuenta que 00:00:00 es igual a 24:00:00
-     * @return la diferencia en minutos
-     */
-    public int getDiferenciaEnMinutos(Time tiempoMayor, Time tiempoMenor) {
+		int horasExtra = (tiempoConectadoHoyMinutos(usuario) / 60) - 8;
+		if (horasExtra < 0) {
+			horasExtra = 0;
+		}
+		return horasExtra;
+	}
 
-        long diff = tiempoMenor.getTime() - tiempoMayor.getTime();
+	/**
+	 * Encuentra la diferencia en minutos entre tiempoMayor y Tiempomenor
+	 * 
+	 * @param tiempoMenor
+	 *            el tiempo que representa la hora menor. ej 5:00:00
+	 * @param tiempoMayor
+	 *            el tiempo que representa la hora mayor. ej 10:00:00 El
+	 *            resultado con estos parametros seria de 300 (5 * 60) //Hay que
+	 *            tomar en cuenta que 00:00:00 es igual a 24:00:00
+	 * @return la diferencia en minutos
+	 */
+	public int getDiferenciaEnMinutos(Time tiempoMayor, Time tiempoMenor) {
 
-        long diffSeconds = diff / 1000 % 60;
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000) % 24;
-        long diffDays = diff / (24 * 60 * 60 * 1000);
+		long diff = tiempoMenor.getTime() - tiempoMayor.getTime();
 
-        return (int) (diffMinutes + (diffHours * 60));
-    }
+		// long diffSeconds = diff / 1000 % 60;
+		long diffMinutes = diff / (60 * 1000) % 60;
+		long diffHours = diff / (60 * 60 * 1000) % 24;
+		// long diffDays = diff / (24 * 60 * 60 * 1000);
 
-    public boolean llegoTarde(Usuario usuario) {
-        boolean llegoTarde = false;
-        try {
-            cal = Calendar.getInstance();
-            Time horaConexionHoy = new Time(0, 0, 0);
+		return (int) (diffMinutes + (diffHours * 60));
+	}
 
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+	public boolean llegoTarde(entidades.Usuario usuario) {
+		boolean llegoTarde = false;
+		try {
+			cal = Calendar.getInstance();
+			Time horaConexionHoy = new Time(0, 0, 0);
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
+			for (Controlhorario c : (List<Controlhorario>) list) {
+				horaConexionHoy = c.getHoraEntrada();
+			}
 
-            if (rs.next()) {
-                horaConexionHoy = rs.getTime("horaEntrada");
-            }
-            /*
-             * No se si hay una menjor manera de hacer esto pero lo que hace aqui
-             * es que agarra las horas actuales y le resta la hora en la que se conect
-             * el formato siempre es de 24 horas
-             */
-            if (horaConexionHoy.getHours() > usuario.getHoraEntrada().getHours()) {
-                llegoTarde = true;
-            }
+			/*
+			 * No se si hay una menjor manera de hacer esto pero lo que hace
+			 * aqui es que agarra las horas actuales y le resta la hora en la
+			 * que se conect el formato siempre es de 24 horas
+			 */
+			if (horaConexionHoy.getHours() > usuario.getHoraEntrada()
+					.getHours()) {
+				llegoTarde = true;
+			}
 
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
-        return llegoTarde;
-    }
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
+		return llegoTarde;
+	}
 
-    public int tiempoConectadoHoyMinutos(Usuario usuario) {
-        int minutosConectado = -1;
-        try {
-            cal = Calendar.getInstance();
-            Time horaConexionHoy = new Time(00, 00, 00);
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+	public int tiempoConectadoHoyMinutos(entidades.Usuario usuario) {
+		int minutosConectado = -1;
+		try {
+			cal = Calendar.getInstance();
+			Time horaConexionHoy = new Time(00, 00, 00);
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
+			for (Controlhorario c : (List<Controlhorario>) list) {
+				horaConexionHoy = c.getHoraEntrada();
+			}
+			/*
+			 * No se si hay una menjor manera de hacer esto pero lo que hace
+			 * aqui es que agarra las horas actuales y le resta la hora en la
+			 * que se conect el formato siempre es de 24 horas
+			 */
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+			minutosConectado = getDiferenciaEnMinutos(horaConexionHoy,
+					new Time(cal.getTimeInMillis()));
 
-            if (rs.next()) {
-                horaConexionHoy = rs.getTime("horaEntrada");
-            }
-            /*
-             * No se si hay una menjor manera de hacer esto pero lo que hace aqui
-             * es que agarra las horas actuales y le resta la hora en la que se conect
-             * el formato siempre es de 24 horas
-             */
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
+		return minutosConectado;
+	}
 
-            minutosConectado = getDiferenciaEnMinutos(horaConexionHoy, new Time(cal.getTimeInMillis()));
+	public int tiempoDeConectadoHoyHoras(Usuario usuario) {
+		int horasConectado = -1;
+		try {
+			cal = Calendar.getInstance();
+			Time horaConexionHoy = new Time(00, 00, 00);
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
+			for (Controlhorario c : (List<Controlhorario>) list) {
+				horaConexionHoy = c.getHoraEntrada();
+			}
 
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
-        return minutosConectado;
-    }
+			/*
+			 * No se si hay una menjor manera de hacer esto pero lo que hace
+			 * aqui es que agarra las horas actuales y le resta la hora en la
+			 * que se conect el formato siempre es de 24 horas
+			 */
+			SimpleDateFormat tf = new SimpleDateFormat("HH");// solo obtiene las
+																// horas
+			horasConectado = Integer.parseInt(tf.format(cal.getTime()))
+					- horaConexionHoy.getHours();
 
-    public int tiempoDeConectadoHoyHoras(Usuario usuario) {
-        int horasConectado = -1;
-        try {
-            cal = Calendar.getInstance();
-            Time horaConexionHoy = new Time(00, 00, 00);
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
+		return horasConectado;
+	}
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+	public void iniciarSesionXelDia(entidades.Usuario usuario) {
+		try {
+			cal = Calendar.getInstance();
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
+			if (list.isEmpty()) {
+				Controlhorario ch = new Controlhorario();
 
-            if (rs.next()) {
-                horaConexionHoy = rs.getTime("horaEntrada");
-            }
-            /*
-             * No se si hay una menjor manera de hacer esto pero lo que hace aqui
-             * es que agarra las horas actuales y le resta la hora en la que se conect
-             * el formato siempre es de 24 horas
-             */
-            SimpleDateFormat tf = new SimpleDateFormat("HH");//solo obtiene las horas
-            horasConectado = Integer.parseInt(tf.format(cal.getTime())) - horaConexionHoy.getHours();
+				ControlhorarioPK chpk = new ControlhorarioPK();
+				chpk.setIdUsuario(usuario.getId());
+				chpk.setFecha(new Date(dateFormat.format(cal.getTime())));
 
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
-        return horasConectado;
-    }
+				ch.setUsuario(usuario);
+				ch.setHoraEntrada(new Time(cal.getTime().getTime()));
+				ch.setHoraSalida(null);
 
-    public void iniciarSesionXelDia(Usuario usuario) {
-        try {
-            cal = Calendar.getInstance();
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+				sech.insertar(ch);
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+			} else {
+				System.out.println("Ya fue iniciada la sesion el dia de hoy.."
+						+ "no es necesario volver a iniciarla");
+			}
 
-            if (!rs.next()) {
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
 
-                Conexion.getInstancia().insertar(
-                        "ControlHorarios",
-                        "idUsuario, fecha, horaEntrada",
-                        "'" + usuario.getId()
-                        + "', '" + dateFormat.format(cal.getTime())
-                        + "', '" + timeFormat.format(cal.getTime()) + "'");
-            } else {
-                System.out.println("Ya fue iniciada la sesion el dia de hoy.."
-                        + "no es necesario volver a iniciarla");
-            }
+	}
 
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
+	public void cerrarSesion(entidades.Usuario usuario) {
+		try {
+			cal = Calendar.getInstance();
 
-    }
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
 
-    public void cerrarSesion(Usuario usuario) {
-        try {
-            cal = Calendar.getInstance();
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+			// Si esto no se cumple es simplemente porque el usuario no ha
+			// empezado sesion en el presente dia
+			for (Controlhorario c : (List<Controlhorario>) list) {
+				// agrega hora de salida
+				c.setHoraSalida(new Time(cal.getTime().getTime()));
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+				sech.actualizar(c);
 
-            if (rs.next()) {
+				// inserta las horas trabajadas durante el dia
+				ServicioEntidad<Hora> seh = new ServicioEntidad<Hora>() {
+					private static final long serialVersionUID = 1L;
+				};
+				seh.startEntityManager(); // empieza entity manager
 
-                //pone la hora de cierre en la linea que corresponde a la fecha de hoy
-                Conexion.getInstancia().modificar(
-                        "ControlHorarios",
-                        "horaSalida",
-                        timeFormat.format(cal.getTime()),
-                        "fecha='" + dateFormat.format(cal.getTime())
-                        + "' and idUsuario='" + usuario.getId() + "'");
+				Hora horasDia = new Hora();
+				horasDia.setIdUsuario(usuario.getId());
+				horasDia.setFecha(new Date(dateFormat.format(cal.getTime())));
+				horasDia.setHorasExtra(cuantasHorasExtra(usuario));
+				horasDia.setHorasNormales(cuantasHorasDeTrabajoNormales(usuario));
 
-                //inserta la cantidad de horas extra correspondiente al dia
-                String InsertarHorasDelDia = "Insert into horas "
-                        + "(idUsuario, fecha, HorasExtra, HorasNormales)"
-                        + " values ('" + usuario.getId() + "', '" + dateFormat.format(cal.getTime()) + "', '" + cuantasHorasExtra(usuario) + "', '" + cuantasHorasDeTrabajoNormales(usuario) + "');";
-                Conexion.getInstancia().ejecutarNonQuery(InsertarHorasDelDia);
+				seh.insertar(horasDia);
 
-            } else {
-                System.out.println("La sesion aun NO ha sido iniciada por el "
-                        + "usuario para el dia de hoy");
-            }
+				seh.closeEntityManager();// cierra entity manager
+			}
 
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
 
-    }
+	}
 
-    public boolean cerroSesionXelDia(Usuario usuario) {
-        try {
-            cal = Calendar.getInstance();
-            String SQL_BUSCAR = "Select * from ControlHorarios ch where idUsuario ='" + usuario.getId() + "' and fecha='" + dateFormat.format(cal.getTime()) + "';";
+	public boolean cerroSesionXelDia(entidades.Usuario usuario) {
+		try {
+			cal = Calendar.getInstance();
+			Boolean cerro = false;
+			javax.persistence.Query query = seu.getEntityManager().createQuery(
+					"from " + Controlhorario.class.getSimpleName()
+							+ " where idUsuario = '" + usuario.getId()
+							+ "' and fecha='"
+							+ dateFormat.format(cal.getTime()));
+			List list = query.getResultList();
+			//solo entra si hay datos en el select
+			for (Controlhorario c : (List<Controlhorario>) list) {
+				if (c.getHoraSalida() != null) {
+					cerro = true;
+				}
+			}
+			return cerro;
+		
 
-            Statement st = Conexion.getInstancia().conectar().createStatement();
-            ResultSet rs = st.executeQuery(SQL_BUSCAR);
+		} catch (Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		} finally {
+		}
+		return false;
+	}
 
-            if (rs.next()) {
-                if (rs.getString("horaSalida") != null) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        } finally {
-            Conexion.getInstancia().desconectar();
-        }
-        return false;
-    }
-
-    public String getFecha() {
-        cal = Calendar.getInstance();
-        return dateFormat.format(cal.getTime());
-    }
+	public String getFecha() {
+		cal = Calendar.getInstance();
+		return dateFormat.format(cal.getTime());
+	}
 }

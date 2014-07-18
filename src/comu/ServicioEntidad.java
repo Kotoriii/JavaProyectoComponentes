@@ -17,11 +17,19 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		super();
 	}
 
-	public void startEntityManager(String unidadPersistencia) {
-		emf = Persistence.createEntityManagerFactory(unidadPersistencia);
+	public void startEntityManager() {
+		if(emf == null){
+		emf = Persistence.createEntityManagerFactory("DogeBarcelo");
+		}
+		if(em == null){
 		em = emf.createEntityManager();
+		}
 	}
 
+	public EntityManager getEntityManager(){
+		return em;
+	}
+	
 	public void closeEntityManager() {
 		em.close();
 		emf.close();
