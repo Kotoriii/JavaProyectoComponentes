@@ -261,11 +261,9 @@ public class ControlHorarios {
 				ch.setHoraEntrada(new Time(cal.getTime().getTime()));
 				ch.setHoraSalida(null);
 
-				sech.startEntityManager();// //
 
 				sech.insertar(ch);
 
-				sech.closeEntityManager();// ///
 
 			} else {
 				System.out.println("Ya fue iniciada la sesion el dia de hoy.."
@@ -300,16 +298,12 @@ public class ControlHorarios {
 				// agrega hora de salida
 				c.setHoraSalida(new Time(cal.getTime().getTime()));
 				
-				sech.startEntityManager();// //
 				sech.actualizar(c);
-				sech.closeEntityManager();// //
 				
 				// inserta las horas trabajadas durante el dia
 				ServicioEntidad<Hora> seh = new ServicioEntidad<Hora>() {
 					private static final long serialVersionUID = 1L;
 				};
-				seh.startEntityManager(); // empieza entity manager
-
 				Hora horasDia = new Hora();
 				horasDia.setIdUsuario(usuario.getId());
 				horasDia.setFecha(cal.getTime());
@@ -319,7 +313,6 @@ public class ControlHorarios {
 
 				seh.insertar(horasDia);
 
-				seh.closeEntityManager();// cierra entity manager
 			}
 
 		} catch (Exception ex) {
@@ -366,5 +359,10 @@ public class ControlHorarios {
 	public String getFecha() {
 		cal = Calendar.getInstance();
 		return dateFormat.format(cal.getTime());
+	}
+	
+	public Date getFechaDate() {
+		cal = Calendar.getInstance();
+		return cal.getTime();
 	}
 }

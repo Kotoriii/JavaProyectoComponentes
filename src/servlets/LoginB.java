@@ -47,10 +47,12 @@ public class LoginB extends HttpServlet {
             String id = request.getParameter("inptId");
             String contra = request.getParameter("inptContra");
             
+            if(id == null && contra == null){
+            	response.sendRedirect("index.jsp");
+            }
+            
             Usuario usuario = new Usuario();
-            su.startEntityManager();////
             usuario = su.buscar(usuario, new Integer(Integer.parseInt(id)));
-            su.closeEntityManager();///
             
             int cnt = 0;
             

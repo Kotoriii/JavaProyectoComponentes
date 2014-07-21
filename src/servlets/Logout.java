@@ -16,7 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.Conexion;
 import com.ControlHorarios;
 import com.ObservadorUsuario;
-import com.Usuario;
+import comu.ServicioEntidad;
+
+import entidades.Shiftreport;
+import entidades.ShiftreportPK;
+import entidades.Usuario;
 
 /**
  *
@@ -40,12 +44,24 @@ public class Logout extends HttpServlet {
         try {
             Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
             String report = request.getParameter("txtReport");
-            String SQLIn = "insert into shiftreports (idUsuario, fecha, reporte) values ('" + usuario.getId() + "', '" + ControlHorarios.getInstancia().getFecha() + "', '" + report + "');";
-            Conexion.getInstancia().ejecutarNonQuery(SQLIn);
+            
+            ServicioEntidad<Shiftreport> seshreport = new ServicioEntidad<Shiftreport>() {
+				private static final long serialVersionUID = 1L;
+			};
+            
+            ShiftreportPK shiftReportPK = new ShiftreportPK();
+            shiftReportPK.setFecha(ControlHorarios.getInstancia().getFechaDate());
+            shiftReportPK.setIdUsuario(usuario.getId());
+            
+            Shiftreport shiftReport = new Shiftreport();
+            shiftReport.setId(shiftReportPK);
+            shiftReport.setReporte(report);
+            shiftReport.setUsuario(usuario);
+            
+            seshreport.insertar(shiftReport);
             
             ControlHorarios.getInstancia().cerrarSesion(usuario);
             request.getSession().setAttribute("usuario", null);
-            usuario.removeObserver(ObservadorUsuario.getInstancia());
             response.sendRedirect("index.jsp");
 
         } catch (Exception e) {
