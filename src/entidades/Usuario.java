@@ -1,8 +1,11 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Time;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -124,6 +127,30 @@ public class Usuario implements Serializable {
 		this.keywords = keywords;
 	}
 
+    /**
+     * transforma un string de palabras separas por coma en un array
+     * 
+     */
+    public List<String> getKeyword() {
+        return Arrays.asList(this.keywords.split("\\s*,\\s*"));
+    }
+
+    // Se encarga de recorrer la lista para comparar su contenido con un string
+    public boolean comparaKeyword(String _comparar) {
+        for (String buscar : getKeyword()) {
+            if (buscar.equals(_comparar)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Se encarga de convertir la lista en un string
+    public String hacerStringKeywords(){
+        return getKeywords();
+    }
+
+	
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -259,5 +286,24 @@ public class Usuario implements Serializable {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
+	
+	@Override
+    public String toString() {
+        return "<tr>" + "<td><h4>" + getId()+ "</h4></td>"
+                + "<td><h4>" + getNombre() + "</h4></td>"
+                + "<td><h4>" + getRol()+ "</h4></td>"
+                + "<td><h4>" + getSalario()+ "</h4></td>"
+                + "<td><h4>" + getEstado()+ "</h4></td>"
+                + "<td>" + "<a href=" + "administracion.jsp?nombre=" + getNombre()+ ""
+                + "&id=" + getId() + "" + "&puesto=" + getRol()+ ""
+                + "&salario=" + getSalario()+ "" + "&pagoHora=" + getPrecioPorHora()+ ""
+                + "&horaEntrada=" + getHoraEntrada()+ "" + "&horaSalida=" + getHoraSalida()+ ""
+                + "&email=" + getCorreo()+ "" + "&keywords=" + hacerStringKeywords()+ ""
+                + "&estado=" + getEstado()+ ">"
+                + "<input type=\"button\"value=\" Modificar \" class=\"btn btn-primary\"</a>" 
+                + "</td>" + "</tr>";
+    }
+
+	
 
 }
