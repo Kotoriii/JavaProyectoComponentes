@@ -329,7 +329,7 @@ public class ControlHorarios {
 			};
 
 			cal = Calendar.getInstance();
-			Boolean cerro = false;
+			boolean cerro = false;
 			
 			df.startEntityManager();/////
 			
@@ -340,10 +340,8 @@ public class ControlHorarios {
 							+ dateFormat.format(cal.getTime()) + "'");
 			List list = query.getResultList();
 			// solo entra si hay datos en el select
-			for (Controlhorario c : (List<Controlhorario>) list) {
-				if (c.getHoraSalida() != null) {
-					cerro = true;
-				}
+			if(list.size() != 0){
+				cerro = true;
 			}
 			df.closeEntityManager(); /////
 			
