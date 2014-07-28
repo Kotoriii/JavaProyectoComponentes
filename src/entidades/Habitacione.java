@@ -26,7 +26,7 @@ public class Habitacione implements Serializable {
 
 	//bi-directional many-to-one association to Hotel
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Hotel_idHotel")
+	@JoinColumn(name="Hotel_idHotel", insertable=false, updatable=false)
 	private Hotel hotel;
 
 	//bi-directional many-to-one association to ServicioExtra

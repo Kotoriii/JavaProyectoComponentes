@@ -20,7 +20,7 @@ public class Factura implements Serializable {
 
 	//bi-directional many-to-one association to Reservacion
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Reservacion_idReservacion")
+	@JoinColumn(name="Reservacion_idReservacion", insertable=false, updatable=false)
 	private Reservacion reservacion;
 
 	public Factura() {

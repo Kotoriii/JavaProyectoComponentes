@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -26,7 +28,7 @@ public class Permiso implements Serializable {
 	private String tipo;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="idUsuario", insertable=false, updatable=false)
 	private Usuario usuario;
 

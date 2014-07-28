@@ -1,6 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.*;
 
@@ -26,6 +27,7 @@ public class Pago implements Serializable {
 	private Usuario usuario;
 
 	public Pago() {
+		
 	}
 
 	public PagoPK getId() {

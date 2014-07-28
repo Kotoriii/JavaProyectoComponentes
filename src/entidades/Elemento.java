@@ -23,7 +23,7 @@ public class Elemento implements Serializable {
 
 	//bi-directional many-to-one association to Habitacione
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Habitaciones_idHabitaciones")
+	@JoinColumn(name="Habitaciones_idHabitaciones", insertable=false, updatable=false)
 	private Habitacione habitacione;
 
 	public Elemento() {
