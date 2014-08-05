@@ -1,3 +1,16 @@
+/**
+ * @NamedQuerys(value= {
+ * 	@NamedQuery(
+ * 		name ewr
+ * 			Select d from usuario d where d.nombre like :nombreParam order by id 
+ * 			   )
+ * }
+ * TypedQuery<usuario> q = em.createNamedQuery ("erw", Usuario.class);
+ * q.setParameter(parametro1, parametro2);
+ * return query.getResultList  ( o query.getSingleResult()  )
+ * 
+ * */
+
 package entidades;
 
 import java.io.Serializable;
@@ -8,14 +21,13 @@ import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * The persistent class for the usuarios database table.
  * 
  */
 @Entity
-@Table(name="usuarios")
-@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
+@Table(name = "usuarios")
+@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,29 +55,29 @@ public class Usuario implements Serializable {
 
 	private int salario;
 
-	//bi-directional many-to-one association to Controlhorario
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Controlhorario
+	@OneToMany(mappedBy = "usuario")
 	private List<Controlhorario> controlhorarios;
 
-	//bi-directional one-to-one association to Hora
-	@OneToOne(mappedBy="usuario")
+	// bi-directional one-to-one association to Hora
+	@OneToOne(mappedBy = "usuario")
 	private Hora hora;
 
-	//bi-directional many-to-one association to Pago
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Pago
+	@OneToMany(mappedBy = "usuario")
 	private List<Pago> pagos;
 
-	//bi-directional many-to-one association to Permiso
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Permiso
+	@OneToMany(mappedBy = "usuario")
 	private List<Permiso> permisos;
 
-	//bi-directional many-to-one association to Shiftreport
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Shiftreport
+	@OneToMany(mappedBy = "usuario")
 	private List<Shiftreport> shiftreports;
 
-	//bi-directional many-to-one association to Hotel
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="idHotel", insertable=false, updatable=false)
+	// bi-directional many-to-one association to Hotel
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "idHotel", insertable = false, updatable = false)
 	private Hotel hotel;
 
 	public Usuario() {
@@ -127,30 +139,29 @@ public class Usuario implements Serializable {
 		this.keywords = keywords;
 	}
 
-    /**
-     * transforma un string de palabras separas por coma en un array
-     * 
-     */
-    public List<String> getKeyword() {
-        return Arrays.asList(this.keywords.split("\\s*,\\s*"));
-    }
+	/**
+	 * transforma un string de palabras separas por coma en un array
+	 * 
+	 */
+	public List<String> getKeyword() {
+		return Arrays.asList(this.keywords.split("\\s*,\\s*"));
+	}
 
-    // Se encarga de recorrer la lista para comparar su contenido con un string
-    public boolean comparaKeyword(String _comparar) {
-        for (String buscar : getKeyword()) {
-            if (buscar.equals(_comparar)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    // Se encarga de convertir la lista en un string
-    public String hacerStringKeywords(){
-        return getKeywords();
-    }
+	// Se encarga de recorrer la lista para comparar su contenido con un string
+	public boolean comparaKeyword(String _comparar) {
+		for (String buscar : getKeyword()) {
+			if (buscar.equals(_comparar)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	
+	// Se encarga de convertir la lista en un string
+	public String hacerStringKeywords() {
+		return getKeywords();
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -286,24 +297,58 @@ public class Usuario implements Serializable {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
-	
-	@Override
-    public String toString() {
-        return "<tr>" + "<td><h4>" + getId()+ "</h4></td>"
-                + "<td><h4>" + getNombre() + "</h4></td>"
-                + "<td><h4>" + getRol()+ "</h4></td>"
-                + "<td><h4>" + getSalario()+ "</h4></td>"
-                + "<td><h4>" + getEstado()+ "</h4></td>"
-                + "<td>" + "<a href=" + "administracion.jsp?nombre=" + getNombre()+ ""
-                + "&id=" + getId() + "" + "&puesto=" + getRol()+ ""
-                + "&salario=" + getSalario()+ "" + "&pagoHora=" + getPrecioPorHora()+ ""
-                + "&horaEntrada=" + getHoraEntrada()+ "" + "&horaSalida=" + getHoraSalida()+ ""
-                + "&email=" + getCorreo()+ "" + "&keywords=" + hacerStringKeywords()+ ""
-                + "&estado=" + getEstado()+ ">"
-                + "<input type=\"button\"value=\" Modificar \" class=\"btn btn-primary\"</a>" 
-                + "</td>" + "</tr>";
-    }
 
-	
+	@Override
+	public String toString() {
+		return "<tr>" + "<td><h4>"
+				+ getId()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getNombre()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getRol()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getSalario()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getEstado()
+				+ "</h4></td>"
+				+ "<td>"
+				+ "<a href="
+				+ "administracion.jsp?nombre="
+				+ getNombre()
+				+ ""
+				+ "&id="
+				+ getId()
+				+ ""
+				+ "&puesto="
+				+ getRol()
+				+ ""
+				+ "&salario="
+				+ getSalario()
+				+ ""
+				+ "&pagoHora="
+				+ getPrecioPorHora()
+				+ ""
+				+ "&horaEntrada="
+				+ getHoraEntrada()
+				+ ""
+				+ "&horaSalida="
+				+ getHoraSalida()
+				+ ""
+				+ "&email="
+				+ getCorreo()
+				+ ""
+				+ "&keywords="
+				+ hacerStringKeywords()
+				+ ""
+				+ "&estado="
+				+ getEstado()
+				+ ">"
+				+ "<input type=\"button\"value=\" Modificar \" class=\"btn btn-primary\"</a>"
+				+ "</td>" + "</tr>";
+	}
 
 }
