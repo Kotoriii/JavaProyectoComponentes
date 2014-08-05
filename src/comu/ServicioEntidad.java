@@ -74,6 +74,8 @@ public abstract class ServicioEntidad<E> implements Serializable {
 	}
 	
 
+	
+
 	public List<E> buscarTodos(E item){
 		if(em == null){
 			startEntityManager();

@@ -1,7 +1,9 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,8 +23,8 @@ public class Cadena_Hotelera implements Serializable {
 	private String nombre;
 
 	//bi-directional many-to-one association to Hotel
-	@OneToMany(mappedBy="cadenaHotelera")
-	private List<Hotel> hotels;
+	@OneToMany(mappedBy="cadenaHotelera", cascade = CascadeType.ALL)
+	private List<Hotel> hotels = new ArrayList<Hotel>();
 
 	public Cadena_Hotelera() {
 	}

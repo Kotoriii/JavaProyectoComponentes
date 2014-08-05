@@ -26,13 +26,13 @@ public class Hotel implements Serializable {
 	@Column(name="Ubicacion")
 	private String ubicacion;
 
-	//bi-directional many-to-one association to Habitacione
+	//bi-directional many-to-one association to Habitaciones
 	@OneToMany(mappedBy="hotel", cascade={CascadeType.ALL})
 	private List<Habitacione> habitaciones;
 
 	//bi-directional many-to-one association to Cadena_Hotelera
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Cadena_Hotelera_idCadena_Hotelera", insertable=false, updatable=false)
+	@ManyToOne
+	@JoinColumn(name="Cadena_Hotelera_idCadena_Hotelera")
 	private Cadena_Hotelera cadenaHotelera;
 
 	//bi-directional many-to-one association to Reservacion
