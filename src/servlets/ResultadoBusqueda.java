@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.Conexion;
-import com.Usuario;
+import entidades.Usuario;
+import comu.ServicioEntidad;
 
 /**
  *
@@ -45,21 +46,25 @@ public class ResultadoBusqueda extends HttpServlet {
 
         List<Usuario> empleados;
         List<Usuario> listkeywords = new ArrayList<Usuario>();
-        Usuario resultado;
 
         Conexion con = Conexion.getInstancia();
+        
+        ServicioEntidad <Usuario> u = new ServicioEntidad<Usuario>() {
+			private static final long serialVersionUID = 1L;
+        };
+        Usuario resultado = new Usuario();
 
         try {
             if (seleccion.equals("nombre")) {
-                resultado = con.buscarPorNombre(busqueda);
+            	resultado = u.busqueda(resultado, busqueda);
                 request.getSession().setAttribute("empleado", resultado);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("estado")) {
-                empleados = con.buscarPorEstado(busqueda);
+                empleados = u.busEstado(resultado, busqueda);
                 request.getSession().setAttribute("empleados", empleados);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("keyword")) {
-                empleados = con.mostrarEmpleados();
+                empleados = u.buscarTodos(resultado);
                 for (Usuario e : empleados) {
                     if (e.comparaKeyword(busqueda)) {
                         listkeywords.add(e);
@@ -68,11 +73,11 @@ public class ResultadoBusqueda extends HttpServlet {
                 request.getSession().setAttribute("empleados", listkeywords);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("id")) {
-                resultado = con.buscarXId(busqueda);
+                resultado = u.buscar(resultado, new Integer(Integer.parseInt(busqueda)));
                 request.getSession().setAttribute("empleado", resultado);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("todos")) {
-                empleados = con.todosLosEmpleados(busqueda);
+                empleados = u.buscarTodos(resultado);
                 request.getSession().setAttribute("empleados", empleados);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("tipobusqueda") || busqueda.equals("")) {
