@@ -26,8 +26,23 @@ import java.util.List;
  * 
  */
 @Entity
+<<<<<<< HEAD
 @Table(name = "usuarios")
 @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+=======
+@Table(name="usuarios")
+@NamedQueries(value = {
+		@NamedQuery(
+				name="Usuario.findAll", 
+				query="SELECT u FROM Usuario u"),
+		@NamedQuery(
+				name = "Usuario.findNombre",
+				query = "SELECT u FROM Usuario u WHERE u.nombre = :nombrePar"),
+		@NamedQuery(
+				name = "Usuario.findEstado",
+				query = "SELECT u FROM Usuario u WHERE u.estado = :estadoPar")	
+})
+>>>>>>> cambios Usuario, creacion ServUsuario y tester
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -119,16 +134,38 @@ public class Usuario implements Serializable {
 		return this.horaEntrada;
 	}
 
-	public void setHoraEntrada(Time horaEntrada) {
-		this.horaEntrada = horaEntrada;
+	public void setHoraEntrada(String horaEntrada) {
+		String horas;
+        String minutos;
+        String segundos;
+        if (horaEntrada.length() == 8) {
+            horas = horaEntrada.substring(0, 2);
+            minutos = horaEntrada.substring(3, 5);
+            segundos = horaEntrada.substring(6);
+            this.horaEntrada = new Time(Integer.parseInt(horas),
+                    Integer.parseInt(minutos), Integer.parseInt(segundos));
+        } else {
+            System.out.println("ERROR: la hora tiene que ser de 8 digitos... formato HH:MM:SS. Clase: Usuario, metodo: horaEntada");
+        }
 	}
 
 	public Time getHoraSalida() {
 		return this.horaSalida;
 	}
 
-	public void setHoraSalida(Time horaSalida) {
-		this.horaSalida = horaSalida;
+	public void setHoraSalida(String horaSalida) {
+		String horas;
+        String minutos;
+        String segundos;
+        if (horaSalida.length() == 8) {
+            horas = horaSalida.substring(0, 2);
+            minutos = horaSalida.substring(3, 5);
+            segundos =horaSalida.substring(6);
+            this.horaSalida = new Time(Integer.parseInt(horas),
+                    Integer.parseInt(minutos), Integer.parseInt(segundos));
+        } else {
+            System.out.println("ERROR: la hora tiene que ser de 8 digitos... formato HH:MM:SS . Clase: Usuario, metodo HoraSalida");
+        }
 	}
 
 	public String getKeywords() {
