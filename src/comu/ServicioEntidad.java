@@ -43,9 +43,6 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		em.persist(item);
 		em.flush();
 		em.getTransaction().commit();
-		if(em != null){
-			closeEntityManager();
-		}
 	}
 
 	public void actualizar(E item) {
@@ -56,9 +53,6 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		em.merge(item);
 		em.flush();
 		em.getTransaction().commit();
-		if(em != null){
-			closeEntityManager();
-		}
 	}	
 	
 	public E buscar(E item, Object pk){
@@ -66,15 +60,8 @@ public abstract class ServicioEntidad<E> implements Serializable {
 			startEntityManager();
 		}
 		E pop = (E) em.find(item.getClass(), pk);
-		if(em != null){
-			closeEntityManager();
-		}
 		return pop;
-		
 	}
-	
-
-	
 
 	public List<E> buscarTodos(E item){
 		if(em == null){
@@ -82,11 +69,7 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		}
 		String qjl = "Select t from " + item.getClass().getSimpleName() +" t";
 		List<E> popio = (List<E>) em.createQuery(qjl, item.getClass()).getResultList();
-		if(em != null){
-			closeEntityManager();
-		}
 		return popio;
-		
 	}
 	
 }
