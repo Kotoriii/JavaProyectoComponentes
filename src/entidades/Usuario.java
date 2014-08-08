@@ -26,10 +26,6 @@ import java.util.List;
  * 
  */
 @Entity
-<<<<<<< HEAD
-@Table(name = "usuarios")
-@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
-=======
 @Table(name="usuarios")
 @NamedQueries(value = {
 		@NamedQuery(
@@ -42,7 +38,6 @@ import java.util.List;
 				name = "Usuario.findEstado",
 				query = "SELECT u FROM Usuario u WHERE u.estado = :estadoPar")	
 })
->>>>>>> cambios Usuario, creacion ServUsuario y tester
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,6 +53,8 @@ public class Usuario implements Serializable {
 	private Time horaEntrada;
 
 	private Time horaSalida;
+	
+	private int idHotel;
 
 	@Lob
 	private String keywords;
@@ -91,7 +88,7 @@ public class Usuario implements Serializable {
 	private List<Shiftreport> shiftreports;
 
 	// bi-directional many-to-one association to Hotel
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "idHotel", insertable = false, updatable = false)
 	private Hotel hotel;
 
@@ -231,6 +228,14 @@ public class Usuario implements Serializable {
 		this.salario = salario;
 	}
 
+	public int getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(int idHotel) {
+		this.idHotel = idHotel;
+	}
+	
 	public List<Controlhorario> getControlhorarios() {
 		return this.controlhorarios;
 	}
