@@ -56,12 +56,12 @@ public class ResultadoBusqueda extends HttpServlet {
 
         try {
             if (seleccion.equals("nombre")) {
-            	resultado = u.busqueda(resultado, busqueda);
+            	//resultado = u.busqueda(resultado, busqueda);
                 request.getSession().setAttribute("empleado", resultado);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("estado")) {
-                empleados = u.busEstado(resultado, busqueda);
-                request.getSession().setAttribute("empleados", empleados);
+                //empleados = u.busEstado(resultado, busqueda);
+                //request.getSession().setAttribute("empleados", empleados);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("keyword")) {
                 empleados = u.buscarTodos(resultado);
