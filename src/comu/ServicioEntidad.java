@@ -55,6 +55,9 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		em.getTransaction().commit();
 	}	
 	
+	/*###################################################################################*/
+	
+	/** En teoria estos metodos no se deben de usar, pero aqui se quedan para referencia :D */
 	public E buscar(E item, Object pk){
 		if(em == null){
 			startEntityManager();
@@ -71,5 +74,7 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		List<E> popio = (List<E>) em.createQuery(qjl, item.getClass()).getResultList();
 		return popio;
 	}
+
+	/*###################################################################################*/
 	
 }
