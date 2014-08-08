@@ -167,7 +167,7 @@ public class testDecorador {
 
 		ControlhorarioPK controlPK = new ControlhorarioPK();
 
-		controlPK.setFecha(new Date(2014, 7, 18));
+		controlPK.setFecha("2014-07-18");
 		controlPK.setIdUsuario(1);
 
 		control = serv.buscar_x_id(controlPK);

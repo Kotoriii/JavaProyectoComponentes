@@ -1,6 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 /**
@@ -15,8 +16,7 @@ public class ControlhorarioPK implements Serializable {
 	@Column(insertable=false, updatable=false)
 	private int idUsuario;
 
-	@Temporal(TemporalType.DATE)
-	private java.util.Date fecha;
+	private String fecha;
 
 	public ControlhorarioPK() {
 	}
@@ -26,10 +26,10 @@ public class ControlhorarioPK implements Serializable {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	public java.util.Date getFecha() {
+	public String getFecha() {
 		return this.fecha;
 	}
-	public void setFecha(java.util.Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

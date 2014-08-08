@@ -254,7 +254,7 @@ public class ControlHorarios {
 
 				ControlhorarioPK chpk = new ControlhorarioPK();
 				chpk.setIdUsuario(usuario.getId());
-				chpk.setFecha(cal.getTime());
+				chpk.setFecha(dateFormat.format(cal.getTime()));
 
 				ch.setId(chpk);
 				// ch.setUsuario(usuario);
