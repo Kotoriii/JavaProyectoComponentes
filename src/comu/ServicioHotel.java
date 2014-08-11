@@ -1,6 +1,5 @@
 package comu;
 
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -37,4 +36,5 @@ public class ServicioHotel extends ServicioEntidad<Hotel> implements Serializabl
 		num = buscarTodos().size() + 1;
 		return num;
 	}
+
 }

@@ -13,7 +13,20 @@ import java.util.Date;
  */
 @Entity
 @Table(name="permisos")
-@NamedQuery(name="Permiso.findAll", query="SELECT p FROM Permiso p")
+@NamedQueries(value = {
+		@NamedQuery(
+				name="Permiso.findAll",
+				query="SELECT p FROM Permiso p"),
+		@NamedQuery(
+				name = "Permiso.findPKComp",
+				query = "SELECT p FROM Permiso p WHERE p.id.idUsuario = :idU AND p.id.desdeFecha = :desdeF"),
+		@NamedQuery(
+				name = "Permiso.findXEmpleado",
+				query = "SELECT p FROM Permiso p WHERE p.id.idUsuario = :idU"),
+		@NamedQuery(
+				name = "Permiso.findXFecha",
+				query = "SELECT p FROM Permiso p WHERE p.id.desdeFecha = :desdeF"),
+})
 public class Permiso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,13 +35,12 @@ public class Permiso implements Serializable {
 
 	private byte estado;
 
-	@Temporal(TemporalType.DATE)
-	private Date hastaFecha;
+	private String hastaFecha;
 
 	private String tipo;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="idUsuario", insertable=false, updatable=false)
 	private Usuario usuario;
 
@@ -51,11 +63,11 @@ public class Permiso implements Serializable {
 		this.estado = estado;
 	}
 
-	public Date getHastaFecha() {
+	public String getHastaFecha() {
 		return this.hastaFecha;
 	}
 
-	public void setHastaFecha(Date hastaFecha) {
+	public void setHastaFecha(String hastaFecha) {
 		this.hastaFecha = hastaFecha;
 	}
 

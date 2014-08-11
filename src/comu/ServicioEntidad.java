@@ -43,9 +43,6 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		em.persist(item);
 		em.flush();
 		em.getTransaction().commit();
-		if(em != null){
-			closeEntityManager();
-		}
 	}
 
 	public void actualizar(E item) {
@@ -56,25 +53,28 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		em.merge(item);
 		em.flush();
 		em.getTransaction().commit();
-		if(em != null){
-			closeEntityManager();
-		}
-	}	
+	}
 	
+	public void eliminar(E item) {
+		if(em == null){
+			startEntityManager();
+		}
+		em.getTransaction().begin();
+		em.remove(item);
+		em.flush();
+		em.getTransaction().commit();
+	}
+	
+	/*###################################################################################*/
+	
+	/** En teoria estos metodos no se deben de usar, pero aqui se quedan para referencia :D */
 	public E buscar(E item, Object pk){
 		if(em == null){
 			startEntityManager();
 		}
 		E pop = (E) em.find(item.getClass(), pk);
-		if(em != null){
-			closeEntityManager();
-		}
 		return pop;
-		
 	}
-	
-
-	
 
 	public List<E> buscarTodos(E item){
 		if(em == null){
@@ -82,10 +82,9 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		}
 		String qjl = "Select t from " + item.getClass().getSimpleName() +" t";
 		List<E> popio = (List<E>) em.createQuery(qjl, item.getClass()).getResultList();
-		if(em != null){
-			closeEntityManager();
-		}
 		return popio;
-		
 	}
+
+	/*###################################################################################*/
+	
 }

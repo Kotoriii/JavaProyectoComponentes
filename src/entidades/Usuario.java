@@ -1,4 +1,21 @@
+/**
+ * @NamedQuerys(value= {
+ * 	@NamedQuery(
+ * 		name ewr
+ * 			Select d from usuario d where d.nombre like :nombreParam order by id 
+ * 			   )
+ * }
+ * TypedQuery<usuario> q = em.createNamedQuery ("erw", Usuario.class);
+ * q.setParameter(parametro1, parametro2);
+ * return query.getResultList  ( o query.getSingleResult()  )
+ * 
+ * */
+
 package entidades;
+
+import interfases.ActiveState;
+import interfases.InactiveState;
+import interfases.State;
 
 import java.io.Serializable;
 
@@ -8,14 +25,26 @@ import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * The persistent class for the usuarios database table.
  * 
  */
 @Entity
 @Table(name="usuarios")
-@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
+@NamedQueries(value = {
+		@NamedQuery(
+				name="Usuario.findAll", 
+				query="SELECT u FROM Usuario u"),
+		@NamedQuery(
+				name = "Usuario.findPK",
+				query = "SELECT u FROM Usuario u WHERE u.id = :pk"),
+		@NamedQuery(
+				name = "Usuario.findNombre",
+				query = "SELECT u FROM Usuario u WHERE u.nombre = :nombrePar"),
+		@NamedQuery(
+				name = "Usuario.findEstado",
+				query = "SELECT u FROM Usuario u WHERE u.estado = :estadoPar")
+})
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,6 +60,8 @@ public class Usuario implements Serializable {
 	private Time horaEntrada;
 
 	private Time horaSalida;
+	
+	private int idHotel;
 
 	@Lob
 	private String keywords;
@@ -43,31 +74,32 @@ public class Usuario implements Serializable {
 
 	private int salario;
 
-	//bi-directional many-to-one association to Controlhorario
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Controlhorario
+	@OneToMany(mappedBy = "usuario")
 	private List<Controlhorario> controlhorarios;
 
-	//bi-directional one-to-one association to Hora
-	@OneToOne(mappedBy="usuario")
+	// bi-directional one-to-one association to Hora
+	@OneToOne(mappedBy = "usuario")
 	private Hora hora;
 
-	//bi-directional many-to-one association to Pago
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Pago
+	@OneToMany(mappedBy = "usuario")
 	private List<Pago> pagos;
 
-	//bi-directional many-to-one association to Permiso
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Permiso
+	@OneToMany(mappedBy = "usuario")
 	private List<Permiso> permisos;
 
-	//bi-directional many-to-one association to Shiftreport
-	@OneToMany(mappedBy="usuario")
+	// bi-directional many-to-one association to Shiftreport
+	@OneToMany(mappedBy = "usuario")
 	private List<Shiftreport> shiftreports;
 
 	//bi-directional many-to-one association to Hotel
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="idHotel"/*, insertable=false, updatable=false*/)
-	private Hotel hotel;
 
+	private Hotel hotel;
+	
 	public Usuario() {
 	}
 
@@ -107,16 +139,38 @@ public class Usuario implements Serializable {
 		return this.horaEntrada;
 	}
 
-	public void setHoraEntrada(Time horaEntrada) {
-		this.horaEntrada = horaEntrada;
+	public void setHoraEntrada(String horaEntrada) {
+		String horas;
+        String minutos;
+        String segundos;
+        if (horaEntrada.length() == 8) {
+            horas = horaEntrada.substring(0, 2);
+            minutos = horaEntrada.substring(3, 5);
+            segundos = horaEntrada.substring(6);
+            this.horaEntrada = new Time(Integer.parseInt(horas),
+                    Integer.parseInt(minutos), Integer.parseInt(segundos));
+        } else {
+            System.out.println("ERROR: la hora tiene que ser de 8 digitos... formato HH:MM:SS. Clase: Usuario, metodo: horaEntada");
+        }
 	}
 
 	public Time getHoraSalida() {
 		return this.horaSalida;
 	}
 
-	public void setHoraSalida(Time horaSalida) {
-		this.horaSalida = horaSalida;
+	public void setHoraSalida(String horaSalida) {
+		String horas;
+        String minutos;
+        String segundos;
+        if (horaSalida.length() == 8) {
+            horas = horaSalida.substring(0, 2);
+            minutos = horaSalida.substring(3, 5);
+            segundos =horaSalida.substring(6);
+            this.horaSalida = new Time(Integer.parseInt(horas),
+                    Integer.parseInt(minutos), Integer.parseInt(segundos));
+        } else {
+            System.out.println("ERROR: la hora tiene que ser de 8 digitos... formato HH:MM:SS . Clase: Usuario, metodo HoraSalida");
+        }
 	}
 
 	public String getKeywords() {
@@ -127,30 +181,29 @@ public class Usuario implements Serializable {
 		this.keywords = keywords;
 	}
 
-    /**
-     * transforma un string de palabras separas por coma en un array
-     * 
-     */
-    public List<String> getKeyword() {
-        return Arrays.asList(this.keywords.split("\\s*,\\s*"));
-    }
+	/**
+	 * transforma un string de palabras separas por coma en un array
+	 * 
+	 */
+	public List<String> getKeyword() {
+		return Arrays.asList(this.keywords.split("\\s*,\\s*"));
+	}
 
-    // Se encarga de recorrer la lista para comparar su contenido con un string
-    public boolean comparaKeyword(String _comparar) {
-        for (String buscar : getKeyword()) {
-            if (buscar.equals(_comparar)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    // Se encarga de convertir la lista en un string
-    public String hacerStringKeywords(){
-        return getKeywords();
-    }
+	// Se encarga de recorrer la lista para comparar su contenido con un string
+	public boolean comparaKeyword(String _comparar) {
+		for (String buscar : getKeyword()) {
+			if (buscar.equals(_comparar)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	
+	// Se encarga de convertir la lista en un string
+	public String hacerStringKeywords() {
+		return getKeywords();
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -183,6 +236,14 @@ public class Usuario implements Serializable {
 		this.salario = salario;
 	}
 
+	public int getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(int idHotel) {
+		this.idHotel = idHotel;
+	}
+	
 	public List<Controlhorario> getControlhorarios() {
 		return this.controlhorarios;
 	}
@@ -286,24 +347,68 @@ public class Usuario implements Serializable {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
-	
-	@Override
-    public String toString() {
-        return "<tr>" + "<td><h4>" + getId()+ "</h4></td>"
-                + "<td><h4>" + getNombre() + "</h4></td>"
-                + "<td><h4>" + getRol()+ "</h4></td>"
-                + "<td><h4>" + getSalario()+ "</h4></td>"
-                + "<td><h4>" + getEstado()+ "</h4></td>"
-                + "<td>" + "<a href=" + "administracion.jsp?nombre=" + getNombre()+ ""
-                + "&id=" + getId() + "" + "&puesto=" + getRol()+ ""
-                + "&salario=" + getSalario()+ "" + "&pagoHora=" + getPrecioPorHora()+ ""
-                + "&horaEntrada=" + getHoraEntrada()+ "" + "&horaSalida=" + getHoraSalida()+ ""
-                + "&email=" + getCorreo()+ "" + "&keywords=" + hacerStringKeywords()+ ""
-                + "&estado=" + getEstado()+ ">"
-                + "<input type=\"button\"value=\" Modificar \" class=\"btn btn-primary\"</a>" 
-                + "</td>" + "</tr>";
+
+	// Metodos para cambiar el estado
+    public void cambiarEstado(String state) {
+    	State estado;
+    	if (state.equals("Activo"))
+    		estado = new InactiveState();
+    	else
+    		estado = new ActiveState();
+    	estado.changeState(this);
     }
 
-	
+	@Override
+	public String toString() {
+		return "<tr>" + "<td><h4>"
+				+ getId()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getNombre()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getRol()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getSalario()
+				+ "</h4></td>"
+				+ "<td><h4>"
+				+ getEstado()
+				+ "</h4></td>"
+				+ "<td>"
+				+ "<a href="
+				+ "administracion.jsp?nombre="
+				+ getNombre()
+				+ ""
+				+ "&id="
+				+ getId()
+				+ ""
+				+ "&puesto="
+				+ getRol()
+				+ ""
+				+ "&salario="
+				+ getSalario()
+				+ ""
+				+ "&pagoHora="
+				+ getPrecioPorHora()
+				+ ""
+				+ "&horaEntrada="
+				+ getHoraEntrada()
+				+ ""
+				+ "&horaSalida="
+				+ getHoraSalida()
+				+ ""
+				+ "&email="
+				+ getCorreo()
+				+ ""
+				+ "&keywords="
+				+ hacerStringKeywords()
+				+ ""
+				+ "&estado="
+				+ getEstado()
+				+ ">"
+				+ "<input type=\"button\"value=\" Modificar \" class=\"btn btn-primary\"</a>"
+				+ "</td>" + "</tr>";
+	}
 
 }

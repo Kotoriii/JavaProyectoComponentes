@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.Conexion;
-import com.Usuario;
+import entidades.Usuario;
+import comu.ServicioUsuario;
 
 /**
  *
@@ -25,7 +25,9 @@ import com.Usuario;
 @WebServlet(name = "NuevoEmpleado", urlPatterns = {"/NuevoEmpleado"})
 public class NuevoOModificarEmpleado extends HttpServlet {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -54,28 +56,42 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         String modificar = request.getParameter("modificar");
         String cambiarEstado = request.getParameter("cambiarEstado");
         
-        Conexion con = Conexion.getInstancia();
+        ServicioUsuario su = new ServicioUsuario() {
+			private static final long serialVersionUID = 1L;
+        };
         
-        Usuario empleado;
-        
+        Usuario emp = new Usuario();
+        emp.setNombre(nombre);
+        emp.setContrasenna(nombre);
+        emp.setId(Integer.parseInt(id));
+        emp.setIdHotel(1);
+        emp.setRol(puesto);
+        emp.setSalario(Integer.parseInt(salario));
+        emp.setPrecioPorHora(Integer.parseInt(pagoHora));
+        emp.setHoraEntrada(horaEntrada);
+        emp.setHoraSalida(horaSalida);
+        emp.setCorreo(email);
+        emp.setKeywords(keywords);
+        emp.setEstado(estado);
+                
         try {
             if ("Modificar Empleado".equals(modificar)){
-                String SQL_MODIFICAR = "UPDATE usuarios SET rol = '" + puesto + "', salario = '" + salario + "', precioPorHora = '" + pagoHora + "', keywords = '" + keywords + "', correo = '" + email + "', horaEntrada = '" + horaEntrada + "', horaSalida = '" + horaSalida + "' WHERE id = '" + id + "' ";
-                con.ejecutarNonQuery(SQL_MODIFICAR);
+            	su.actualizar(emp);
+            	su.closeEntityManager();
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
                 response.sendRedirect("administracion.jsp");
             } else if ("Estado Empleado".equals(cambiarEstado)) {
-                empleado = con.buscarXId(id);
-                empleado.cambiarEstado();
-                empleado.cambiarEstado();
-                String SQL_UPDATESTATE = "UPDATE usuarios SET estado = '" + empleado.getEstado() + "' WHERE id = '" + empleado.getId() + "' ";
-                con.ejecutarNonQuery(SQL_UPDATESTATE);
+            	Usuario usuario = su.findPK(new Integer(Integer.parseInt(id)));
+                usuario.cambiarEstado(estado);
+                su.actualizar(usuario);
+                su.closeEntityManager();
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
                 response.sendRedirect("administracion.jsp");
             } else if ("Ingresar Empleado".equals(annadir)) {
-                con.crearNuevoUsuario(id, nombre, id, puesto, salario, pagoHora, keywords, email, horaEntrada, horaSalida);
+            	su.insertar(emp);
+            	su.closeEntityManager();
                 response.sendRedirect("administracion.jsp");
             }
         } finally {

@@ -15,8 +15,7 @@ public class PermisoPK implements Serializable {
 	@Column(insertable=false, updatable=false)
 	private int idUsuario;
 
-	@Temporal(TemporalType.DATE)
-	private java.util.Date desdeFecha;
+	private String desdeFecha;
 
 	public PermisoPK() {
 	}
@@ -26,10 +25,10 @@ public class PermisoPK implements Serializable {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	public java.util.Date getDesdeFecha() {
+	public String getDesdeFecha() {
 		return this.desdeFecha;
 	}
-	public void setDesdeFecha(java.util.Date desdeFecha) {
+	public void setDesdeFecha(String desdeFecha) {
 		this.desdeFecha = desdeFecha;
 	}
 

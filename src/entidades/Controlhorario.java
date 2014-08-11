@@ -13,7 +13,14 @@ import java.sql.Time;
  */
 @Entity
 @Table(name="controlhorarios")
-@NamedQuery(name="Controlhorario.findAll", query="SELECT c FROM Controlhorario c")
+@NamedQueries(value = {
+		@NamedQuery(
+				name="Controlhorario.findAll", query="SELECT c FROM Controlhorario c"),
+		@NamedQuery(
+				name = "Controlhorario.xId",
+				query = "SELECT u FROM Controlhorario u WHERE u.id = :id_par")	
+})
+
 public class Controlhorario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
