@@ -65,7 +65,7 @@ public class Usuario implements Serializable {
 
 	//bi-directional many-to-one association to Hotel
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="idHotel", insertable=false, updatable=false)
+	@JoinColumn(name="idHotel"/*, insertable=false, updatable=false*/)
 	private Hotel hotel;
 
 	public Usuario() {

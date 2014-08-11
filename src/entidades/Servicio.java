@@ -36,17 +36,17 @@ public class Servicio implements Serializable {
 	@JoinTable(
 		name="cliente_has_servicios"
 		, joinColumns={
-			@JoinColumn(name="Servicios_idServicios", insertable=false, updatable=false)
+			@JoinColumn(name="Servicios_idServicios"/*, insertable=false, updatable=false*/)
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="Cliente_idCliente", insertable=false, updatable=false)
+			@JoinColumn(name="Cliente_idCliente"/*, insertable=false, updatable=false*/)
 			}
 		)
 	private List<Cliente> clientes;
 
 	//bi-directional many-to-one association to Hotel
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Hotel_idHotel", insertable=false, updatable=false)
+	@ManyToOne//(cascade = {CascadeType.ALL})
+	@JoinColumn(name="Hotel_idHotel"/*, insertable=false, updatable=false*/)
 	private Hotel hotel;
 
 	public Servicio() {
