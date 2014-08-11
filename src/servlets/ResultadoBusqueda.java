@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.Conexion;
 import entidades.Usuario;
-import comu.ServicioEntidad;
+import comu.ServicioUsuario;
 
 /**
  *
@@ -27,7 +26,9 @@ import comu.ServicioEntidad;
 @WebServlet(name = "ResultadoBusqueda", urlPatterns = {"/ResultadoBusqueda"})
 public class ResultadoBusqueda extends HttpServlet {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -43,48 +44,54 @@ public class ResultadoBusqueda extends HttpServlet {
 
         String busqueda = request.getParameter("busqueda");
         String seleccion = request.getParameter("seleccion");
-
+        
+        ServicioUsuario su = new ServicioUsuario() {
+			private static final long serialVersionUID = 1L;
+        };
+        
+        Usuario resultado;
         List<Usuario> empleados;
         List<Usuario> listkeywords = new ArrayList<Usuario>();
 
-        Conexion con = Conexion.getInstancia();
-        
-        ServicioEntidad <Usuario> u = new ServicioEntidad<Usuario>() {
-			private static final long serialVersionUID = 1L;
-        };
-        Usuario resultado = new Usuario();
-
         try {
             if (seleccion.equals("nombre")) {
-            	//resultado = u.busqueda(resultado, busqueda);
+            	resultado = su.findNombre(busqueda);
+            	su.closeEntityManager();
                 request.getSession().setAttribute("empleado", resultado);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("estado")) {
-                //empleados = u.busEstado(resultado, busqueda);
-                //request.getSession().setAttribute("empleados", empleados);
+                empleados = su.findEstado(busqueda);
+                su.closeEntityManager();
+                request.getSession().setAttribute("empleados", empleados);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("keyword")) {
-                empleados = u.buscarTodos(resultado);
-                for (Usuario e : empleados) {
+                for (Usuario e : su.findTodos()) {
                     if (e.comparaKeyword(busqueda)) {
                         listkeywords.add(e);
                     }
                 }
+                su.closeEntityManager();
                 request.getSession().setAttribute("empleados", listkeywords);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("id")) {
-                resultado = u.buscar(resultado, new Integer(Integer.parseInt(busqueda)));
+                resultado = su.findPK(new Integer(Integer.parseInt(busqueda)));
+                su.closeEntityManager();
                 request.getSession().setAttribute("empleado", resultado);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("todos")) {
-                empleados = u.buscarTodos(resultado);
+                empleados = su.findTodos();
+                su.closeEntityManager();
                 request.getSession().setAttribute("empleados", empleados);
                 response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("tipobusqueda") || busqueda.equals("")) {
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
                 response.sendRedirect("administracion.jsp");
-            }
+            } else {
+                request.getSession().setAttribute("empleado", null);
+                request.getSession().setAttribute("empleados", null);
+                response.sendRedirect("administracion.jsp");
+            } 
         } finally {
             out.close();
         }
