@@ -53,7 +53,17 @@ public abstract class ServicioEntidad<E> implements Serializable {
 		em.merge(item);
 		em.flush();
 		em.getTransaction().commit();
-	}	
+	}
+	
+	public void eliminar(E item) {
+		if(em == null){
+			startEntityManager();
+		}
+		em.getTransaction().begin();
+		em.remove(item);
+		em.flush();
+		em.getTransaction().commit();
+	}
 	
 	/*###################################################################################*/
 	
