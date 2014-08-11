@@ -6,14 +6,13 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%@include file="template.jsp" %>
+<%@taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@include file="template.jsp"%>
 <%@page import="com.Cryptsy;"%>
 <!DOCTYPE html>
 <html>
 <head>
 <%
-
 	if (request.getSession().getAttribute("usuario") != null) {
 		response.sendRedirect("paginaP.jsp");
 	}
@@ -48,18 +47,35 @@
 </head>
 <body>
 
+	<!-- 
 	<form method="post" action="LoginB" class="container">
-		<h1></h1>
-		<div class="jumbotron"
-			style="width: 70%; margin-left: auto; margin-right: auto; opacity: 0.96">
-			<%="<h1>" + mens + "</h1>"%>
+<%//"<h1>" + mens + "</h1>"%>
 			<p>ID De Usuario</p>
 			<input type="text" width="70%" name="inptId" />
 			<p>Contraseña</p>
 			<input type="password" width="70%" name="inptContra" /> </br>
 			<button type="submit">Ingresar</button>
+			</form>
+-->
+
+	<div class="jumbotron"
+		style="width: 50%; margin-left: auto; margin-right: auto; opacity: 0.96; border-radius: 10px">
+
+		<div style="color: red">
+			<html:errors />
 		</div>
-	</form>
+		<html:form action="/Login">
+			<p>ID De Usuario</p>
+			<html:text name="LoginForm" property="userName" />
+			<br>
+			<p>Contraseña</p>
+			<html:password name="LoginForm" property="password" />
+			<br>
+			<html:submit value="Login" />
+		</html:form>
+
+	</div>
+
 
 	<!-- para eliminar todos los contenidos de "controldehorarios",
         horas y shiftreports -->
