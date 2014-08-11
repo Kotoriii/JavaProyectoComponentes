@@ -27,7 +27,7 @@ public class Hotel implements Serializable {
 	private String ubicacion;
 
 	//bi-directional many-to-one association to Habitaciones
-	@OneToMany(mappedBy="hotel", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="hotel", cascade= CascadeType.ALL)
 	private List<Habitacione> habitaciones;
 
 	//bi-directional many-to-one association to Cadena_Hotelera
@@ -36,15 +36,15 @@ public class Hotel implements Serializable {
 	private Cadena_Hotelera cadenaHotelera;
 
 	//bi-directional many-to-one association to Reservacion
-	@OneToMany(mappedBy="hotel")
+	@OneToMany(mappedBy="hotel", cascade= CascadeType.ALL)
 	private List<Reservacion> reservacions;
 
 	//bi-directional many-to-one association to Servicio
-	@OneToMany(mappedBy="hotel")
+	@OneToMany(mappedBy="hotel", cascade= CascadeType.ALL)
 	private List<Servicio> servicios;
 
 	//bi-directional many-to-one association to Usuario
-	@OneToMany(mappedBy="hotel")
+	@OneToMany(mappedBy="hotel", cascade= CascadeType.ALL)
 	private List<Usuario> usuarios;
 
 	public Hotel() {

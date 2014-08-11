@@ -14,7 +14,6 @@ public class ServicioCadena_Hotelera extends ServicioEntidad<Cadena_Hotelera> im
 	
 
 	public Cadena_Hotelera buscar(Object pk){
-		
 		return (Cadena_Hotelera) em.find(Cadena_Hotelera.class, pk);
 	}
 	
@@ -28,5 +27,12 @@ public class ServicioCadena_Hotelera extends ServicioEntidad<Cadena_Hotelera> im
 		Cadena_Hotelera c = buscar(i);
 		em.remove(c);
 		
+	}
+	
+	public int siguienteId()
+	{
+		int num = 1;
+		num = buscarTodos().size() + 1;
+		return num;
 	}
 }

@@ -37,13 +37,13 @@ public class Reservacion implements Serializable {
 	private List<Factura> facturas;
 
 	//bi-directional many-to-one association to Cliente
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Cliente_idCliente", insertable=false, updatable=false)
+	@ManyToOne
+	@JoinColumn(name="Cliente_idCliente"/*, insertable=false, updatable=false*/)
 	private Cliente cliente;
 
 	//bi-directional many-to-one association to Hotel
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Hotel_idHotel", insertable=false, updatable=false)
+	@ManyToOne
+	@JoinColumn(name="Hotel_idHotel"/*, insertable=false, updatable=false*/)
 	private Hotel hotel;
 
 	public Reservacion() {

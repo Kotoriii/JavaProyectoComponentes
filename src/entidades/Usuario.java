@@ -94,9 +94,10 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario")
 	private List<Shiftreport> shiftreports;
 
-	// bi-directional many-to-one association to Hotel
+	//bi-directional many-to-one association to Hotel
 	@ManyToOne
-	@JoinColumn(name = "idHotel", insertable = false, updatable = false)
+	@JoinColumn(name="idHotel"/*, insertable=false, updatable=false*/)
+
 	private Hotel hotel;
 	
 	public Usuario() {

@@ -31,8 +31,8 @@ public class ServicioExtra implements Serializable {
 	private Date horario;
 
 	//bi-directional many-to-one association to Habitacione
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Habitaciones_idHabitaciones", insertable=false, updatable=false)
+	@ManyToOne//(cascade = {CascadeType.ALL})
+	@JoinColumn(name="Habitaciones_idHabitaciones"/*, insertable=false, updatable=false*/)
 	private Habitacione habitacione;
 
 	public ServicioExtra() {
