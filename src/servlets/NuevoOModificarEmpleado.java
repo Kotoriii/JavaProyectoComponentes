@@ -8,7 +8,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Time;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.Conexion;
 import entidades.Usuario;
-import comu.ServicioEntidad;
+import comu.ServicioUsuario;
 
 /**
  *
@@ -27,7 +25,9 @@ import comu.ServicioEntidad;
 @WebServlet(name = "NuevoEmpleado", urlPatterns = {"/NuevoEmpleado"})
 public class NuevoOModificarEmpleado extends HttpServlet {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -56,7 +56,7 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         String modificar = request.getParameter("modificar");
         String cambiarEstado = request.getParameter("cambiarEstado");
         
-        ServicioEntidad <Usuario> u = new ServicioEntidad<Usuario>() {
+        ServicioUsuario su = new ServicioUsuario() {
 			private static final long serialVersionUID = 1L;
         };
         
@@ -64,6 +64,7 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         emp.setNombre(nombre);
         emp.setContrasenna(nombre);
         emp.setId(Integer.parseInt(id));
+        emp.setIdHotel(1);
         emp.setRol(puesto);
         emp.setSalario(Integer.parseInt(salario));
         emp.setPrecioPorHora(Integer.parseInt(pagoHora));
@@ -75,21 +76,22 @@ public class NuevoOModificarEmpleado extends HttpServlet {
                 
         try {
             if ("Modificar Empleado".equals(modificar)){
-            	u.actualizar(emp);
+            	su.actualizar(emp);
+            	su.closeEntityManager();
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
                 response.sendRedirect("administracion.jsp");
             } else if ("Estado Empleado".equals(cambiarEstado)) {
-            	Usuario usuario = new Usuario();
-                usuario = u.buscar(usuario, new Integer(Integer.parseInt(id)));
-                //usuario.cambiarEstado();
-                //usuario.cambiarEstado();
-                u.actualizar(usuario);
+            	Usuario usuario = su.findPK(new Integer(Integer.parseInt(id)));
+                usuario.cambiarEstado(estado);
+                su.actualizar(usuario);
+                su.closeEntityManager();
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
                 response.sendRedirect("administracion.jsp");
             } else if ("Ingresar Empleado".equals(annadir)) {
-            	u.insertar(emp);
+            	su.insertar(emp);
+            	su.closeEntityManager();
                 response.sendRedirect("administracion.jsp");
             }
         } finally {

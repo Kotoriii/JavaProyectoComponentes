@@ -1,6 +1,6 @@
 package interfases;
 
-import com.Usuario;
+import entidades.Usuario;
 
 /**
  *

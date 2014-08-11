@@ -13,6 +13,10 @@
 
 package entidades;
 
+import interfases.ActiveState;
+import interfases.InactiveState;
+import interfases.State;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
@@ -32,11 +36,14 @@ import java.util.List;
 				name="Usuario.findAll", 
 				query="SELECT u FROM Usuario u"),
 		@NamedQuery(
+				name = "Usuario.findPK",
+				query = "SELECT u FROM Usuario u WHERE u.id = :pk"),
+		@NamedQuery(
 				name = "Usuario.findNombre",
 				query = "SELECT u FROM Usuario u WHERE u.nombre = :nombrePar"),
 		@NamedQuery(
 				name = "Usuario.findEstado",
-				query = "SELECT u FROM Usuario u WHERE u.estado = :estadoPar")	
+				query = "SELECT u FROM Usuario u WHERE u.estado = :estadoPar")
 })
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -91,7 +98,7 @@ public class Usuario implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idHotel", insertable = false, updatable = false)
 	private Hotel hotel;
-
+	
 	public Usuario() {
 	}
 
@@ -339,6 +346,16 @@ public class Usuario implements Serializable {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
+
+	// Metodos para cambiar el estado
+    public void cambiarEstado(String state) {
+    	State estado;
+    	if (state.equals("Activo"))
+    		estado = new InactiveState();
+    	else
+    		estado = new ActiveState();
+    	estado.changeState(this);
+    }
 
 	@Override
 	public String toString() {

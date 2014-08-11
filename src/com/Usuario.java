@@ -52,7 +52,7 @@ public final class Usuario implements interfases.Subject {
         setHoraEntrada(_horaEntrada);
         setHoraSalida(_horaSalida);
 
-        setChangeState(new ActiveState()); //Instancia el estado para cuando se desee cambiarlo
+        //setChangeState(new ActiveState()); //Instancia el estado para cuando se desee cambiarlo
     }
 
     public String getId() {
@@ -228,7 +228,7 @@ public final class Usuario implements interfases.Subject {
     }
 
     public void cambiarEstado() {
-        changeState.changeState(this);
+        //changeState.changeState(this);
     }
 
     //// ###################################################################
