@@ -8,7 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@include file="template.jsp"%>
-<%@page import="com.Cryptsy;"%>
 <!DOCTYPE html>
 <html>
 <head>

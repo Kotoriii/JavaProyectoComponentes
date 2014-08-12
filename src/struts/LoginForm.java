@@ -8,15 +8,15 @@ package struts;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 
 import com.ControlHorarios;
+
 import comu.ServicioUsuario;
+import entidades.Usuario;  
 
-import entidades.Usuario;
-
-public class LoginForm extends org.apache.struts.action.ActionForm {
+public class LoginForm extends ActionForm {
 
 	/**
 	 * 
