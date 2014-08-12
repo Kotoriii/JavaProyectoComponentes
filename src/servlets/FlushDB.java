@@ -54,27 +54,21 @@ public class FlushDB extends HttpServlet {
 			List<Controlhorario> listCH = swer.buscarTodosCH();
 
 			Servicio_Hora svh = new Servicio_Hora();
-			List<Hora> listH = svh.buscarTodos(new Hora());
+			List<Hora> listH = svh.findTodos();
 
 			Servicio_ShiftReport sshr = new Servicio_ShiftReport();
-			List<Shiftreport> listSHR = sshr.buscarTodos(new Shiftreport());
+			List<Shiftreport> listSHR = sshr.findTodos();
 
 			for (Controlhorario ch : listCH) {
-				if (ch.equals(null)) {
 					swer.eliminar(ch);
-				}
 			}
 			swer.closeEntityManager();
 			for (Hora h : listH) {
-				if (h.equals(null)) {
-					svh.eliminar(h);
-				}
+				svh.eliminar(h);
 			}
 			svh.closeEntityManager();
 			for (Shiftreport sr : listSHR) {
-				if (sr.equals(null)) {
 					sshr.eliminar(sr);
-				}
 			}
 			sshr.closeEntityManager();
 
