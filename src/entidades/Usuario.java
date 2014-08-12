@@ -79,7 +79,7 @@ public class Usuario implements Serializable {
 	private List<Controlhorario> controlhorarios;
 
 	// bi-directional one-to-one association to Hora
-	@OneToOne(mappedBy = "usuario")
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private Hora hora;
 
 	// bi-directional many-to-one association to Pago
@@ -96,7 +96,7 @@ public class Usuario implements Serializable {
 
 	//bi-directional many-to-one association to Hotel
 	@ManyToOne
-	@JoinColumn(name="idHotel"/*, insertable=false, updatable=false*/)
+	@JoinColumn(name="idHotel", insertable=false, updatable=false)
 
 	private Hotel hotel;
 	

@@ -30,7 +30,7 @@ public class Hora implements Serializable {
 	private int horasNormales;
 
 	//bi-directional one-to-one association to Usuario
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne
 	@JoinColumn(name="idUsuario")
 	private Usuario usuario;
 

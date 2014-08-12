@@ -21,8 +21,8 @@
 
     <action-mappings>
         <action input="/login.jsp" name="LoginForm" path="/Login" scope="session" type="struts.LoginAction">
-            <forward name="success" path="/success.jsp" />
-            <forward name="failure" path="/failure.jsp" />
+            <forward name="paginaP" path="/paginaP.jsp" />
+            <forward name="index" path="/index.jsp" />
         </action>
         <action path="/Welcome" forward="/welcomeStruts.jsp"/>
     </action-mappings>

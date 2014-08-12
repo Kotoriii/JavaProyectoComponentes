@@ -25,7 +25,8 @@ public class ServicioUsuario extends ServicioEntidad<Usuario> {
 		}
 		TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findNombre", Usuario.class);
 		query.setParameter("nombrePar", nombre);
-		return query.getSingleResult();
+		Usuario usuario = query.getSingleResult();
+		return usuario;
 	}
 	
 	public List<Usuario> findEstado(String estado) {

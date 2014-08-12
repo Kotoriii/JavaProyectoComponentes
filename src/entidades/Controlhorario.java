@@ -32,7 +32,7 @@ public class Controlhorario implements Serializable {
 	private Time horaSalida;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="idUsuario", insertable=false, updatable=false)
 	private Usuario usuario;
 

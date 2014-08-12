@@ -12,13 +12,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <%
+
 	if (request.getSession().getAttribute("usuario") != null) {
 		response.sendRedirect("paginaP.jsp");
 	}
 	String mens = "";
-	if (request.getParameter("cnt") != null) {
-		switch (Integer.parseInt(request.getParameter("cnt"))) {
+	if (request.getSession().getAttribute("errr") != null) {
+		switch ((Integer)request.getSession().getAttribute("errr")) {
 			case 1 : {
 				mens = "El usuario no existe";
 				break;
@@ -39,30 +41,20 @@
 				mens = "";
 			}
 		}
+		request.getSession().setAttribute("errr", null);
 	}
 %>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Inicio</title>
 </head>
 <body>
-
-	<!-- 
-	<form method="post" action="LoginB" class="container">
-<%//"<h1>" + mens + "</h1>"%>
-			<p>ID De Usuario</p>
-			<input type="text" width="70%" name="inptId" />
-			<p>Contraseña</p>
-			<input type="password" width="70%" name="inptContra" /> </br>
-			<button type="submit">Ingresar</button>
-			</form>
--->
 
 	<div class="jumbotron"
 		style="width: 50%; margin-left: auto; margin-right: auto; opacity: 0.96; border-radius: 10px">
 
 		<div style="color: red">
 			<html:errors />
+			<ul><%= mens %></ul>
 		</div>
 		<html:form action="/Login">
 			<p>ID De Usuario</p>

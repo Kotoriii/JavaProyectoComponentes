@@ -12,8 +12,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.ControlHorarios;
-import comu.ServicioUsuario;
 
+import comu.ServicioUsuario;
 import entidades.Usuario;
 
 /**
@@ -29,8 +29,15 @@ public class LoginAction extends org.apache.struts.action.Action {
 		ServicioUsuario servu = new ServicioUsuario();
 
 		Usuario usuario = new Usuario();
-		usuario = servu.findNombre(loginForm.getUserName());
 
+		
+		try {
+			usuario = servu.findPK(Integer.parseInt(loginForm.getUserName()));
+
+		} catch (Exception e) {
+		
+		}
+		
 		int cnt = 0;
 
 		// se fija que el usuairo no ha iniciado sesion en el dia y
@@ -55,7 +62,7 @@ public class LoginAction extends org.apache.struts.action.Action {
 			return mapping.findForward("paginaP");
 
 		} else {
-			return mapping.findForward("index.jsp?cnt=" + cnt + "");
+			return mapping.findForward("index");
 		}
 
 	}
