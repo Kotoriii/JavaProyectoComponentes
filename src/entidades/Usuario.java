@@ -364,6 +364,9 @@ public class Usuario implements Serializable {
 				+ getId()
 				+ "</h4></td>"
 				+ "<td><h4>"
+				+ getIdHotel()
+				+ "</h4></td>"
+				+ "<td><h4>"
 				+ getNombre()
 				+ "</h4></td>"
 				+ "<td><h4>"

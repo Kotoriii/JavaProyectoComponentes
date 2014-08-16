@@ -22,40 +22,46 @@
 <!DOCTYPE html>
 <jsp:include page="template.jsp" />
 <html>
-<head>
-<link href="style/main.css" rel="stylesheet" type="text/css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Bienvenido <%=usuario.getNombre()%></title>
-</head>
-<body>
-	<div class="row">
-		<div class="col-md-6">
-			<%
-				int tiempoConHoy = ControlHorarios.getInstancia()
-						.tiempoConectadoHoyMinutos(usuario);
-				int horas = tiempoConHoy / 60;
-				int minutos = tiempoConHoy - (horas * 60);
-				if (minutos == -1) {
-					minutos = 0;
-				}
-			%>
-			<div class=" jumbotron" style="margin-top: 23%; border-radius: 10px;">
-				<h4>
-					Usted lleva
-					<%=horas%>
-					horas y
-					<%=minutos%>
-					minutos de estar conectado
-					</h3>
-					<h1>
-						Bienvenido
-						<%=usuario.getNombre()%>!
-					</h1>
-					<%
-						if (usuario.getRol().equals("admin")) {
-							out.println("<p><a href=\"administracion.jsp\"><button class=\"btn btn-primary btn-lg\">Administracion</button></a></p>");
-							out.println("<p><a href=\"Planilla.jsp\"><button class=\"btn btn-primary btn-lg\">Planillas</button></a></p>");
+    <head>
+        <link href="style/main.css" rel="stylesheet" type="text/css">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Bienvenido <%= usuario.getNombre()%></title>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-md-6">
+                <%
+                int tiempoConHoy = ControlHorarios.getInstancia().tiempoConectadoHoyMinutos(usuario);
+                int horas = tiempoConHoy / 60;
+                int minutos =  tiempoConHoy - (horas * 60);
+                if (minutos == -1){
+                	minutos = 0;
+                }
+                %>                
+                <div class=" jumbotron" style="margin-top: 23%; border-radius: 10px;">
+                    <h4>Usted lleva <%= horas %> horas y <%= minutos %> minutos de estar conectado</h3>
+                        <h1>Bienvenido <%= usuario.getNombre()%>!</h1>    
+                        <%                if (usuario.getRol().equals("admin")) {
+                                out.println("<p><a href=\"administracion.jsp\"><button class=\"btn btn-primary btn-lg\">Administracion</button></a></p>");
+                                 out.println("<p><a href=\"Planilla.jsp\"><button class=\"btn btn-primary btn-lg\">Planillas</button></a></p>");
+                                
+                            }%>
+                            <p><a href="Reportes.jsp"><button class="btn btn-primary btn-lg">Generar Reportes</button></a></p>
+                            <p><a href="SolicitudPermisos.jsp"><button class="btn btn-success btn-lg">Pedir Permisos</button></a></p>
+                            <p><a href="modificarContra.jsp"><button class="btn btn-success btn-lg">Cambiar Contraseña</button></a></p>
+                                
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="container" style="margin-top: 5%; width: 100%; margin-right: 100px">
+                    <div class="heading">
+                        <h1 class="title"><%= usuario.getNombre() %></h1>
+                        <div class="scores-container" >
+                            <div class="score-container" style="height: 5%">0</div>
+                            <div class="best-container" style="height: 5%">0</div>
+                        </div>
+                    </div>
 
 						}
 					%>
