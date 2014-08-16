@@ -54,17 +54,17 @@ public class ResultadoBusqueda extends HttpServlet {
         List<Usuario> listkeywords = new ArrayList<Usuario>();
 
         try {
-            if (seleccion.equals("nombre")) {
+            if (seleccion.equals("nombre") & busqueda != null) {
             	resultado = su.findNombre(busqueda);
             	su.closeEntityManager();
                 request.getSession().setAttribute("empleado", resultado);
-                response.sendRedirect("administracion.jsp");
-            } else if (seleccion.equals("estado")) {
+                request.getSession().setAttribute("empleados", null);
+            } else if (seleccion.equals("estado") & busqueda != null) {
                 empleados = su.findEstado(busqueda);
                 su.closeEntityManager();
                 request.getSession().setAttribute("empleados", empleados);
-                response.sendRedirect("administracion.jsp");
-            } else if (seleccion.equals("keyword")) {
+                request.getSession().setAttribute("empleado", null);
+            } else if (seleccion.equals("keyword") & busqueda != null) {
                 for (Usuario e : su.findTodos()) {
                     if (e.comparaKeyword(busqueda)) {
                         listkeywords.add(e);
@@ -72,26 +72,22 @@ public class ResultadoBusqueda extends HttpServlet {
                 }
                 su.closeEntityManager();
                 request.getSession().setAttribute("empleados", listkeywords);
-                response.sendRedirect("administracion.jsp");
-            } else if (seleccion.equals("id")) {
+            } else if (seleccion.equals("id") & busqueda != null) {
                 resultado = su.findPK(new Integer(Integer.parseInt(busqueda)));
                 su.closeEntityManager();
                 request.getSession().setAttribute("empleado", resultado);
-                response.sendRedirect("administracion.jsp");
-            } else if (seleccion.equals("todos")) {
+            } else if (seleccion.equals("todos") & busqueda != null) {
                 empleados = su.findTodos();
                 su.closeEntityManager();
                 request.getSession().setAttribute("empleados", empleados);
-                response.sendRedirect("administracion.jsp");
             } else if (seleccion.equals("tipobusqueda") || busqueda.equals("")) {
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
-                response.sendRedirect("administracion.jsp");
             } else {
                 request.getSession().setAttribute("empleado", null);
                 request.getSession().setAttribute("empleados", null);
-                response.sendRedirect("administracion.jsp");
-            } 
+            }
+            response.sendRedirect("administracion.jsp");
         } finally {
             out.close();
         }

@@ -43,6 +43,7 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         
         String nombre = request.getParameter("nombre");
         String id = request.getParameter("id");
+        String idHotel = request.getParameter("idHotel");
         String puesto = request.getParameter("puesto");
         String salario = request.getParameter("salario");
         String pagoHora = request.getParameter("pagoHora");
@@ -54,7 +55,7 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         
         String annadir = request.getParameter("annadir");
         String modificar = request.getParameter("modificar");
-        String cambiarEstado = request.getParameter("cambiarEstado");
+        String cEstado = request.getParameter("cEstado");
         
         ServicioUsuario su = new ServicioUsuario() {
 			private static final long serialVersionUID = 1L;
@@ -64,7 +65,7 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         emp.setNombre(nombre);
         emp.setContrasenna(nombre);
         emp.setId(Integer.parseInt(id));
-        emp.setIdHotel(1);
+        emp.setIdHotel(Integer.parseInt(idHotel));
         emp.setRol(puesto);
         emp.setSalario(Integer.parseInt(salario));
         emp.setPrecioPorHora(Integer.parseInt(pagoHora));
@@ -77,23 +78,17 @@ public class NuevoOModificarEmpleado extends HttpServlet {
         try {
             if ("Modificar Empleado".equals(modificar)){
             	su.actualizar(emp);
-            	su.closeEntityManager();
-                request.getSession().setAttribute("empleado", null);
-                request.getSession().setAttribute("empleados", null);
-                response.sendRedirect("administracion.jsp");
-            } else if ("Estado Empleado".equals(cambiarEstado)) {
+            } else if ("Ingresar Empleado".equals(annadir)) {
+            	su.insertar(emp);
+            } else {
             	Usuario usuario = su.findPK(new Integer(Integer.parseInt(id)));
                 usuario.cambiarEstado(estado);
                 su.actualizar(usuario);
-                su.closeEntityManager();
-                request.getSession().setAttribute("empleado", null);
-                request.getSession().setAttribute("empleados", null);
-                response.sendRedirect("administracion.jsp");
-            } else if ("Ingresar Empleado".equals(annadir)) {
-            	su.insertar(emp);
-            	su.closeEntityManager();
-                response.sendRedirect("administracion.jsp");
             }
+            su.closeEntityManager();
+            request.getSession().setAttribute("empleado", null);
+            request.getSession().setAttribute("empleados", null);
+            response.sendRedirect("administracion.jsp");
         } finally {
             out.close();
         }

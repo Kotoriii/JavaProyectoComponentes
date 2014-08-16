@@ -12,6 +12,7 @@
 <%
     String nombre = (request.getParameter("nombre")) == null ? "" : request.getParameter("nombre");
     String id = (request.getParameter("id")) == null ? "" : request.getParameter("id");
+    String idHotel = (request.getParameter("idHotel")) == null ? "" : request.getParameter("idHotel");
     String puesto = (request.getParameter("puesto")) == null ? "" : request.getParameter("puesto");
     String salario = (request.getParameter("salario")) == null ? "" : request.getParameter("salario");
     String pagoHora = (request.getParameter("pagoHora")) == null ? "" : request.getParameter("pagoHora");
@@ -79,6 +80,17 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control" id="id" placeholder="Ingrese el ID" name="id" value="<%= id%>"/>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                            
+                                            <ul class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <h4> <span class='glyphicon glyphicon-globe'></span> ID Hotel:</h4>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control" id="idHotel" placeholder="Ingrese el ID del Hotel" name="idHotel" value="<%= idHotel%>"/>
                                                     </div>
                                                 </div>
                                             </ul>
@@ -262,6 +274,7 @@
 
                 <tr>
                     <td><h4> <span class='glyphicon glyphicon-glass'></span> ID</h4></td>
+                    <td><h4> <span class='glyphicon glyphicon-globe'></span> ID Hotel</h4></td>
                     <td><h4> <span class='glyphicon glyphicon-user'></span> Empleado</h4></td>
                     <td><h4> <span class='glyphicon glyphicon-bullhorn'></span> Puesto</h4></td>
                     <td><h4> <span class='glyphicon glyphicon-usd'></span> Salario</h4></td>
