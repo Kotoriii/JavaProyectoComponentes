@@ -11,8 +11,10 @@ import javax.ws.rs.core.MediaType;
 
 //The browser requests per default the HTML type.
 
-//Sets the path to base URL + /hello
-@Path("/webService")
+//El path que tiene este web service en especifico
+// Para accesar un web service se haria:
+	// http://localhost:8080/DogeBarcelo/rest/nombreWebService  (en este caso webServiceT)
+@Path("/webServiceT")
 public class WebServices {
 
 	// This method is called if TEXT_PLAIN is request
