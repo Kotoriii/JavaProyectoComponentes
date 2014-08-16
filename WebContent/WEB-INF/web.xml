@@ -9,6 +9,10 @@
     <servlet-class>Login</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>GenerarReportes</servlet-name>
+    <servlet-class>GenerarReportes</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>LoginB</servlet-name>
     <servlet-class>servlets.LoginB</servlet-class>
   </servlet>
@@ -70,6 +74,10 @@
     <url-pattern>/EliminarSesion</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>GenerarReportes</servlet-name>
+    <url-pattern>/GenerarReportes</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>modificarContra</servlet-name>
     <url-pattern>/modificarContra</url-pattern>
   </servlet-mapping>
@@ -98,4 +106,14 @@
       <taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
     </taglib>
   </jsp-config>
+  <servlet>
+    <description></description>
+    <display-name>GenerarReportes1</display-name>
+    <servlet-name>GenerarReportes1</servlet-name>
+    <servlet-class>servlets.GenerarReportes</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GenerarReportes1</servlet-name>
+    <url-pattern>/GenerarReportes1</url-pattern>
+  </servlet-mapping>
 </web-app>

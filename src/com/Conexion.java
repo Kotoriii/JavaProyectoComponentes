@@ -34,7 +34,7 @@ public class Conexion {
 
     String mUser = "root";
     String mPassword = "root";
-    String mUrl = "jdbc:mysql://localhost:3306/mydb";
+    String mUrl = "jdbc:mysql://localhost:3306/dogebarcelo";
     
     public void agregarResultadoBusqueda(Usuario resultado){
         this.listEmpleados.add(resultado);
@@ -44,6 +44,10 @@ public class Conexion {
         this.listEmpleados.clear();
     }
 
+    public Connection getSqlCon(){
+    	return this.mCon;
+    }
+    
     public Connection conectar() {
 
         try {

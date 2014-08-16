@@ -1,11 +1,8 @@
 package servlets;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -13,15 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.export.ExporterInput;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-
 import com.Conexion;
+import com.Report;
 
 
 
@@ -40,11 +30,13 @@ public class GenerarReportes extends HttpServlet {
 		
 		response.setContentType("application/pdf");
         ServletOutputStream out = response.getOutputStream();
-        Conexion cn = Conexion.getInstancia();
+        Connection cn = Conexion.getInstancia().getSqlCon();
+        
         String empactivos = request.getParameter("empleadosactivos");
 		
-        if("empleadosactivos".equals(empactivos)){
+        if(true  || "empleadosactivos".equals(empactivos)){
         try {
+        	/*
         	String jasper = "dobebarcelo/Empleados_Estado.jasper";
         	
         	
@@ -53,7 +45,7 @@ public class GenerarReportes extends HttpServlet {
             Map<String,Object> reporteactivos = new HashMap<String, Object>();
             
             
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper, reporteactivos, (Connection) cn);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper, reporteactivos, cn);
 
             
             //JRPdfExporter exporter = new JRPdfExporter();
@@ -67,14 +59,19 @@ public class GenerarReportes extends HttpServlet {
 
             exporter.exportReport();*/
 
-			response.sendRedirect("Reportes.jsp");
 
+			HashMap parameterMap = new HashMap();
+			Report rpt = new Report(parameterMap, "Empleados_Estado");
+			rpt.callReport();
+			
+			
         } catch (Exception e) {
             e.printStackTrace();
         }
         
         finally {
             out.close();
+            System.out.println("igor");
         }
         }
 	}
