@@ -1,6 +1,8 @@
 package com;
 
 import java.awt.Container;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -8,9 +10,11 @@ import javax.swing.JFrame;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.view.JRViewer;
 
 public class Report extends JFrame {
@@ -22,6 +26,7 @@ public class Report extends JFrame {
 	HashMap hm = null;
 	Connection con = null;
 	String reportName;
+	JasperPrint print = null;
 
 	public Report() {
 		setExtendedState(MAXIMIZED_BOTH);
@@ -29,7 +34,7 @@ public class Report extends JFrame {
 
 	}
 
-	/** hash map y el nombre del reporte (sin '.jasper' )*/
+	/** hash map y el nombre del reporte (sin '.jasper' ) */
 	public Report(HashMap map, String reportName) {
 		this.hm = map;
 		setExtendedState(MAXIMIZED_BOTH);
@@ -51,15 +56,28 @@ public class Report extends JFrame {
 		this.reportName = rptName;
 	}
 
+	public JasperPrint getReporT() {
+		return this.print;
+	}
+
 	public void callReport() {
-		JasperPrint jasperPrint = generateReport();
+		print = generateReport();
 		try {
-			JasperExportManager.exportReportToPdf(jasperPrint);
+
+			JRExporter exporter = new JRPdfExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
+					new FileOutputStream(reportName + ".pdf")); // your output
+																// goes here
+			exporter.exportReport();
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		JRViewer viewer = new JRViewer(jasperPrint);
+		JRViewer viewer = new JRViewer(print);
 		Container c = getContentPane();
 		c.add(viewer);
 		this.setVisible(true);
@@ -97,8 +115,8 @@ public class Report extends JFrame {
 				 * You can also test this line if you want to display report
 				 * from any absolute path other than the project root path
 				 */
-				jasperPrint = JasperFillManager.fillReport(reportName + ".jasper",
-						hm, con);
+				jasperPrint = JasperFillManager.fillReport(reportName
+						+ ".jasper", hm, con);
 				// jasperPrint = JasperFillManager.fillReport(reportName +
 				// ".jasper", hm, con);
 			} catch (JRException e) {

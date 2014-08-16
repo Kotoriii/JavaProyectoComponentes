@@ -20,7 +20,7 @@
     </head>
     <body>
 
-        <form action="GenerarReportes1" method="post" class="form-inline">
+        <form action="GeneradorReportes" method="post" class="form-inline">
             <div class='container jumbotron' style="border-radius: 10px">
                 <h2 style="margin-left:35%; margin-top:2%; margin-bottom: 2%">Generación de Reportes</h2>
                 <div class="row" style="margin-left:40%">
