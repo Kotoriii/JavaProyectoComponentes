@@ -11,65 +11,141 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <%
-            Usuario usuario = new Usuario();//se usa un constructor vacio para evitar nullPointerException
-            if (request.getSession().getAttribute("usuario") == null) {
-                response.sendRedirect("index.jsp");
-            } else {
-                usuario = (Usuario) request.getSession().getAttribute("usuario");
-            }
+<head>
+<%
+	
+	 Usuario usuario = new Usuario();//se usa un constructor vacio para evitar nullPointerException
+	 if (request.getSession().getAttribute("usuario") == null) {
+	 response.sendRedirect("index.jsp");
+	 } else {
+	 usuario = (Usuario) request.getSession().getAttribute("usuario");
+	 }
+	 
+	String solicitud = (String) request.getSession().getAttribute(
+			"permiso");
+	if (solicitud == null)
+		solicitud = "";
+	else
+		solicitud = "Su solicitud ha sido enviada, pronto sera aprobada.";
+%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Solicitud de Permisos</title>
+</head>
+<body>
 
-        %>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Solicitud de Permisos</title>
-    </head>
-    <body>
+	<div class='container jumbotron'>
 
-        <form action="SolicitarPermiso" method="post" class="form-inline">
-            <div class='container jumbotron' style="border-radius: 10px">
-                <h2 style="margin-left:35%; margin-top:2%; margin-bottom: 5%">Solicitud de Permisos</h2>
-                <div class="row" style="margin-left:10%">
-                    <label><h4>Nombre:</h4></label>
-                    <input type="text" class="form-control" style="margin-left:2%; margin-right: 4%; width:280px" >
-                    <label><h4>ID:</h4></label>
-                    <input type="text" class="form-control" style="margin-left:2.5%; margin-right:3%; width:100px;" name="id" id="id">
-                    <label style="margin-right:4%"><h4>Motivo: </h4></label>
-                    <select class="form-control" name="permiso" style="width:157.5px" id="permiso">
-                        <option value="noo">-----</option>
-                        <option value="ausencia">Ausencia</option>
-                        <option value="vacaciones">Vacaciones</option>
-                        <option value="incapacidad">Incapacidad</option>
-                        <option value="otros">Otros</option>
-                    </select>      
+		<form action="SolicitarPermiso" method="post">
 
-                </div>
-                <div class="row" style="margin-top:2.5%; margin-left:10%">
-                    <label style="margin-left:0%"><h4>Fecha/Inicio:</h4></label>
-                    <input placeholder="YYYY-MM-DD" class="form-control" type="text" style="margin-left:2%; width:120px" name="fechainicio" id="fechainicio">
-                    <label style="margin-left:1.8%"><h4>Fecha/Fin:</h4></label>
-                    <input placeholder="YYYY-MM-DD" type="text" class="form-control" style="margin-left:2%; margin-right:3%; width:120px" name="fechafinal" id="fechafinal">
-                    <label style="margin-right:2.5%"><h4>Departamento:</h4></label>
-                    <select class="form-control" name="departamento" style="width:195px">
-                        <option value="noo">-----</option>
-                        <option>Recursos Humanos</option>
-                        <option>Mineria</option>
-                    </select>
-                </div>
-                <div class="row" style="margin-top:1%; margin-left:10%">
-                    <label style="margin-top:2.5%">Mensaje</label>
-                </div>
-                <textarea style="margin-left:10%; margin-top:1%; width: 835px" class="form-control" rows="10"></textarea>
+			<div class="row">
 
-                <input type="submit" name="enviar" value="Enviar" style="margin-left:77.5%;margin-top:2%" class="btn btn-primary"/>
-                <a href="paginaP.jsp" style="margin-left:77.5%;margin-top:2%" class="btn btn-success btn-sm">Cancelar</a>
-            </div>
-        </form>
-        <script>
-            frases.push("such permit");
-            frases.push("much vacations");
-            frases.push("so procrastinate");
-        </script>
-    </body>
+				<div class="col-md-8">
+					<ul class="list-group">
+
+						<ul class="list-group-item">
+							<h3>Solicitud de Permiso</h3>
+						</ul>
+
+						<ul class="list-group-item">
+							<div class="row">
+								<div class="col-md-4">
+									<h4>
+										<span class='glyphicon glyphicon-glass'></span> ID:
+									</h4>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="id"
+										placeholder="Ingrese el ID del solicitante" name="id" value="" />
+								</div>
+							</div>
+						</ul>
+
+						<ul class="list-group-item">
+							<div class="row">
+								<div class="col-md-4">
+									<h4>
+										<span class='glyphicon glyphicon-flag'></span> Motivo:
+									</h4>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="motivo"
+										placeholder="Ingrese el motivo del permiso" name="motivo"
+										value="" />
+								</div>
+							</div>
+						</ul>
+
+						<ul class="list-group-item">
+							<div class="row">
+								<div class="col-md-4">
+									<h4>
+										<span class='glyphicon glyphicon-calendar'></span> Fecha
+										Inicio:
+									</h4>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="fechainicio"
+										placeholder="Ingrese la Fecha de Inicio en el formato YYYY-MM-DD"
+										name="fechainicio" value="" />
+								</div>
+							</div>
+						</ul>
+
+						<ul class="list-group-item">
+							<div class="row">
+								<div class="col-md-4">
+									<h4>
+										<span class='glyphicon glyphicon-calendar'></span> Fecha
+										Final:
+									</h4>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="fechafinal"
+										placeholder="Ingrese la Fecha de Finalizacion en el formato YYYY-MM-DD"
+										name="fechafinal" value="" />
+								</div>
+							</div>
+						</ul>
+
+						<ul class="list-group-item">
+							<h4><%=solicitud%></h4>
+						</ul>
+
+					</ul>
+				</div>
+
+				<div class="col-md-4">
+					<ul class="list-gorup">
+
+						<ul class="list-group-item">
+							<div class="jumbotron "
+								style="width: 100%; margin-top: 5%; margin-bottom: 5%">
+								<input type="submit" name="enviar" id="enviar"
+									value="Enviar Solicitud" class="btn btn-primary btn-lg" />
+							</div>
+						</ul>
+
+						<ul class="list-group-item">
+							<div class="jumbotron "
+								style="width: 100%; margin-top: 5%; margin-bottom: 5%">
+								<a href="paginaP.jsp" style="width: 100%"
+									class="btn btn-primary btn-lg">Cancelar</a>
+							</div>
+						</ul>
+
+					</ul>
+				</div>
+
+			</div>
+		</form>
+
+	</div>
+
+	<script>
+		frases.push("such permit");
+		frases.push("much vacations");
+		frases.push("so procrastinate");
+	</script>
+</body>
 </html>
 
