@@ -47,6 +47,7 @@
                                  out.println("<p><a href=\"Planilla.jsp\"><button class=\"btn btn-primary btn-lg\">Planillas</button></a></p>");
                                 
                             }%>
+                            <p><a href="Reportes.jsp"><button class="btn btn-primary btn-lg">Generar Reportes</button></a></p>
                             <p><a href="SolicitudPermisos.jsp"><button class="btn btn-success btn-lg">Pedir Permisos</button></a></p>
                             <p><a href="modificarContra.jsp"><button class="btn btn-success btn-lg">Cambiar Contraseña</button></a></p>
                                 
