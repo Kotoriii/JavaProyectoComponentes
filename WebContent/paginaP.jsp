@@ -53,32 +53,7 @@
                                 
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="container" style="margin-top: 5%; width: 100%; margin-right: 100px">
-                    <div class="heading">
-                        <h1 class="title"><%= usuario.getNombre() %></h1>
-                        <div class="scores-container" >
-                            <div class="score-container" style="height: 5%">0</div>
-                            <div class="best-container" style="height: 5%">0</div>
-                        </div>
-                    </div>
-
-						}
-					%>
-					<p>
-						<a href="SolicitudPermisos.jsp"><button
-								class="btn btn-success btn-lg">Pedir Permisos</button></a>
-					</p>
-					<p>
-						<a href="modificarContra.jsp"><button
-								class="btn btn-success btn-lg">Cambiar Contraseña</button></a>
-					</p>
-					<p>
-						<a href="Reportes.jsp"><button
-								class="btn btn-success btn-lg">Generar Reportes</button></a>
-					</p>
-			</div>
-		</div>
+           
 		<div class="col-md-6">
 			<div class="container"
 				style="margin-top: 5%; width: 100%; margin-right: 100px">
