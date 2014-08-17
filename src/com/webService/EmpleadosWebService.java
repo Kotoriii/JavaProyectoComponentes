@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import comu.ServicioUsuario;
 import entidades.Usuario;
 
-@Path("/empleados")
+@Path("/ListaEmpleados")
 public class EmpleadosWebService {
 
 	@GET
