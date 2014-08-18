@@ -52,144 +52,25 @@ public class testDecorador {
  	int idCadena = 4;
     logica.BorrarCadenaHotelera(idCadena);
 	*/
-    
+	/*
+	int idCadena = 1;
+	int idhotel = 1;
+ 	logica.CrearHabitacion(idCadena, idhotel);
+    */
+	/*
+	int idCadena = 1;
+	int idhotel = 1;
+	int idhabitacion=1;
+	logica.CrearHabitacion(idCadena, idhotel,idhabitacion);
+	    */
  	
     	
     
     
     
     	
-    	/*
-    	//+++++++++++++++++++++++Agregar/insertar un Servicio+++++++++++++++++++++++
-    	//Inicio
-    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
     	
-    	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
     	
-    	ServicioServicio SS = new ServicioServicio(); //Instanciacion del Servicio
-    	ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
-    	ServicioHotel SH = new ServicioHotel(); //Instanciacion del Servicio
-    	Servicio servicio = new Servicio();
-    	
-    	servicio.setClientes(new ArrayList<Cliente>());
-    	servicio.setCosto(1000);
-    	servicio.setDescripcion("Lavanderia");
-    	servicio.setHorario(new Date(2013-01-01));
-    	servicio.setHotel(hotel1);
-    	servicio.setIdServicios(1);
-    	
-    	SS.insertar(servicio);
-    	//FIN Insertar un Servicio 
-    	*/
-    	
-    	/*
-    	//+++++++++++++++++++++++Actualizar un Servicio+++++++++++++++++++++++
-    	//Inicio
-    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
-    	
-    	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
-    	
-    	ServicioServicio SS = new ServicioServicio(); //Instanciacion del Servicio
-    	ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
-    	ServicioHotel SH = new ServicioHotel(); //Instanciacion del Servicio
-    	Servicio servicio = new Servicio();
-    	
-    	servicio.setClientes(new ArrayList<Cliente>());
-    	servicio.setCosto(2000);
-    	servicio.setDescripcion("Lavanderia");
-    	servicio.setHorario(new Date(2013-01-01));
-    	servicio.setHotel(hotel1);
-    	servicio.setIdServicios(1);
-    	
-    	SS.insertar(servicio);
-    	//FIN Actualizar un Servicio 
-    	*/
-    	
-    	/*
-    	//+++++++++++++++++++++++Agregar/insertar una Habitacion+++++++++++++++++++++++
-    	//Inicio
-    	ServicioHabitacion SHabita = new ServicioHabitacion();
-    	Habitacione habitacion = new Habitacione();
-    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
-    	
-    	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
-    	
-    	habitacion.setHotel(hotel1);
-    	habitacion.setIdHabitaciones(1);
-    	habitacion.setElementos(new ArrayList<Elemento>());
-    	habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
-    	
-    	SHabita.insertar(habitacion);
-    	
-    	//FIN Insertar un Habitacion 
-    	*/
-    	
-    	/*
-    	//+++++++++++++++++++++++Actualizar una Habitacion+++++++++++++++++++++++
-    	//Inicio
-    	ServicioHabitacion SHabita = new ServicioHabitacion();
-    	Habitacione habitacion = new Habitacione();
-    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
-    	
-    	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
-    	
-    	habitacion.setHotel(hotel1);
-    	habitacion.setIdHabitaciones(1);
-    	habitacion.setElementos(new ArrayList<Elemento>());
-    	habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
-    	
-    	SHabita.actualizar(habitacion);
-    	
-    	//FIN Actualizar un Habitacion 
-    	*/
     	
     	/*
     	//+++++++++++++++++++++++Agregar/insertar un Servicio Extra a una Habitacion+++++++++++++++++++++++

@@ -3,8 +3,11 @@ package comu;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+
 import entidades.Cadena_Hotelera;
 import entidades.Hotel;
+import entidades.Usuario;
 
 
 
@@ -35,6 +38,13 @@ public class ServicioHotel extends ServicioEntidad<Hotel> implements Serializabl
 		int num = 1;
 		num = buscarTodos().size() + 1;
 		return num;
+	}
+	public List<Hotel> findTodos() {
+		if (em == null) {
+			startEntityManager();
+		}
+		TypedQuery<Hotel> query = em.createNamedQuery("Hotel.findAll", Hotel.class);
+		return query.getResultList();
 	}
 
 }
