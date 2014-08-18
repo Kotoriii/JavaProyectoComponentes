@@ -5,11 +5,13 @@ import java.util.List;
 
 import comu.ServicioCadena_Hotelera;
 import comu.ServicioCliente;
+import comu.ServicioElemento;
 import comu.ServicioEntidad;
 import comu.ServicioHabitacion;
 import comu.ServicioHotel;
 import comu.ServicioReservacion;
 import comu.ServicioServicio;
+import comu.ServicioServicioExtra;
 import entidades.Cadena_Hotelera;
 import entidades.Cliente;
 import entidades.Elemento;
@@ -410,9 +412,193 @@ public class Logica {
     	}
 	
 	
+	public boolean AgregarElemento (int idcadena, int idhotel, int idhabitacion, String descripcion){
+		ServicioElemento SEl = new ServicioElemento();
+		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
+		ServicioHotel SH = new ServicioHotel();
+    	Elemento elemento = new Elemento();
+    	ServicioHabitacion SHab = new ServicioHabitacion();
+    	Habitacione habitacion = new Habitacione();
+    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+    	SCH.startEntityManager();
+    	CH= SCH.buscar(idcadena);
+    	if(CH!=null){
+    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+    	CH.setNombre(CH.getNombre());
+    	CH.setHotels(CH.getHotels());
+    	
+    	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
+    	hotel1=SH.buscar(idhotel);
+    	if(hotel1!=null)
+    	{
+    	hotel1.setIdHotel(hotel1.getIdHotel());
+    	hotel1.setNombre(hotel1.getNombre());
+    	hotel1.setUbicacion(hotel1.getUbicacion());
+    	hotel1.setCadenaHotelera(hotel1.getCadenaHotelera());
+    	hotel1.setHabitaciones(hotel1.getHabitaciones());
+    	hotel1.setReservacions(hotel1.getReservacions());
+    	hotel1.setServicios(hotel1.getServicios());
+    	hotel1.setUsuarios(hotel1.getUsuarios());
+    	SHab.startEntityManager();
+    	habitacion = SHab.buscar(idhabitacion);
+    	if(habitacion!= null)
+    	{
+    	habitacion.setIdHabitaciones(habitacion.getIdHabitaciones());
+    	habitacion.setHotel(habitacion.getHotel());
+    	habitacion.setElementos(habitacion.getElementos());
+    	habitacion.setServicioExtras(habitacion.getServicioExtras());
+    	
+    	elemento.setIdElemento(2);
+    	elemento.setDescripcion_Elemento(descripcion);
+    	elemento.setHabitacione(habitacion);
+    	
+    	habitacion.getElementos().add(elemento);
+    	SEl.insertar(elemento);
+    	SHab.actualizar(habitacion);
+    	SH.closeEntityManager();
+    	SCH.closeEntityManager();
+    	return true;
+    	}else
+    	{
+    		SHab.closeEntityManager();
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    	}else{
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    		
+    	}
+    	else{
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+	}
 	
 	
+	public boolean ActualizarElemento (int idcadena, int idhotel, int idhabitacion, int idelemento,String descripcion){
+		ServicioElemento SEl = new ServicioElemento();
+		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
+		ServicioHotel SH = new ServicioHotel();
+    	Elemento elemento = new Elemento();
+    	ServicioHabitacion SHab = new ServicioHabitacion();
+    	Habitacione habitacion = new Habitacione();
+    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+    	SCH.startEntityManager();
+    	CH= SCH.buscar(idcadena);
+    	if(CH!=null){
+    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+    	CH.setNombre(CH.getNombre());
+    	CH.setHotels(CH.getHotels());
+    	
+    	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
+    	hotel1=SH.buscar(idhotel);
+    	if(hotel1!=null)
+    	{
+    	hotel1.setIdHotel(hotel1.getIdHotel());
+    	hotel1.setNombre(hotel1.getNombre());
+    	hotel1.setUbicacion(hotel1.getUbicacion());
+    	hotel1.setCadenaHotelera(hotel1.getCadenaHotelera());
+    	hotel1.setHabitaciones(hotel1.getHabitaciones());
+    	hotel1.setReservacions(hotel1.getReservacions());
+    	hotel1.setServicios(hotel1.getServicios());
+    	hotel1.setUsuarios(hotel1.getUsuarios());
+    	SHab.startEntityManager();
+    	habitacion = SHab.buscar(idhabitacion);
+    	if(habitacion!= null)
+    	{
+    	habitacion.setIdHabitaciones(habitacion.getIdHabitaciones());
+    	habitacion.setHotel(habitacion.getHotel());
+    	habitacion.setElementos(habitacion.getElementos());
+    	habitacion.setServicioExtras(habitacion.getServicioExtras());
+    	
+    	SEl.startEntityManager();
+    	elemento= SEl.buscar(idelemento);
+    	if(elemento!=null)
+    	{
+    	elemento.setIdElemento(elemento.getIdElemento());
+    	elemento.setDescripcion_Elemento(descripcion);
+    	elemento.setHabitacione(elemento.getHabitacione());
+    
+    	SEl.actualizar(elemento);
+    	SHab.actualizar(habitacion);
+    	SH.closeEntityManager();
+    	SCH.closeEntityManager();
+    	return true;
+    	}else
+    	{
+    		SEl.closeEntityManager();
+    		SHab.closeEntityManager();
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;	
+    	}
+    	}else
+    	{
+    		SHab.closeEntityManager();
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    	}else{
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    		
+    	}
+    	else{
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+	}
 	
 	
+	public boolean AgregarServicioExtra(int idcadena, int idhotel, int idhabitacion, int idelemento,String descripcion,int costo,Date horario){
+		//Inicio
+    	ServicioServicioExtra SSE = new ServicioServicioExtra();
+    	ServicioExtra SE = new ServicioExtra();
+    	ServicioHabitacion SHab = new ServicioHabitacion();
+    	Habitacione habitacion = new Habitacione();
+    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+    	CH.setIdCadena_Hotelera(new Integer(1));
+    	CH.setNombre("CadenaNueva1");
+    	CH.setHotels(new ArrayList<Hotel>());
+    	
+    	Hotel hotel1 = new Hotel(); // hotel existente
+    	hotel1.setIdHotel(1);
+    	hotel1.setNombre("h1");
+    	hotel1.setUbicacion("U1");
+    	hotel1.setCadenaHotelera(CH);
+    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
+    	hotel1.setReservacions(new ArrayList<Reservacion>());
+    	hotel1.setServicios(new ArrayList<Servicio>());
+    	hotel1.setUsuarios(new ArrayList<Usuario>());
+    	CH.getHotels().add(hotel1);
+    	
+    	habitacion.setHotel(hotel1);
+    	habitacion.setIdHabitaciones(1);
+    	habitacion.setElementos(new ArrayList<Elemento>());
+    	habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
+    	
+    	
+    	SE.setCosto(10000);
+    	SE.setDescripcion("Masaje");
+    	SE.setHabitacione(habitacion);
+    	SE.setHorario(new Date(2013-01-01));
+    	SE.setIdServicio_Extra(1);
+    	
+    	habitacion.getServicioExtras().add(SE);
+    	
+    	SHab.actualizar(habitacion);
+    	SSE.actualizar(SE);
+    	return true;
+    	//FIN Insertar un Servicio Extra 
+	}
 };
 

@@ -63,8 +63,21 @@ public class testDecorador {
 	int idhabitacion=1;
 	logica.CrearHabitacion(idCadena, idhotel,idhabitacion);
 	    */
- 	
+		
+		/*
+		int idCadena = 1;
+		int idhotel = 1;
+		int idhabitacion=1;
+		String descripcion = "ducha";
+		logica.AgregarElemento(idCadena, idhotel, idhabitacion, descripcion);
+ 		*/
     	
+		int idCadena = 1;
+		int idelemento = 1;
+		int idhotel = 1;
+		int idhabitacion=1;
+		String descripcion = "ducha caliente";
+		logica.ActualizarElemento(idCadena, idhotel, idhabitacion, idelemento, descripcion);
     
     
     
@@ -114,44 +127,7 @@ public class testDecorador {
     	//FIN Insertar un Servicio Extra 
     	*/
    
-    	/*
-    	//+++++++++++++++++++++++Agregar/insertar un nuevo Elemento+++++++++++++++++++++++
-    	//Inicio
-    	ServicioElemento SEl = new ServicioElemento();
-    	Elemento elemento = new Elemento();
-    	ServicioHabitacion SHab = new ServicioHabitacion();
-    	Habitacione habitacion = new Habitacione();
-    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
     	
-    	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
-    	
-    	habitacion.setHotel(hotel1);
-    	habitacion.setIdHabitaciones(1);
-    	habitacion.setElementos(new ArrayList<Elemento>());
-    	habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
-    	
-    	elemento.setIdElemento(1);
-    	elemento.setDescripcion_Elemento("Cama Matrimonial");
-    	elemento.setHabitacione(habitacion);
-    	
-    	habitacion.getElementos().add(elemento);
-    	SEl.insertar(elemento);
-    	SHab.actualizar(habitacion);    	
-    	
-    	//Fin		
-    	*/
     	
 		//test_Control_Horarios();
 
