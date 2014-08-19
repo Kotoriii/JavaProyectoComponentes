@@ -8,7 +8,7 @@
 <%@page import="java.sql.Time"%>
 <%@page import="entidades.Usuario"%>
 <%
-	// request.getSession().setAttribute("usuario", null);
+	//request.getSession().setAttribute("usuario", null);
 	Usuario usuario = new Usuario();//se usa un constructor vacio para evitar nullPointerException
 	if (request.getSession().getAttribute("usuario") == null) {
 		response.sendRedirect("index.jsp");

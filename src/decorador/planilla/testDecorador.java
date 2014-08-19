@@ -236,10 +236,6 @@ public class testDecorador {
 		 * System.out.println("El salario es de: " + salario1.getDescription());
 		 * System.out.println("El monto es: " + salario1.deduccion(250));
 		 */
-
-		HashMap parameterMap = new HashMap();
-		Report rpt = new Report(parameterMap, "Estados_Usuarios");
-		rpt.callReport();
 	}
 
 	public static void test_Control_Horarios() {
