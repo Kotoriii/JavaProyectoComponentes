@@ -18,7 +18,7 @@
 		<form action="AgregarServicio" method="get">
 			Id Servicio:<input type="text" name="IdServicio"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
-			Horario:<input type="text" name="Horario"><br>
+			Id Cliente:<input type="text" name="IdCliente"><br>
 			Costo:<input type="text" name="Costo"><br>
 			Id Hotel:<input type="text" name="IdHotel"><br>
 			<input type="submit" name="Agregar" value="Agregar" /><br>
@@ -29,7 +29,7 @@
 		<form action="EliminarServicio" method="get">
 			Id Servicio:<input type="text" name="IdServicio"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
-			Horario:<input type="text" name="Horario"><br>
+			Id Cliente:<input type="text" name="IdCliente"><br>
 			Costo:<input type="text" name="Costo"><br>
 			Id Hotel:<input type="text" name="IdHotel"><br>
 			<input type="submit" name="Eliminar" value="Eliminar" /><br>
@@ -40,7 +40,7 @@
 		<form action="ActualizarServicio" method="get">
 			Id Servicio:<input type="text" name="IdServicio"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
-			Horario:<input type="text" name="Horario"><br>
+			Id Cliente:<input type="text" name="Id Cliente"><br>
 			Costo:<input type="text" name="Costo"><br>
 			Id Hotel:<input type="text" name="IdHotel"><br>
 			<input type="submit" name="Actualizar" value="Actualizar" /><br>
