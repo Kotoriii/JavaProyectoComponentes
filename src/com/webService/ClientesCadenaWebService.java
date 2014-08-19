@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import comu.ServicioHotel;
 import comu.ServicioUsuario;
 import entidades.Hotel;
+import entidades.Reservacion;
 import entidades.Usuario;
 
 @Path("/Clientes")
@@ -27,19 +28,22 @@ public class ClientesCadenaWebService {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String sayHtmlHello() {
-		return "<html> " + "<title>" + "Clientes" + "</title>"
-				+ "<body><h1>" + lista() + "</body></h1>" + "</html> ";
+		return "<html> " + "<title>" + "Clientes" + "</title>" + "<body><h1>"
+				+ lista() + "</body></h1>" + "</html> ";
 	}
 
 	public String lista() {
 		ServicioHotel SH = new ServicioHotel();
 		String CAD = "*** Empleados de DogeBarcelo ***";
-		for ( Hotel h : SH.findTodos()) {
+		SH.startEntityManager();
+		for (Hotel h : SH.buscarTodos()) {
 			CAD = CAD + "\nHotel: " + h.getNombre() + "\nClientes: ";
-					for ( int i = 0; i <= h.getReservacions().size() ;i++){
-						CAD = CAD +"\n Nombre: " +h.getReservacions().get(i).getCliente().getNombre() + "  Telefono: " + h.getReservacions().get(i).getCliente().getTelefono() + " "
-					+ "\n-----------------------------------------";
-					}
+			for (Reservacion r : h.getReservacions()) {
+				CAD = CAD + "\n Nombre: " + r.getCliente().getNombre()
+						+ "  Telefono: "
+						+ r.getCliente().getTelefono()
+						+ " " + "\n-----------------------------------------";
+			}
 		}
 		return CAD;
 	}

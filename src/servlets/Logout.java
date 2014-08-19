@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.Conexion;
 import com.ControlHorarios;
-import com.ObservadorUsuario;
 import comu.ServicioEntidad;
 
 import entidades.Shiftreport;

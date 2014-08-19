@@ -1,13 +1,17 @@
 package com;
 
 import java.awt.Container;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
 
+import decorador.planilla.testDecorador;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -27,6 +31,7 @@ public class Report extends JFrame {
 	Connection con = null;
 	String reportName;
 	JasperPrint print = null;
+	String path_reportes = "";
 
 	public Report() {
 		setExtendedState(MAXIMIZED_BOTH);
@@ -41,6 +46,8 @@ public class Report extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.reportName = reportName;
 
+		get_path();
+
 	}
 
 	public Report(HashMap map, Connection con) {
@@ -50,6 +57,22 @@ public class Report extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Report Viewer");
 
+		get_path();
+
+	}
+
+	private void get_path() {
+		URL location = testDecorador.class.getProtectionDomain()
+				.getCodeSource().getLocation();
+		String p = "";
+		for (String s : location.getFile().split("/")) {
+			if (!s.equals(".metadata")) {
+				p += s + "/";
+			} else {
+				break;
+			}
+		}
+		path_reportes = p + "dogebarcelo/Reporte";
 	}
 
 	public void setReportName(String rptName) {
@@ -67,8 +90,9 @@ public class Report extends JFrame {
 			JRExporter exporter = new JRPdfExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-					new FileOutputStream(reportName + ".pdf")); // your output
-																// goes here
+					new FileOutputStream(path_reportes + "/" + reportName
+							+ ".pdf")); // your output
+			// goes here
 			exporter.exportReport();
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
@@ -77,10 +101,7 @@ public class Report extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JRViewer viewer = new JRViewer(print);
-		Container c = getContentPane();
-		c.add(viewer);
-		this.setVisible(true);
+
 	}
 
 	public void callConnectionLessReport() {
@@ -115,8 +136,8 @@ public class Report extends JFrame {
 				 * You can also test this line if you want to display report
 				 * from any absolute path other than the project root path
 				 */
-				jasperPrint = JasperFillManager.fillReport(reportName
-						+ ".jasper", hm, con);
+				jasperPrint = JasperFillManager.fillReport(path_reportes + "/"
+						+ reportName + ".jasper", hm, con);
 				// jasperPrint = JasperFillManager.fillReport(reportName +
 				// ".jasper", hm, con);
 			} catch (JRException e) {

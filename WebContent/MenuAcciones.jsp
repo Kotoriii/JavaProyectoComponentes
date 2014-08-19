@@ -9,22 +9,23 @@
 <title>Menu de acciones del Hotel</title>
 </head>
 <body>
-	
+
 	<div>
 		<form action="DirigirPag" method="get">
-			Cadena Hotelera:<input type="submit" name="IR" value="IRcadena"><br>
-			Hotel:<input type="submit" name="IR" value="IRhotel"><br>
-			Habitaciones:<input type="submit" name="IR" value="IRhabitacion"><br>
-			Servicios:<input type="submit" name="IR" value="IRservicio"><br>
-			Servicios Extra:<input type="submit" name="IR" value="IRservicioextra"><br>
-			Cliente:<input type="submit" name="IR" value="IRcliente"><br>
-			Reservacion:<input type="submit" name="IR" value="IRreservacion"><br>
-			Elementos de Habitaciones:<input type="submit" name="IR" value="IRelemento">
-			
+			<div class="container jumbotron">
+				<h2>
+					<a href="CadenaHotelera.jsp">Cadena Hotelera:<br></a> <a
+						href="Hotel.jsp">Hotel:</a><br> <a href="Habitacion.jsp">Habitaciones:</a><br>
+					<a href="Servicio.jsp">Servicios:</a><br> <a
+						href="ServicioExtra.jsp">Servicios Extra:</a><br> <a
+						href="Cliente.jsp">Cliente:</a><br> <a href="Reservacion.jsp">Reservacion:</a><br>
+					<a href="Elemento.jsp">Elementos de Habitaciones:</a>
+				</h2>
+			</div>
 		</form>
 	</div>
 
-			
-			
+
+
 </body>
 </html>

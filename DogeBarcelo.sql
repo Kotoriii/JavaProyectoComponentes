@@ -1,4 +1,4 @@
-insert into cadena_hotelera (idCadena_Hotelera, nombre)
+insert into Cadena_Hotelera (idCadena_Hotelera, nombre)
 values ('1', "DogeBarcelo");
 insert into hotel (idHotel, Nombre, Ubicacion, Cadena_Hotelera_idCadena_Hotelera)
 values ('1', "Doge", "Such Place", '1');

@@ -56,7 +56,7 @@ public class LoginForm extends ActionForm {
 		// se fija que el usuario exista y que la contrasenna
 		// sea correcta
 		if (sdf != 1) {
-			if (usuario != null && usuario.getNombre() == null) {
+			if (!usuario.equals(null) && !usuario.getNombre().equals(null)) {
 				//errors.add("userName", new ActionMessage("error.nonExiste"));
 				error = 1;
 			} else if (!usuario.getContrasenna().equals(password)) {

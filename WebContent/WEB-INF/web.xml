@@ -173,6 +173,7 @@
     <servlet-name>modificarContra</servlet-name>
     <url-pattern>/modificarContra</url-pattern>
   </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>AgregarCadena</servlet-name>
     <url-pattern>/AgregarCadena</url-pattern>

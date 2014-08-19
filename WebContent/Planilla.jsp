@@ -3,10 +3,11 @@
     Created on : Mar 15, 2014, 07:53:19 PM
     Author     : Soda de Limon
 --%>
+<%@page import="comu.ServicioUsuario"%>
 <%@page import="com.ControlHorarios"%>
 <%@page import="com.Conexion"%>
 <%@page import="java.util.List"%>
-<%@page import="com.Usuario"%>
+<%@page import="entidades.Usuario"%>
 <jsp:include page="template.jsp" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,7 +25,8 @@
     }
 
     Conexion con = Conexion.getInstancia();
-    List<Usuario> empleados = con.mostrarEmpleados();
+    
+    List<Usuario> empleados = new ServicioUsuario().findTodos();
 
     empleados.remove(usuario); // la lista de usaurios menos el usuario actual
 
