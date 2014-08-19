@@ -87,7 +87,9 @@ public class Conexion {
 
             while (rs.next()) {
 
+
                 return null;
+
             }
 
         } catch (SQLException ex) {
@@ -109,6 +111,7 @@ public class Conexion {
             while (rs.next()) {
 
                 return null;
+
             }
 
         } catch (SQLException ex) {
@@ -135,6 +138,7 @@ public class Conexion {
             while (rs.next()) {
 
                 Usuario empleado = null;
+
                 
                 agregarResultadoBusqueda(empleado);
             }
@@ -164,6 +168,7 @@ public class Conexion {
             while (rs.next()) {
 
                 Usuario empleado = null;
+
                 
                 agregarResultadoBusqueda(empleado);
             }
@@ -193,7 +198,7 @@ public class Conexion {
             while (rs.next()) {
 
                 Usuario empleado = null;
-                
+
                 agregarResultadoBusqueda(empleado);
             }
             

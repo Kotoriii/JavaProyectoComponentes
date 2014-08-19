@@ -25,6 +25,7 @@
     }
 
     Conexion con = Conexion.getInstancia();
+    
     List<Usuario> empleados = new ServicioUsuario().findTodos();
 
     empleados.remove(usuario); // la lista de usaurios menos el usuario actual

@@ -29,7 +29,7 @@ public class Logica {
 		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
     	SCH.startEntityManager();
 		Cadena_Hotelera CH = new Cadena_Hotelera();//asignacion de un nuevo espacio en memoria
-    	CH.setIdCadena_Hotelera(idCadena);
+    	CH.setIdCadena_Hotelera(SCH.siguienteId());
     	CH.setNombre(Nombre);
     	CH.setHotels(new ArrayList<Hotel>());
     	SCH.insertar(CH);	
@@ -47,10 +47,13 @@ public class Logica {
     	CH.setNombre(NombreNuevo);
     	CH.setHotels(CH.getHotels());
     	SCH.actualizar(CH);	
-    	}else
-    		System.out.print("Cadena no existe");
-    	
+
     	SCH.closeEntityManager();
+    	}else
+    	{
+    		System.out.print("Cadena no existe");
+    		SCH.closeEntityManager();
+    	}
 	}
 	
 	public void BorrarCadenaHotelera(int idCadena){
@@ -64,17 +67,23 @@ public class Logica {
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(CH.getHotels());
     	SCH.eliminar(CH);
-    	}else
-    		System.out.print("Cadena no existe");
-    	
+
     	SCH.closeEntityManager();
+    	}else
+    	{
+    		System.out.print("Cadena no existe");
+    		SCH.closeEntityManager();
+    	}
 	}
 	
 	
 	
 	public void InsertarHotelACadena(int idCadena, String Nombre, String Ubicacion){
 		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
-    	Cadena_Hotelera CH = new Cadena_Hotelera();//asignacion de un nuevo espacio en memoria
+
+    	ServicioHotel SH = new ServicioHotel();
+		Cadena_Hotelera CH = new Cadena_Hotelera();//asignacion de un nuevo espacio en memoria
+
     	SCH.startEntityManager();
     	CH = SCH.buscar(idCadena);
     	if(CH!= null)
@@ -83,9 +92,10 @@ public class Logica {
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(new ArrayList<Hotel>());
     	SCH.startEntityManager();
-    	
+
+    	SH.startEntityManager();
     	Hotel hotel1 = new Hotel();
-    	hotel1.setIdHotel(9);
+    	hotel1.setIdHotel(SH.siguienteId());
     	hotel1.setNombre(Nombre);
     	hotel1.setUbicacion(Ubicacion);
     	hotel1.setCadenaHotelera(CH);
@@ -97,28 +107,78 @@ public class Logica {
     
     	CH.getHotels().add(hotel1);
     	SCH.actualizar(CH);
-    	}else 
-    		System.out.print("Cadena hotelera no econtrada");
-    	SCH.closeEntityManager();
-		
+
+    	SH.closeEntityManager();
+    	}else {
+    			System.out.print("Cadena hotelera no econtrada");
+    			SCH.closeEntityManager();
+    			SH.closeEntityManager();
+    	}
 	}
 	
 	
-	public void InsertarCliente(int idcliente, String Nombre,String cedula,String telefono){
+	public boolean ActualizarHotelACadena(int idCadena,int idhotel, String Nombre, String Ubicacion){
+		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
+    	ServicioHotel SH = new ServicioHotel();
+		Cadena_Hotelera CH = new Cadena_Hotelera();//asignacion de un nuevo espacio en memoria
+    	SCH.startEntityManager();
+    	CH = SCH.buscar(idCadena);
+    	if(CH!= null)
+    	{	
+    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+    	CH.setNombre(CH.getNombre());
+    	CH.setHotels(new ArrayList<Hotel>());
+    	SCH.startEntityManager();
+    	SH.startEntityManager();
+    	Hotel hotel1 = new Hotel();
+    	hotel1 = SH.buscar(idhotel);
+    	if(hotel1!=null)
+    	{
+    	hotel1.setIdHotel(hotel1.getIdHotel());
+    	hotel1.setNombre(Nombre);
+    	hotel1.setUbicacion(Ubicacion);
+    	hotel1.setCadenaHotelera(CH);
+    	hotel1.setHabitaciones(hotel1.getHabitaciones());
+    	hotel1.setReservacions(hotel1.getReservacions());
+    	hotel1.setServicios(hotel1.getServicios());
+    	hotel1.setUsuarios(hotel1.getUsuarios());
+    	CH.getHotels().add(hotel1);
+    	SCH.actualizar(CH);
+    	SH.closeEntityManager();
+    	return true;
+    	}else
+    	{
+    		SCH.closeEntityManager();
+			SH.closeEntityManager();
+			return false;
+    	}
+    	}else {
+    			SCH.closeEntityManager();
+    			SH.closeEntityManager();
+    			return false;
+    	}
+	}
+	
+	
+	public void InsertarCliente(String Nombre,String cedula,String telefono){
 		ServicioCliente SC = new ServicioCliente();
+		SC.startEntityManager();
     	Cliente clientenuevo = new Cliente();
-    	clientenuevo.setIdCliente(2);
+    	clientenuevo.setIdCliente(SC.siguienteId());
     	clientenuevo.setNombre(Nombre);
     	clientenuevo.setCedula(cedula);
     	clientenuevo.setTelefono(telefono);
     	clientenuevo.setReservacions(new ArrayList<Reservacion>());
     	clientenuevo.setServicios(new ArrayList<Servicio>());
     	SC.insertar(clientenuevo);
+
+    	SC.closeEntityManager();
 	}
 	
-	public void ActualizarCliente(int idcliente, String Nombre,String cedula,String telefono){
+	public boolean ActualizarCliente(int idcliente, String Nombre,String cedula,String telefono){
 		ServicioCliente SC = new ServicioCliente();
     	Cliente clientenuevo = new Cliente();
+    	SC.startEntityManager();
     	clientenuevo = SC.buscar(idcliente);
     	if(clientenuevo!= null)
     	{
@@ -129,8 +189,12 @@ public class Logica {
     	clientenuevo.setReservacions(clientenuevo.getReservacions());
     	clientenuevo.setServicios(clientenuevo.getServicios());
     	SC.actualizar(clientenuevo);
-    	} else
-    	System.out.print("No existe cliente");
+    	SC.closeEntityManager();
+    	return true;
+    	} else{
+    		SC.closeEntityManager();
+    		return false;
+    	}
 	}
 	
 	
@@ -143,13 +207,19 @@ public class Logica {
     	
     	
     	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+
+    	SCH.startEntityManager();
     	CH = SCH.buscar(idCadena);
+    	if(CH!=null){
     	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(CH.getHotels());
     	
     	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
     	hotel1=SH.buscar(idHotel);
+    	if(hotel1!=null)
+    	{
     	hotel1.setIdHotel(hotel1.getIdHotel());
     	hotel1.setNombre(hotel1.getNombre());
     	hotel1.setUbicacion(hotel1.getUbicacion());
@@ -158,24 +228,21 @@ public class Logica {
     	hotel1.setReservacions(hotel1.getReservacions());
     	hotel1.setServicios(hotel1.getServicios());
     	hotel1.setUsuarios(hotel1.getUsuarios());
-    	
-    	for (int i =0; i< CH.getHotels().size();i++)
-    	{
-    		if(CH.getHotels().get(1).getIdHotel()== hotel1.getIdHotel())
-    		{
+   
     			Cliente clientenuevo = new Cliente();//cliente existente
+    			SC.startEntityManager();
+    			clientenuevo = SC.buscar(idCliente);
     			if(clientenuevo!=null)
     			{
-    			clientenuevo = SC.buscar(idCliente);
     			clientenuevo.setIdCliente(clientenuevo.getIdCliente());
     	    	clientenuevo.setNombre(clientenuevo.getNombre());
     	    	clientenuevo.setCedula(clientenuevo.getCedula());
     	    	clientenuevo.setTelefono(clientenuevo.getTelefono());
     	    	clientenuevo.setReservacions(clientenuevo.getReservacions());
     	    	clientenuevo.setServicios(clientenuevo.getServicios());
-    	    
+    	    	SR.startEntityManager();
     	    	Reservacion reservacionueva = new Reservacion();//reservacion nueva
-    	    	reservacionueva.setIdReservacion(1);
+    	    	reservacionueva.setIdReservacion(SR.siguienteId());
     	    	reservacionueva.setHotel(hotel1);
     	    	reservacionueva.setFecha_Reserva("08/08/2014");
     	    	reservacionueva.setFecha_Llegada(Llegada);
@@ -185,28 +252,145 @@ public class Logica {
     	    	reservacionueva.setFacturas(new ArrayList<Factura>());
     	      	
     	    	hotel1.getReservacions().add(reservacionueva);
+    	    	clientenuevo.getReservacions().add(reservacionueva);
     	    	
     	    	SR.insertar(reservacionueva);
+    	    	SC.closeEntityManager();
+    	    	SR.closeEntityManager();
+    	    	SH.closeEntityManager();
+    	    	SCH.closeEntityManager();
     	    	return true;
+    			}else
+    			{
+    				SC.closeEntityManager();
+    				SH.closeEntityManager();
+    	    		SCH.closeEntityManager();
+    	        	return false;
     			}
-    		}
+    		
+    	}else
+    	{	
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+        	return false;
     	}
-    	
+    	}else{
+	    	SCH.closeEntityManager();
     	return false;
-    	
+    	}
 	}
+	
+	
+	public boolean ActualizarReservacion (int idCadena, int idHotel, int idCliente, int idreservacion, String Llegada, String Salida){
+		ServicioCliente SC = new ServicioCliente();
+    	ServicioReservacion SR = new ServicioReservacion();
+    	ServicioHotel SH= new ServicioHotel();
+    	ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
+    	
+    	
+    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+    	SCH.startEntityManager();
+    	CH = SCH.buscar(idCadena);
+    	if(CH!=null){
+    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+    	CH.setNombre(CH.getNombre());
+    	CH.setHotels(CH.getHotels());
+    	
+    	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
+    	hotel1=SH.buscar(idHotel);
+    	if(hotel1!=null)
+    	{
+    	hotel1.setIdHotel(hotel1.getIdHotel());
+    	hotel1.setNombre(hotel1.getNombre());
+    	hotel1.setUbicacion(hotel1.getUbicacion());
+    	hotel1.setCadenaHotelera(CH);
+    	hotel1.setHabitaciones(hotel1.getHabitaciones());
+    	hotel1.setReservacions(hotel1.getReservacions());
+    	hotel1.setServicios(hotel1.getServicios());
+    	hotel1.setUsuarios(hotel1.getUsuarios());
+   
+    			Cliente clientenuevo = new Cliente();//cliente existente
+    			SC.startEntityManager();
+    			clientenuevo = SC.buscar(idCliente);
+    			if(clientenuevo!=null)
+    			{
+    			clientenuevo.setIdCliente(clientenuevo.getIdCliente());
+    	    	clientenuevo.setNombre(clientenuevo.getNombre());
+    	    	clientenuevo.setCedula(clientenuevo.getCedula());
+    	    	clientenuevo.setTelefono(clientenuevo.getTelefono());
+    	    	clientenuevo.setReservacions(clientenuevo.getReservacions());
+    	    	clientenuevo.setServicios(clientenuevo.getServicios());
+    	    
+    	    	SR.startEntityManager();
+    	    	Reservacion reservacionueva = new Reservacion();//reservacion nueva
+    	    	reservacionueva=SR.buscar(idreservacion);
+    	    	if(reservacionueva!=null)
+    	    	{
+    	    	reservacionueva.setIdReservacion(reservacionueva.getIdReservacion());
+    	    	reservacionueva.setHotel(reservacionueva.getHotel());
+    	    	reservacionueva.setFecha_Reserva("08/08/2014");
+    	    	reservacionueva.setFecha_Llegada(Llegada);
+    	    	reservacionueva.setFecha_Salida(Salida);
+    	    	reservacionueva.setCliente(reservacionueva.getCliente());
+    	    	reservacionueva.setCosto(10000);
+    	    	reservacionueva.setFacturas(new ArrayList<Factura>());
+    	      	
+    	    	hotel1.getReservacions().add(reservacionueva);
+    	    	clientenuevo.getReservacions().add(reservacionueva);
+    	    	
+    	    	SR.actualizar(reservacionueva);
+    	    	SC.closeEntityManager();
+    	    	SR.closeEntityManager();
+    	    	SH.closeEntityManager();
+    	    	SCH.closeEntityManager();
+    	    	return true;
+    	    	}else
+    	    	{
+    	    		SR.closeEntityManager();
+    	    		SC.closeEntityManager();
+    				SH.closeEntityManager();
+    	    		SCH.closeEntityManager();
+    	        	return false;
+    	    	}
+    			}else
+    			{
+    				SC.closeEntityManager();
+    				SH.closeEntityManager();
+    	    		SCH.closeEntityManager();
+    	        	return false;
+    			}
+    		
+    	}else
+    	{	
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+        	return false;
+    	}
+    	}else{
+	    	SCH.closeEntityManager();
+    	return false;
+    	}
+	}
+	
 	
 	public boolean CrearServicio (int idCadena, int idHotel, int idCliente, String Descripcion, Date horario, int costo){
 		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
 		ServicioHotel SH = new ServicioHotel();
 		Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+		SCH.startEntityManager();
 		CH = SCH.buscar(idCadena);
+		if(CH!=null)
+		{
     	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(CH.getHotels());
     	
     	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
     	hotel1 = SH.buscar(idHotel);
+    	if(hotel1!=null)
+    	{
     	hotel1.setIdHotel(hotel1.getIdHotel());
     	hotel1.setNombre(hotel1.getNombre());
     	hotel1.setUbicacion(hotel1.getUbicacion());
@@ -216,38 +400,49 @@ public class Logica {
     	hotel1.setServicios(hotel1.getServicios());
     	hotel1.setUsuarios(hotel1.getUsuarios());
     	CH.getHotels().add(hotel1);
-    	for (int i =0; i< CH.getHotels().size();i++)
-    	{
-    		if(CH.getHotels().get(1).getIdHotel()== hotel1.getIdHotel())
-    		{
+    	
     			ServicioServicio SS = new ServicioServicio(); //Instanciacion del Servicio
     			Servicio servicio = new Servicio();
-    	
+    			SS.startEntityManager();
     			servicio.setClientes(new ArrayList<Cliente>());
     			servicio.setCosto(costo);
     			servicio.setDescripcion(Descripcion);
     			servicio.setHorario(horario);
     			servicio.setHotel(hotel1);
-    			servicio.setIdServicios(1);
+    			servicio.setIdServicios(SS.siguienteId());
     	
     			SS.insertar(servicio);
+    			SS.closeEntityManager();
+    			SH.closeEntityManager();
+        		SCH.closeEntityManager();
     			return true;
-    		}
-    	}
-    	return false;
-	}
+    	
+		}else
+		{
+			SCH.closeEntityManager();
+			return false;
+		}
+		}
+		return false;
+		}
 	
 	public boolean ActualizarServicio (int idCadena, int idHotel, int idCliente, int idServicio, String Descripcion, Date horario, int costo){
 		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
 		ServicioHotel SH = new ServicioHotel();
 		Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+		SCH.startEntityManager();
 		CH = SCH.buscar(idCadena);
+		if(CH!=null)
+		{
     	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(CH.getHotels());
     	
     	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
     	hotel1 = SH.buscar(idHotel);
+    	if(hotel1!=null)
+    	{
     	hotel1.setIdHotel(hotel1.getIdHotel());
     	hotel1.setNombre(hotel1.getNombre());
     	hotel1.setUbicacion(hotel1.getUbicacion());
@@ -257,29 +452,41 @@ public class Logica {
     	hotel1.setServicios(hotel1.getServicios());
     	hotel1.setUsuarios(hotel1.getUsuarios());
     	CH.getHotels().add(hotel1);
-    	for (int i =0; i< CH.getHotels().size();i++)
-    	{
-    		if(CH.getHotels().get(1).getIdHotel()== hotel1.getIdHotel())
-    		{
+    	
     			ServicioServicio SS = new ServicioServicio(); //Instanciacion del Servicio
     			Servicio servicio = new Servicio();
+    			SS.startEntityManager();
     			servicio = SS.buscar(idServicio);
-    			if (servicio!= null)
+    			if(servicio!=null)
     			{
-    			servicio.setClientes(new ArrayList<Cliente>());
+    			servicio.setClientes(servicio.getClientes());
     			servicio.setCosto(costo);
     			servicio.setDescripcion(Descripcion);
     			servicio.setHorario(horario);
-    			servicio.setHotel(servicio.getHotel());
+    			servicio.setHotel(hotel1);
     			servicio.setIdServicios(servicio.getIdServicios());
     	
     			SS.actualizar(servicio);
+    			SS.closeEntityManager();
+    			SH.closeEntityManager();
+        		SCH.closeEntityManager();
     			return true;
     			}else
+    			{
+    				SH.closeEntityManager();
+    				SS.closeEntityManager();
+    				SCH.closeEntityManager();
     				return false;
-    		}
-    	}
-    	return false;
+    			}
+		}else
+		{
+			SH.closeEntityManager();
+			SCH.closeEntityManager();
+			return false;
+		}
+		}
+		SCH.closeEntityManager();
+		return false;
 	}
 	
 	public boolean CrearHabitacion (int idcadena, int idhotel){
@@ -314,10 +521,13 @@ public class Logica {
     		if((CH.getHotels().get(i).getIdHotel()) == (hotel1.getIdHotel()))
     			{
     				habitacion.setHotel(hotel1);
-    				habitacion.setIdHabitaciones(3);
+    				SHabita.startEntityManager();
+    				habitacion.setIdHabitaciones(SHabita.siguienteId());
     				habitacion.setElementos(new ArrayList<Elemento>());
     				habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
     				SHabita.insertar(habitacion);
+    				SHabita.closeEntityManager();
+    				hotel1.getHabitaciones().add(habitacion);
     				SH.closeEntityManager();
     				SCH.closeEntityManager();
     				return true;
@@ -350,48 +560,49 @@ public class Logica {
     	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
     	SCH.startEntityManager();
     	CH= SCH.buscar(idcadena);
-    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
-    	CH.setNombre(CH.getNombre());
-    	CH.setHotels(CH.getHotels());
     	if(CH!= null)
     	{
+    		CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+        	CH.setNombre(CH.getNombre());
+        	CH.setHotels(CH.getHotels());
     	Hotel hotel1 = new Hotel(); // hotel existente
     	SH.startEntityManager();
     	hotel1=SH.buscar(idhotel);
-    	hotel1.setIdHotel(hotel1.getIdHotel());
-    	hotel1.setNombre(hotel1.getNombre());
-    	hotel1.setUbicacion(hotel1.getUbicacion());
-    	hotel1.setCadenaHotelera(hotel1.getCadenaHotelera());
-    	hotel1.setHabitaciones(hotel1.getHabitaciones());
-    	hotel1.setReservacions(hotel1.getReservacions());
-    	hotel1.setServicios(hotel1.getServicios());
-    	hotel1.setUsuarios(hotel1.getUsuarios());
     	if(hotel1!=null)
     	{
+    		hotel1.setIdHotel(hotel1.getIdHotel());
+        	hotel1.setNombre(hotel1.getNombre());
+        	hotel1.setUbicacion(hotel1.getUbicacion());
+        	hotel1.setCadenaHotelera(hotel1.getCadenaHotelera());
+        	hotel1.setHabitaciones(hotel1.getHabitaciones());
+        	hotel1.setReservacions(hotel1.getReservacions());
+        	hotel1.setServicios(hotel1.getServicios());
+        	hotel1.setUsuarios(hotel1.getUsuarios());
     	for (int i = 0; i < CH.getHotels().size();i++)
     	{
     		if((CH.getHotels().get(i).getIdHotel()) == (hotel1.getIdHotel()))
     			{
     				SHabita.startEntityManager();
     				habitacion = SHabita.buscar(idhabitacion);
-    				if(habitacion!=null)
-    				{
-    				habitacion.setHotel(habitacion.getHotel());
+    				if(habitacion!=null){
+    				habitacion.setHotel(hotel1);
     				habitacion.setIdHabitaciones(habitacion.getIdHabitaciones());
     				habitacion.setElementos(habitacion.getElementos());
     				habitacion.setServicioExtras(habitacion.getServicioExtras());
-    				
     				SHabita.actualizar(habitacion);
     				SHabita.closeEntityManager();
+    				hotel1.getHabitaciones().add(habitacion);
     				SH.closeEntityManager();
     				SCH.closeEntityManager();
     				return true;
-    				}else{
+    				}else
+    				{
     					SHabita.closeEntityManager();
-						SH.closeEntityManager();
-						SCH.closeEntityManager();
-    					return false;			
-    				}}
+    					SCH.closeEntityManager();
+    			    	SH.closeEntityManager();
+    			    	return false;
+    				}
+    			}
     	}
     	SCH.closeEntityManager();
     	SH.closeEntityManager();
@@ -561,44 +772,164 @@ public class Logica {
 	
 	public boolean AgregarServicioExtra(int idcadena, int idhotel, int idhabitacion, int idelemento,String descripcion,int costo,Date horario){
 		//Inicio
+		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
+		ServicioHotel SH = new ServicioHotel();
     	ServicioServicioExtra SSE = new ServicioServicioExtra();
     	ServicioExtra SE = new ServicioExtra();
     	ServicioHabitacion SHab = new ServicioHabitacion();
     	Habitacione habitacion = new Habitacione();
     	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
+    	SCH.startEntityManager();
+    	CH=SCH.buscar(idcadena);
+    	if(CH!=null)
+    	{
+    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+    	CH.setNombre(CH.getNombre());
+    	CH.setHotels(CH.getHotels());
     	
     	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
+    	SH.startEntityManager();
+    	hotel1 = SH.buscar(idhotel);
+    	if(hotel1!=null)
+    	{
+    	hotel1.setIdHotel(hotel1.getIdHotel());
+    	hotel1.setNombre(hotel1.getNombre());
+    	hotel1.setUbicacion(hotel1.getUbicacion());
+    	hotel1.setCadenaHotelera(hotel1.getCadenaHotelera());
+    	hotel1.setHabitaciones(hotel1.getHabitaciones());
+    	hotel1.setReservacions(hotel1.getReservacions());
+    	hotel1.setServicios(hotel1.getServicios());
+    	hotel1.setUsuarios(hotel1.getUsuarios());
     	
-    	habitacion.setHotel(hotel1);
-    	habitacion.setIdHabitaciones(1);
-    	habitacion.setElementos(new ArrayList<Elemento>());
-    	habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
+    	SHab.startEntityManager();
+    	habitacion=SHab.buscar(idhabitacion);
+    	if(habitacion!=null)
+    	{
+    	habitacion.setHotel(habitacion.getHotel());
+    	habitacion.setIdHabitaciones(habitacion.getIdHabitaciones());
+    	habitacion.setElementos(habitacion.getElementos());
+    	habitacion.setServicioExtras(habitacion.getServicioExtras());
     	
     	
-    	SE.setCosto(10000);
-    	SE.setDescripcion("Masaje");
+    	SE.setCosto(costo);
+    	SE.setDescripcion(descripcion);
     	SE.setHabitacione(habitacion);
-    	SE.setHorario(new Date(2013-01-01));
-    	SE.setIdServicio_Extra(1);
+    	SE.setHorario(horario);
+    	SE.setIdServicio_Extra(2);
     	
     	habitacion.getServicioExtras().add(SE);
     	
     	SHab.actualizar(habitacion);
-    	SSE.actualizar(SE);
+    	SSE.insertar(SE);
+    	SHab.closeEntityManager();
+    	SH.closeEntityManager();
+    	SCH.closeEntityManager();
     	return true;
-    	//FIN Insertar un Servicio Extra 
+    	}else
+    	{
+    		SHab.closeEntityManager();
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    	}
+    	else
+    	{
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    	}else{
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+	}
+	
+	
+	public boolean ActualizarServicioExtra(int idcadena, int idhotel, int idhabitacion, int idelemento,String descripcion,int costo,int idse,Date horario){
+		//Inicio
+		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
+		ServicioHotel SH = new ServicioHotel();
+    	ServicioServicioExtra SSE = new ServicioServicioExtra();
+    	ServicioExtra SE = new ServicioExtra();
+    	ServicioHabitacion SHab = new ServicioHabitacion();
+    	Habitacione habitacion = new Habitacione();
+    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+    	SCH.startEntityManager();
+    	CH=SCH.buscar(idcadena);
+    	if(CH!=null)
+    	{
+    	CH.setIdCadena_Hotelera(CH.getIdCadena_Hotelera());
+    	CH.setNombre(CH.getNombre());
+    	CH.setHotels(CH.getHotels());
+    	
+    	Hotel hotel1 = new Hotel(); // hotel existente
+    	SH.startEntityManager();
+    	hotel1 = SH.buscar(idhotel);
+    	if(hotel1!=null)
+    	{
+    	hotel1.setIdHotel(hotel1.getIdHotel());
+    	hotel1.setNombre(hotel1.getNombre());
+    	hotel1.setUbicacion(hotel1.getUbicacion());
+    	hotel1.setCadenaHotelera(hotel1.getCadenaHotelera());
+    	hotel1.setHabitaciones(hotel1.getHabitaciones());
+    	hotel1.setReservacions(hotel1.getReservacions());
+    	hotel1.setServicios(hotel1.getServicios());
+    	hotel1.setUsuarios(hotel1.getUsuarios());
+    	
+    	SHab.startEntityManager();
+    	habitacion=SHab.buscar(idhabitacion);
+    	if(habitacion!=null)
+    	{
+    	habitacion.setHotel(habitacion.getHotel());
+    	habitacion.setIdHabitaciones(habitacion.getIdHabitaciones());
+    	habitacion.setElementos(habitacion.getElementos());
+    	habitacion.setServicioExtras(habitacion.getServicioExtras());
+    	
+    	SSE.startEntityManager();
+    	SE = SSE.buscar(idse);
+    	if(SE!=null)
+    	{
+    	SE.setCosto(costo);
+    	SE.setDescripcion(descripcion);
+    	SE.setHabitacione(habitacion);
+    	SE.setHorario(horario);
+    	SE.setIdServicio_Extra(SE.getIdServicio_Extra());
+    	habitacion.getServicioExtras().add(SE);
+    	
+    	SHab.actualizar(habitacion);
+    	SSE.insertar(SE);
+    	SSE.closeEntityManager();
+    	SHab.closeEntityManager();
+    	SH.closeEntityManager();
+    	SCH.closeEntityManager();
+    	return true;
+    	}else
+    	{
+    		SSE.closeEntityManager();
+    		SHab.closeEntityManager();
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();	
+    		return false;
+    	}
+    	}else
+    	{
+    		SHab.closeEntityManager();
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    	}
+    	else
+    	{
+    		SH.closeEntityManager();
+    		SCH.closeEntityManager();
+    		return false;
+    	}
+    	}else{
+    		SCH.closeEntityManager();
+    		return false;
+    	}
 	}
 };
 
