@@ -12,7 +12,6 @@ package permiso;
  */
 public class Otros implements Permiso {
 String permiso ="";
-        @Override
         public String CrearPermiso() {
             return permiso = "Otros";
         }

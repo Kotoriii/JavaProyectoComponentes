@@ -13,7 +13,6 @@ package permiso;
 
 public class Vacaciones implements Permiso{
     String permiso = "";
-    @Override
         public String CrearPermiso() {
 
             return permiso = "Vacaciones";
