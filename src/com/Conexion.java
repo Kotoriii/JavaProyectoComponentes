@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import entidades.Usuario;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -85,18 +87,9 @@ public class Conexion {
 
             while (rs.next()) {
 
-                return new Usuario(
-                        rs.getString("id"),
-                        rs.getString("nombre"),
-                        rs.getString("contrasenna"),
-                        rs.getString("rol"),
-                        rs.getInt("salario"),
-                        rs.getInt("precioPorHora"),
-                        rs.getString("keywords"),
-                        rs.getString("correo"),
-                        rs.getString("horaEntrada"),
-                        rs.getString("horaSalida"),
-                        rs.getString("estado"));
+
+                return null;
+
             }
 
         } catch (SQLException ex) {
@@ -117,18 +110,8 @@ public class Conexion {
 
             while (rs.next()) {
 
-                return new Usuario(
-                        rs.getString("id"),
-                        rs.getString("nombre"),
-                        rs.getString("contrasenna"),
-                        rs.getString("rol"),
-                        rs.getInt("salario"),
-                        rs.getInt("precioPorHora"),
-                        rs.getString("keywords"),
-                        rs.getString("correo"),
-                        rs.getString("horaEntrada"),
-                        rs.getString("horaSalida"),
-                        rs.getString("estado"));
+                return null;
+
             }
 
         } catch (SQLException ex) {
@@ -154,18 +137,8 @@ public class Conexion {
             
             while (rs.next()) {
 
-                Usuario empleado = new Usuario(
-                        rs.getString("id"),
-                        rs.getString("nombre"),
-                        rs.getString("contrasenna"),
-                        rs.getString("rol"),
-                        rs.getInt("salario"),
-                        rs.getInt("precioPorHora"),
-                        rs.getString("keywords"),
-                        rs.getString("correo"),
-                        rs.getString("horaEntrada"),
-                        rs.getString("horaSalida"),
-                        rs.getString("estado"));
+                Usuario empleado = null;
+
                 
                 agregarResultadoBusqueda(empleado);
             }
@@ -194,18 +167,8 @@ public class Conexion {
 
             while (rs.next()) {
 
-                Usuario empleado = new Usuario(
-                        rs.getString("id"),
-                        rs.getString("nombre"),
-                        rs.getString("contrasenna"),
-                        rs.getString("rol"),
-                        rs.getInt("salario"),
-                        rs.getInt("precioPorHora"),
-                        rs.getString("keywords"),
-                        rs.getString("correo"),
-                        rs.getString("horaEntrada"),
-                        rs.getString("horaSalida"),
-                        rs.getString("estado"));
+                Usuario empleado = null;
+
                 
                 agregarResultadoBusqueda(empleado);
             }
@@ -234,19 +197,8 @@ public class Conexion {
 
             while (rs.next()) {
 
-                Usuario empleado = new Usuario(
-                        rs.getString("id"),
-                        rs.getString("nombre"),
-                        rs.getString("contrasenna"),
-                        rs.getString("rol"),
-                        rs.getInt("salario"),
-                        rs.getInt("precioPorHora"),
-                        rs.getString("keywords"),
-                        rs.getString("correo"),
-                        rs.getString("horaEntrada"),
-                        rs.getString("horaSalida"),
-                        rs.getString("estado"));
-                
+                Usuario empleado = null;
+
                 agregarResultadoBusqueda(empleado);
             }
             

@@ -4,7 +4,7 @@
     Author     : Christian
 --%>
 
-<%@page import="com.Usuario"%>
+<%@page import="entidades.Usuario"%>
 <jsp:include page="template.jsp" />
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

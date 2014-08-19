@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.Conexion;
-import com.Usuario;
+
+import entidades.Usuario;
 
 /**
  *

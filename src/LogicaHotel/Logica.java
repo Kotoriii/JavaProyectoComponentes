@@ -47,6 +47,7 @@ public class Logica {
     	CH.setNombre(NombreNuevo);
     	CH.setHotels(CH.getHotels());
     	SCH.actualizar(CH);	
+
     	SCH.closeEntityManager();
     	}else
     	{
@@ -66,6 +67,7 @@ public class Logica {
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(CH.getHotels());
     	SCH.eliminar(CH);
+
     	SCH.closeEntityManager();
     	}else
     	{
@@ -78,8 +80,10 @@ public class Logica {
 	
 	public void InsertarHotelACadena(int idCadena, String Nombre, String Ubicacion){
 		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
+
     	ServicioHotel SH = new ServicioHotel();
 		Cadena_Hotelera CH = new Cadena_Hotelera();//asignacion de un nuevo espacio en memoria
+
     	SCH.startEntityManager();
     	CH = SCH.buscar(idCadena);
     	if(CH!= null)
@@ -88,6 +92,7 @@ public class Logica {
     	CH.setNombre(CH.getNombre());
     	CH.setHotels(new ArrayList<Hotel>());
     	SCH.startEntityManager();
+
     	SH.startEntityManager();
     	Hotel hotel1 = new Hotel();
     	hotel1.setIdHotel(SH.siguienteId());
@@ -102,6 +107,7 @@ public class Logica {
     
     	CH.getHotels().add(hotel1);
     	SCH.actualizar(CH);
+
     	SH.closeEntityManager();
     	}else {
     			System.out.print("Cadena hotelera no econtrada");
@@ -165,6 +171,7 @@ public class Logica {
     	clientenuevo.setReservacions(new ArrayList<Reservacion>());
     	clientenuevo.setServicios(new ArrayList<Servicio>());
     	SC.insertar(clientenuevo);
+
     	SC.closeEntityManager();
 	}
 	
@@ -200,6 +207,7 @@ public class Logica {
     	
     	
     	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
+
     	SCH.startEntityManager();
     	CH = SCH.buscar(idCadena);
     	if(CH!=null){
@@ -232,7 +240,6 @@ public class Logica {
     	    	clientenuevo.setTelefono(clientenuevo.getTelefono());
     	    	clientenuevo.setReservacions(clientenuevo.getReservacions());
     	    	clientenuevo.setServicios(clientenuevo.getServicios());
-    	    
     	    	SR.startEntityManager();
     	    	Reservacion reservacionueva = new Reservacion();//reservacion nueva
     	    	reservacionueva.setIdReservacion(SR.siguienteId());
@@ -365,8 +372,6 @@ public class Logica {
     	return false;
     	}
 	}
-	
-	
 	
 	
 	public boolean CrearServicio (int idCadena, int idHotel, int idCliente, String Descripcion, Date horario, int costo){
@@ -890,7 +895,6 @@ public class Logica {
     	SE.setHabitacione(habitacion);
     	SE.setHorario(horario);
     	SE.setIdServicio_Extra(SE.getIdServicio_Extra());
-    	
     	habitacion.getServicioExtras().add(SE);
     	
     	SHab.actualizar(habitacion);

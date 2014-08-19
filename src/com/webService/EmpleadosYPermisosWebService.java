@@ -19,8 +19,21 @@ public class EmpleadosYPermisosWebService {
   String per = "*** Listado Empleados y sus respectivos Permisos de DogeBarcelo ***";
   for (Permiso p : sp.findTodos()){
    per += "\nNombre Empleado: " + p.getUsuario() + "\nID Permiso: " + p.getId()
-     + "\nTipo: " + p.getTipo() + "\nFechaDeExpiración: " + p.getHastaFecha()
+     + "\nTipo: " + p.getTipo() + "\nFechaDeExpiraciï¿½n: " + p.getHastaFecha()
      + "\n-----------------------------------------";
+  }
+  return per;
+ }
+ 
+ @GET
+ @Produces(MediaType.TEXT_HTML)
+ public String permisosHTML() {
+  ServicioPermiso sp = new ServicioPermiso();
+  String per = "<h1>*** Listado Empleados y sus respectivos Permisos de DogeBarcelo ***</h1>";
+  for (Permiso p : sp.findTodos()){
+   per += "<p>\nNombre Empleado: " + p.getUsuario() + "\nID Permiso: " + p.getId() 
+     + "\nTipo: " + p.getTipo() + "\nFechaDeExpiraciï¿½n: " + p.getHastaFecha()
+     + "\n-----------------------------------------</p>" ;
   }
   return per;
  }

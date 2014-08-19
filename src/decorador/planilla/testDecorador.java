@@ -1,5 +1,6 @@
 package decorador.planilla;
 
+
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,9 +10,11 @@ import LogicaHotel.Logica;
 
 import com.Report;
 
+import comu.ServicioUsuario;
 import comu.Servicio_ControlHorario;
 import entidades.Controlhorario;
 import entidades.ControlhorarioPK;
+import entidades.Usuario;
 
 ;
 
@@ -29,6 +32,9 @@ public class testDecorador {
 	public static void main(String[] args) {
 
 		Logica logica = new Logica();
+		
+		Usuario u = new ServicioUsuario().findPK(new Integer(1));
+		System.out.print(u.getNombre());
  	
  	/*
  	String nombrehotel = "h9";
@@ -38,6 +44,7 @@ public class testDecorador {
    	*/
  	
  	/*
+
  	String nombreCadena = "Cadenanueva6";	
  	int idCadena = 4;
  	logica.InsertarCadenaHotelera(idCadena, nombreCadena);
@@ -63,6 +70,7 @@ public class testDecorador {
  	int idCadena = 4;
     logica.ActualizarCadenaHotelera(idCadena, nombreCadena);
     */
+
 	/*	
 	int idcadena=6;
 	String nombre="hotelnuevoparacadena6";
@@ -82,6 +90,7 @@ public class testDecorador {
 	*/
 	/*
 	int idCadena = 1;
+
 	int idhotel = 2;
  	logica.CrearHabitacion(idCadena, idhotel);
     */
@@ -92,7 +101,6 @@ public class testDecorador {
 	int idhabitacion=1;
 	logica.ActualizarHabitacion(idCadena, idhotel, idhabitacion);
 	 */
-		
 		/*
 		int idCadena = 1;
 		int idhotel = 1;
@@ -100,6 +108,7 @@ public class testDecorador {
 		String descripcion = "ducha";
 		logica.AgregarElemento(idCadena, idhotel, idhabitacion, descripcion);
  		*/
+
     	/*
 		int idCadena = 1;
 		int idelemento = 1;
@@ -107,6 +116,7 @@ public class testDecorador {
 		int idhabitacion=1;
 		String descripcion = "ducha caliente";
 		logica.ActualizarElemento(idCadena, idhotel, idhabitacion, idelemento, descripcion);
+
     */
 		/*
 		int idCadena = 1;
@@ -226,10 +236,6 @@ public class testDecorador {
 		 * System.out.println("El salario es de: " + salario1.getDescription());
 		 * System.out.println("El monto es: " + salario1.deduccion(250));
 		 */
-
-		HashMap parameterMap = new HashMap();
-		Report rpt = new Report(parameterMap, "Estados_Usuarios");
-		rpt.callReport();
 	}
 
 	public static void test_Control_Horarios() {

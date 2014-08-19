@@ -61,10 +61,16 @@ public class GeneradorReportes extends HttpServlet {
 		response.setContentType("application/pdf");
 		ServletOutputStream out = response.getOutputStream();
 		Connection cn = Conexion.getInstancia().getSqlCon();
-
+		
+		String reporte = request.getParameter("repo");
+		
+			
+			
+		
+		
 		try {
 			HashMap parameterMap = new HashMap();
-			Report rpt = new Report(parameterMap, "Estados_Usuarios");
+			Report rpt = new Report(parameterMap, reporte);
 
 			rpt.callReport();
 			JasperPrint print = rpt.getReporT();
