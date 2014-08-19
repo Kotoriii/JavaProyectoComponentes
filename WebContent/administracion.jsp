@@ -34,6 +34,9 @@
     } else if (empleado != null){
         busqueda = empleado.toString();
     }
+    if(request.getParameter("err") != null && !request.getParameter("err").equals("")){
+    	out.print("<ul><li><h2 style=\"color: red; margin-left: 40px\">"+request.getParameter("err")+"</h2></li></ul>");
+    }
 %>
 
 <html>

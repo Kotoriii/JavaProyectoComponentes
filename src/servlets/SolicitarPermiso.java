@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import comu.ServicioPermiso;
 import entidades.Permiso;
 import entidades.PermisoPK;
+import entidades.Usuario;
 
 /**
  * 
@@ -42,7 +43,11 @@ public class SolicitarPermiso extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		String id = request.getParameter("id");
+		if(request.getSession().getAttribute("usuario").equals(null)){
+			response.sendRedirect("paginaP.jsp");
+		}
+		Usuario usuario = (Usuario)request.getSession().getAttribute("usuario");
+		int id = usuario.getId();
 		String permiso = request.getParameter("motivo");
 		String fechainicio = request.getParameter("fechainicio");
 		String fechafinal = request.getParameter("fechafinal");
@@ -50,7 +55,7 @@ public class SolicitarPermiso extends HttpServlet {
 		try {
 			ServicioPermiso sp = new ServicioPermiso();
 			PermisoPK perPK = new PermisoPK();
-			perPK.setIdUsuario(Integer.parseInt(id));
+			perPK.setIdUsuario(id);
 			perPK.setDesdeFecha(fechainicio);
 			Permiso per = new Permiso();
 			per.setHastaFecha(fechafinal);

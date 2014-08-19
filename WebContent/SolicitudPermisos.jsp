@@ -46,20 +46,7 @@
 							<h3>Solicitud de Permiso</h3>
 						</ul>
 
-						<ul class="list-group-item">
-							<div class="row">
-								<div class="col-md-4">
-									<h4>
-										<span class='glyphicon glyphicon-glass'></span> ID:
-									</h4>
-								</div>
-								<div class="col-md-8">
-									<input type="text" class="form-control" id="id"
-										placeholder="Ingrese el ID del solicitante" name="id" value="" />
-								</div>
-							</div>
-						</ul>
-
+			
 						<ul class="list-group-item">
 							<div class="row">
 								<div class="col-md-4">
