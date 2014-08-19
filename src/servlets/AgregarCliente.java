@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import LogicaHotel.Logica;
 import comu.ServicioCliente;
 import entidades.Cliente;
 import entidades.Reservacion;
@@ -20,6 +22,7 @@ import entidades.Servicio;
 
 public class AgregarCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logica logica = new Logica();  
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,19 +39,9 @@ public class AgregarCliente extends HttpServlet {
 		String Nombre = request.getParameter("Nombre");	
 		String cedula = request.getParameter("Cedula");
 		String telefono = request.getParameter("Telefono");
-	 	
-		
-		ServicioCliente SC = new ServicioCliente();
-		SC.startEntityManager();
-    	Cliente clientenuevo = new Cliente();
-    	clientenuevo.setIdCliente(SC.siguienteId());
-    	clientenuevo.setNombre(Nombre);
-    	clientenuevo.setCedula(cedula);
-    	clientenuevo.setTelefono(telefono);
-    	clientenuevo.setReservacions(new ArrayList<Reservacion>());
-    	clientenuevo.setServicios(new ArrayList<Servicio>());
-    	SC.insertar(clientenuevo);
-    	SC.closeEntityManager();
+		PrintWriter out= response.getWriter();
+		out.println("Cliente Agregado");
+		logica.InsertarCliente(Nombre, cedula, telefono);
 	}
 
 	/**

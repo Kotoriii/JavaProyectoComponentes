@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import LogicaHotel.Logica;
 import comu.ServicioCadena_Hotelera;
 import comu.ServicioHotel;
 import comu.ServicioServicio;
@@ -24,7 +26,7 @@ import entidades.Servicio;
 
 public class AgregarServicio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	Logica logica = new Logica();  
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,7 +39,15 @@ public class AgregarServicio extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out= response.getWriter();
+	 	out.println("Servicio Agregado");
+	 	
+	 	String Descripcion = request.getParameter("Descripcion");	
+		int idhotel = Integer.parseInt(request.getParameter("IdHotel"));
+		int idcliente= Integer.parseInt(request.getParameter("IdCliente"));
+		int costo= Integer.parseInt(request.getParameter("Costo"));
 		
+		logica.CrearServicio(idhotel, idcliente, Descripcion, costo);
 	}
 
 	/**

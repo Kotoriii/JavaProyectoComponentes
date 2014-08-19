@@ -20,7 +20,6 @@ import LogicaHotel.Logica;
 
 public class AgregarCadena extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
 	Logica logica = new Logica(); 
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,18 +35,11 @@ public class AgregarCadena extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PrintWriter out= response.getWriter();
-		out.println("Hola agregar hotel");
+		out.println("Cadena Agregada");
 		String nombreCadena = request.getParameter("Nombre");	
 	 	int idCadena = Integer.parseInt(request.getParameter("IdCadena"));
 	 	
-		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera(); //Instanciacion del Servicio
-		SCH.startEntityManager();
-		Cadena_Hotelera CH = new Cadena_Hotelera();//asignacion de un nuevo espacio en memoria
-    	CH.setIdCadena_Hotelera(SCH.siguienteId());
-    	CH.setNombre(nombreCadena);
-    	CH.setHotels(new ArrayList<Hotel>());
-    	SCH.insertar(CH);	
-    	SCH.closeEntityManager();
+		logica.InsertarCadenaHotelera(idCadena, nombreCadena);
 	}
 
 	
