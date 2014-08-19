@@ -54,5 +54,6 @@
 	<classpathentry kind="lib" path="/home/andrea/workspace/dogebarcelo/WebContent/WEB-INF/lib/oauth-server-1.18.jar"/>
 	<classpathentry kind="lib" path="/home/andrea/workspace/dogebarcelo/WebContent/WEB-INF/lib/oauth-signature-1.18.jar"/>
 	<classpathentry kind="lib" path="/home/andrea/workspace/dogebarcelo/WebContent/WEB-INF/lib/struts.jar"/>
+	<classpathentry kind="lib" path="/home/andrea/workspace/DogeCalabaza/jcommon-0.9.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
