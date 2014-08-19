@@ -1,5 +1,6 @@
 package decorador.planilla;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -37,32 +38,60 @@ public class testDecorador {
    	*/
  	
  	/*
- 	String nombreCadena = "Cadenanueva4";	
+ 	String nombreCadena = "Cadenanueva6";	
  	int idCadena = 4;
  	logica.InsertarCadenaHotelera(idCadena, nombreCadena);
  	*/
- 	
- 	/*
+	/*	
+	String Nombre ="Nombreclientenuevo";
+	String cedula = "1212121212";
+	String telefono= "2444444444";
+		
+ 	logica.InsertarCliente(Nombre, cedula,telefono);
+ 	 
+ 	 */
+		/*
+		String Nombre ="Nombreclientenuevo";
+		String cedula = "1212121212";
+		String telefono= "2444444444";	
+		int idcliente = 2;
+		logica.ActualizarCliente(idcliente, Nombre, cedula, telefono);	
+		*/
+		
+		/*
  	String nombreCadena = "Cadenanueva4!!";	
  	int idCadena = 4;
     logica.ActualizarCadenaHotelera(idCadena, nombreCadena);
     */
- 	
+	/*	
+	int idcadena=6;
+	String nombre="hotelnuevoparacadena6";
+	String Ubicacion="ubcacionnueva";
+	logica.InsertarHotelACadena(idcadena, nombre, Ubicacion);
+ 	*/
+		/*
+		int idCadena=2;
+		int idhotel=6;
+		String Nombre="hotelnuevoparacadena6";
+		String Ubicacion="ubcacionnueva22";
+		logica.ActualizarHotelACadena(idCadena, idhotel, Nombre, Ubicacion);
+		*/
  	/*
  	int idCadena = 4;
     logica.BorrarCadenaHotelera(idCadena);
 	*/
 	/*
 	int idCadena = 1;
-	int idhotel = 1;
+	int idhotel = 2;
  	logica.CrearHabitacion(idCadena, idhotel);
     */
-	/*
+	
+		/*
 	int idCadena = 1;
-	int idhotel = 1;
+	int idhotel = 2;
 	int idhabitacion=1;
-	logica.CrearHabitacion(idCadena, idhotel,idhabitacion);
-	    */
+	logica.ActualizarHabitacion(idCadena, idhotel, idhabitacion);
+	 */
 		
 		/*
 		int idCadena = 1;
@@ -71,62 +100,83 @@ public class testDecorador {
 		String descripcion = "ducha";
 		logica.AgregarElemento(idCadena, idhotel, idhabitacion, descripcion);
  		*/
-    	
+    	/*
 		int idCadena = 1;
 		int idelemento = 1;
 		int idhotel = 1;
 		int idhabitacion=1;
 		String descripcion = "ducha caliente";
 		logica.ActualizarElemento(idCadena, idhotel, idhabitacion, idelemento, descripcion);
-    
-    
-    
-    	
-    	
-    	
-    	
-    	/*
-    	//+++++++++++++++++++++++Agregar/insertar un Servicio Extra a una Habitacion+++++++++++++++++++++++
-    	//Inicio
-    	ServicioServicioExtra SSE = new ServicioServicioExtra();
-    	ServicioExtra SE = new ServicioExtra();
-    	ServicioHabitacion SHab = new ServicioHabitacion();
-    	Habitacione habitacion = new Habitacione();
-    	Cadena_Hotelera CH = new Cadena_Hotelera(); //Cadena Existente
-    	CH.setIdCadena_Hotelera(new Integer(1));
-    	CH.setNombre("CadenaNueva1");
-    	CH.setHotels(new ArrayList<Hotel>());
-    	
-    	Hotel hotel1 = new Hotel(); // hotel existente
-    	hotel1.setIdHotel(1);
-    	hotel1.setNombre("h1");
-    	hotel1.setUbicacion("U1");
-    	hotel1.setCadenaHotelera(CH);
-    	hotel1.setHabitaciones(new ArrayList<Habitacione>());
-    	hotel1.setReservacions(new ArrayList<Reservacion>());
-    	hotel1.setServicios(new ArrayList<Servicio>());
-    	hotel1.setUsuarios(new ArrayList<Usuario>());
-    	CH.getHotels().add(hotel1);
-    	
-    	habitacion.setHotel(hotel1);
-    	habitacion.setIdHabitaciones(1);
-    	habitacion.setElementos(new ArrayList<Elemento>());
-    	habitacion.setServicioExtras(new ArrayList<ServicioExtra>());
-    	
-    	
-    	SE.setCosto(10000);
-    	SE.setDescripcion("Masaje");
-    	SE.setHabitacione(habitacion);
-    	SE.setHorario(new Date(2013-01-01));
-    	SE.setIdServicio_Extra(1);
-    	
-    	habitacion.getServicioExtras().add(SE);
-    	
-    	SHab.actualizar(habitacion);
-    	SSE.actualizar(SE);
-    	//FIN Insertar un Servicio Extra 
+    */
+		/*
+		int idCadena = 1;
+		int idCliente = 1;
+		int idHotel = 1;
+		String Llegada="13/12/2014";
+		String Salida="17/12/2014";
+		logica.CrearReservacion(idCadena, idHotel, idCliente, Llegada, Salida);
     	*/
-   
+		
+		/*
+		int idCadena = 1;
+		int idreservacion=1;
+		int idCliente = 1;
+		int idHotel = 1;
+		String Llegada="13/12/2014";
+		String Salida="17/12/2014";
+		logica.ActualizarReservacion(idCadena, idHotel, idCliente, idreservacion, Llegada, Salida);
+		*/
+		/*
+		int idCadena = 1;
+		int costo=100;
+		int idCliente = 1;
+		int idHotel = 1;
+		Date horario = new Date(2013-01-01);
+		String Descripcion ="Desayuno al cuarto";
+		String Salida="17/12/2014";
+    	logica.CrearServicio(idCadena, idHotel, idCliente, Descripcion, horario, costo);
+    	*/
+		
+		/*
+		int idCadena = 1;
+		int idServicio = 1;
+		int costo=10000000;
+		int idCliente = 1;
+		int idHotel = 1;
+		Date horario = new Date(2013-01-01);
+		String Descripcion ="Desayuno al cuarto";
+		String Salida="17/12/2014";
+    	logica.ActualizarServicio(idCadena, idHotel, idCliente, idServicio, Descripcion, horario, costo);
+    	*/
+		
+		/*
+		int idcadena = 1;
+		int idhabitacion = 1;
+		int idelemento =1;
+		String descripcion ="masaje terapeutico";
+		int costo =100000;
+		int idServicio = 1;
+		Date horario = new Date(2013-01-01);
+		int idCliente = 1;
+		int idhotel = 1;
+		logica.AgregarServicioExtra(idcadena, idhotel, idhabitacion, idelemento, descripcion, costo, horario);
+		*/
+		/*
+		int idcadena = 1;
+		int idse=1;
+		int idhabitacion = 1;
+		int idelemento =1;
+		String descripcion ="masaje terapeutico";
+		int costo =100000;
+		int idServicio = 1;
+		Date horario = new Date(2013-01-01);
+		int idCliente = 1;
+		int idhotel = 1;
+		logica.ActualizarServicioExtra(idcadena, idhotel, idhabitacion, idelemento, descripcion, costo, idse, horario);
+		*/
+		
+		
+    	
     	
     	
 		//test_Control_Horarios();

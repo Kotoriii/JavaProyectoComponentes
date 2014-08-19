@@ -33,8 +33,16 @@ public class ServicioElemento extends ServicioEntidad<Elemento> implements Seria
 	
 	public int siguienteId()
 	{
-		int num = 1;
-		num = buscarTodos().size() + 1;
-		return num;
+		int i = 1;
+		boolean bandera = false;
+		while(bandera == false){
+		if(buscar(i)==null)
+		{
+			bandera = true;
+		}else
+			i= i+1;//dato que se asignara al id del nuevo registro
+		}
+		return i;
+		
 	}
 }
