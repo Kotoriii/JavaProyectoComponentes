@@ -12,14 +12,14 @@
 	
 	<div>
 		<form action="DirigirPag" method="get">
-			Cadena Hotelera:<input type="submit" name="IR" value="IRcadena"><br>
-			Hotel:<input type="submit" name="IR" value="IRhotel"><br>
-			Habitaciones:<input type="submit" name="IR" value="IRhabitacion"><br>
-			Servicios:<input type="submit" name="IR" value="IRservicio"><br>
-			Servicios Extra:<input type="submit" name="IR" value="IRservicioextra"><br>
-			Cliente:<input type="submit" name="IR" value="IRcliente"><br>
-			Reservacion:<input type="submit" name="IR" value="IRreservacion"><br>
-			Elementos de Habitaciones:<input type="submit" name="IR" value="IRelemento">
+			<a href="CadenaHotelera.jsp">Cadena Hotelera:<input type="submit" name="IR" value="Cadena"><br>
+			<a href="Hotel.jsp">Hotel:<input type="submit" name="IR" value="Hotel"><br>
+			<a href="Habitacion.jsp">Habitaciones:<input type="submit" name="IR" value="Habitacion"><br>
+			<a href="Servicio.jsp">Servicios:<input type="submit" name="IR" value="Servicio"><br>
+			<a href="ServicioExtra.jsp">Servicios Extra:<input type="submit" name="IR" value="Servicioextra"><br>
+			<a href="Cliente.jsp">Cliente:<input type="submit" name="IR" value="Cliente"><br>
+			<a href="Reservacion.jsp">Reservacion:<input type="submit" name="IR" value="Reservacion"><br>
+			<a href="Elemento.jsp">Elementos de Habitaciones:<input type="submit" name="IR" value="Elemento">
 			
 		</form>
 	</div>
