@@ -9,22 +9,23 @@
 <title>Menu de acciones del Hotel</title>
 </head>
 <body>
-	
+
 	<div>
 		<form action="DirigirPag" method="get">
-			<a href="CadenaHotelera.jsp">Cadena Hotelera:<input type="submit" name="IR" value="Cadena"><br>
-			<a href="Hotel.jsp">Hotel:<input type="submit" name="IR" value="Hotel"><br>
-			<a href="Habitacion.jsp">Habitaciones:<input type="submit" name="IR" value="Habitacion"><br>
-			<a href="Servicio.jsp">Servicios:<input type="submit" name="IR" value="Servicio"><br>
-			<a href="ServicioExtra.jsp">Servicios Extra:<input type="submit" name="IR" value="Servicioextra"><br>
-			<a href="Cliente.jsp">Cliente:<input type="submit" name="IR" value="Cliente"><br>
-			<a href="Reservacion.jsp">Reservacion:<input type="submit" name="IR" value="Reservacion"><br>
-			<a href="Elemento.jsp">Elementos de Habitaciones:<input type="submit" name="IR" value="Elemento">
-			
+			<div class="container jumbotron">
+				<h2>
+					<a href="CadenaHotelera.jsp">Cadena Hotelera:<br></a> <a
+						href="Hotel.jsp">Hotel:</a><br> <a href="Habitacion.jsp">Habitaciones:</a><br>
+					<a href="Servicio.jsp">Servicios:</a><br> <a
+						href="ServicioExtra.jsp">Servicios Extra:</a><br> <a
+						href="Cliente.jsp">Cliente:</a><br> <a href="Reservacion.jsp">Reservacion:</a><br>
+					<a href="Elemento.jsp">Elementos de Habitaciones:</a>
+				</h2>
+			</div>
 		</form>
 	</div>
 
-			
-			
+
+
 </body>
 </html>
