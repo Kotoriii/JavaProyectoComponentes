@@ -44,7 +44,7 @@
 		
 				Nombre Cadena Hotelera:<input type="text" name="Nombre"><br>
 				
-				<input type="submit" name="Eliminar" value="Eliminar" />
+				<input type="submit" name="Eliminar" value="Actualizar" />
 	</form>
 	
 </div>	

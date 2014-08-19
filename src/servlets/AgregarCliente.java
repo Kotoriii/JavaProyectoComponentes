@@ -1,11 +1,18 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import comu.ServicioCliente;
+import entidades.Cliente;
+import entidades.Reservacion;
+import entidades.Servicio;
 
 /**
  * Servlet implementation class AgregarCliente
@@ -26,7 +33,22 @@ public class AgregarCliente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String Nombre = request.getParameter("Nombre");	
+		String cedula = request.getParameter("Cedula");
+		String telefono = request.getParameter("Telefono");
+	 	
+		
+		ServicioCliente SC = new ServicioCliente();
+		SC.startEntityManager();
+    	Cliente clientenuevo = new Cliente();
+    	clientenuevo.setIdCliente(SC.siguienteId());
+    	clientenuevo.setNombre(Nombre);
+    	clientenuevo.setCedula(cedula);
+    	clientenuevo.setTelefono(telefono);
+    	clientenuevo.setReservacions(new ArrayList<Reservacion>());
+    	clientenuevo.setServicios(new ArrayList<Servicio>());
+    	SC.insertar(clientenuevo);
+    	SC.closeEntityManager();
 	}
 
 	/**
