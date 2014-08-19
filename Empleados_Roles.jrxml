@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Empleados_Roles" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
 	<property name="template.engine" value="tabular_template"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Doge"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -44,13 +46,13 @@
 			<![CDATA[]]>
 		</queryString>
 	</subDataset>
-	<queryString language="SQL">
-		<![CDATA[SELECT cadena_hotelera.Nombre, count(cadena_hotelera.Nombre) FROM hotel, cadena_hotelera WHERE cadena_hotelera.idCadena_Hotelera=hotel.Cadena_Hotelera_idCadena_Hotelera GROUP BY cadena_hotelera.Nombre]]>
+	<queryString>
+		<![CDATA[SELECT Cadena_Hotelera.Nombre, count(Cadena_Hotelera.Nombre) FROM hotel, Cadena_Hotelera WHERE Cadena_Hotelera.idCadena_Hotelera=hotel.Cadena_Hotelera_idCadena_Hotelera GROUP BY Cadena_Hotelera.Nombre]]>
 	</queryString>
 	<field name="Nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="count(cadena_hotelera.Nombre)" class="java.lang.Long"/>
+	<field name="count(Cadena_Hotelera.Nombre)" class="java.lang.Long"/>
 	<title>
 		<band height="72">
 			<frame>

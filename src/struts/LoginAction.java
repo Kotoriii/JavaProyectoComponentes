@@ -43,7 +43,7 @@ public class LoginAction extends org.apache.struts.action.Action {
 		// se fija que el usuairo no ha iniciado sesion en el dia y
 		// se fija que el usuario exista y que la contrasenna
 		// sea correcta
-		if (usuario != null && usuario.getNombre() == null) {
+		if (usuario == null && usuario.getNombre() == null) {
 			cnt = 1;
 		} else if (!usuario.getContrasenna().equals(loginForm.getPassword())) {
 			cnt = 2;

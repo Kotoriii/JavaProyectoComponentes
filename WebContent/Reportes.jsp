@@ -5,8 +5,8 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <%--
+<head>
+<%--
             Usuario usuario = new Usuario();//se usa un constructor vacio para evitar nullPointerException
             if (request.getSession().getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
@@ -14,28 +14,34 @@
                 usuario = (Usuario) request.getSession().getAttribute("usuario");
             }
 
-        --%> 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Página de Reportes</title>
-    </head>
-    <body>
+        --%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Página de Reportes</title>
+</head>
+<body>
 
-        <form action="GeneradorReportes" method="post" class="form-inline">
-            <div class='container jumbotron' style="border-radius: 10px">
-                <h2 style="margin-left:35%; margin-top:2%; margin-bottom: 2%">Generación de Reportes</h2>
-                <div class="row" style="margin-left:40%">
-                <input type="submit" name="empleadosactivos" value="Listado de Empleados Activos" style="margin-top:2%" class="btn btn-primary"/></br>
-                <input type="submit" name="salarios" value="Reporte de Salarios de Empleados" style="margin-top:2%" class="btn btn-primary"/></br>
-                <input type="submit" name="empleadosroles" value="Gráfico de Roles en el Hotel" style="margin-top:2%" class="btn btn-primary"/></br>
-                <input type="submit" name="hotelescadena" value="Listado de Hoteles por Cadena" style="margin-top:2%" class="btn btn-primary"/></br>
-                <input type="submit" name="hotelespais" value="Gráfico de Hoteles por País" style="margin-top:2%" class="btn btn-primary"/>
-                </div>
-                </div>
-                </form>
-        <script>
-            frases.push("such permit");
-            frases.push("much vacations");
-            frases.push("so procrastinate");   //jaja
-        </script>
-    </body>
+	<form action="GeneradorReportes" method="post" class="form-inline">
+		<div class='container jumbotron' style="border-radius: 10px">
+			<h2 style="margin-left: 35%; margin-top: 2%; margin-bottom: 2%">Generación
+				de Reportes</h2>
+			<div class="row" style="margin-left: 40%">
+				<select name="repo">
+					<option value="Empleados_Estados">Lista de Empleados Activos</option>
+					<option value="Empleados_Role">Cantidad de Roles de Empleados</option>
+					<option value="Empleados_Salarios">Porcentaje de Gasto en Salarios</option>
+					<option value="Hoteles_Cadenas">Lista de Hoteles por Cadena</option>
+					<option value="Hoteles_PorPais">Lista de Hoteles por Pais</option>
+					
+				</select>
+				<button type="submit">Aceptar</button>
+				
+			</div>
+		</div>
+	</form>
+	<script>
+		frases.push("such permit");
+		frases.push("much vacations");
+		frases.push("so procrastinate"); //jaja
+	</script>
+</body>
 </html>

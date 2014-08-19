@@ -10,9 +10,11 @@ import LogicaHotel.Logica;
 
 import com.Report;
 
+import comu.ServicioUsuario;
 import comu.Servicio_ControlHorario;
 import entidades.Controlhorario;
 import entidades.ControlhorarioPK;
+import entidades.Usuario;
 
 ;
 
@@ -30,6 +32,9 @@ public class testDecorador {
 	public static void main(String[] args) {
 
 		Logica logica = new Logica();
+		
+		Usuario u = new ServicioUsuario().findPK(new Integer(1));
+		System.out.print(u.getNombre());
  	
  	/*
  	String nombrehotel = "h9";

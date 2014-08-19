@@ -67,7 +67,7 @@ public class Report extends JFrame {
 			JRExporter exporter = new JRPdfExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-					new FileOutputStream(reportName + ".pdf")); // your output
+					new FileOutputStream("/home/andrea/workspace/DogeCalabaza/"+reportName + ".pdf")); // your output
 																// goes here
 			exporter.exportReport();
 		} catch (JRException e) {
@@ -115,7 +115,7 @@ public class Report extends JFrame {
 				 * You can also test this line if you want to display report
 				 * from any absolute path other than the project root path
 				 */
-				jasperPrint = JasperFillManager.fillReport(reportName
+				jasperPrint = JasperFillManager.fillReport("/home/andrea/workspace/DogeCalabaza/"+reportName
 						+ ".jasper", hm, con);
 				// jasperPrint = JasperFillManager.fillReport(reportName +
 				// ".jasper", hm, con);
