@@ -377,13 +377,11 @@ public class Logica {
 	}
 	
 	
-<<<<<<< HEAD
+
 	
 	
 	public boolean CrearServicio (int idHotel, int idCliente, String Descripcion, int costo){
-=======
-	public boolean CrearServicio (int idCadena, int idHotel, int idCliente, String Descripcion, Date horario, int costo){
->>>>>>> 3bb31fcd2743f1cc28bdf23c1ac4587cb11336a3
+
 		ServicioCadena_Hotelera SCH = new ServicioCadena_Hotelera();
 		Date horario = new Date(20-8-2014);
 		ServicioHotel SH = new ServicioHotel();
