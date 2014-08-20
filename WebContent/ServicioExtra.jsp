@@ -18,8 +18,8 @@
 			Id Servicio Extra:<input type="text" name="IdServicioExtra"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
 			Costo:<input type="text" name="Costo"><br>
-			Horario:<input type="text" name=""><br>
-			Id Habitación:<input type="text" name="IdHotel"><br>
+			Horario:<input type="text" name="Horario"><br>
+			Id Habitación:<input type="text" name="IdHabitacion"><br>
 			<input type="submit" name="Agregar" value="Agregar" /><br>
 			
 		</form>
@@ -31,8 +31,8 @@
 			Id Servicio Extra:<input type="text" name="IdServicioExtra"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
 			Costo:<input type="text" name="Costo"><br>
-			Horario:<input type="text" name=""><br>
-			Id Habitación:<input type="text" name="IdHotel"><br>
+			Horario:<input type="text" name="Horario"><br>
+			Id Habitación:<input type="text" name="IdHabitacion"><br>
 			<input type="submit" name="Eliminar" value="Eliminar" /><br>
 			
 		</form>
@@ -44,8 +44,8 @@
 			Id Servicio Extra:<input type="text" name="IdServicioExtra"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
 			Costo:<input type="text" name="Costo"><br>
-			Horario:<input type="text" name=""><br>
-			Id Habitación:<input type="text" name="IdHotel"><br>
+			Horario:<input type="text" name="Horario"><br>
+			Id Habitación:<input type="text" name="IdHabitacion"><br>
 			<input type="submit" name="Actualizar" value="Actualizar" /><br>
 			
 		</form>

@@ -14,7 +14,7 @@
 	
 	<div>
 		<form action="AgregarElemento" method="get">
-			Id del Elemento:<input type="text" name="IdElemento"><br>
+			Id del Hotel:<input type="text" name="Idhotel"><br>
 			Descripción:<input type="text" name="Descripcion"><br>
 			Id Habitación asociada:<input type="text" name="IdHabitacion"><br>
 			<input type="submit" name="Agregar" value="Agregar" /><br>

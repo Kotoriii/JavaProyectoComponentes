@@ -1,11 +1,15 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import LogicaHotel.Logica;
 
 /**
  * Servlet implementation class AgregarElemento
@@ -13,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AgregarElemento extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	Logica logica = new Logica();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -26,7 +30,13 @@ public class AgregarElemento extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String descripcion = request.getParameter("Descripcion");	
+		int Idhotel = Integer.parseInt(request.getParameter("Idhotel"));
+		int IdHabitacion= Integer.parseInt(request.getParameter("IdHabitacion"));
+		
+		PrintWriter out= response.getWriter();
+	 	out.println("Elemento Agregado");
+		logica.AgregarElemento(Idhotel, IdHabitacion, descripcion);
 	}
 
 	/**
